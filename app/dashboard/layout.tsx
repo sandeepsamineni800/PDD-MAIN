@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { LayoutDashboard, Users, LogOut, Loader2, PlusCircle, Settings, Moon, Sun, Menu, Mail, Type, FileText, ArrowUp } from 'lucide-react';
+import { LayoutDashboard, Users, LogOut, Loader2, PlusCircle, Settings, Moon, Sun, Menu, Mail, Type, FileText, ArrowUp, BarChart } from 'lucide-react';
 import { useLanguage } from '@/lib/i18nContext';
 import styles from './layout.module.css';
 
@@ -158,6 +158,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 {invitationsCount}
               </span>
             )}
+          </Link>
+          <Link 
+            href="/dashboard/progress" 
+            className={`${styles.navItem} ${pathname === '/dashboard/progress' ? styles.active : ''}`}
+          >
+            <BarChart size={20} />
+            <span>{t('sidebar.progress')}</span>
           </Link>
           <Link 
             href="/dashboard/terms" 
