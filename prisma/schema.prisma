@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  domains   DomainMember[]
+  tasks     Task[]         @relation("AssignedTasks")
+  createdTasks Task[]      @relation("CreatedTasks")
+}
+
+model Domain {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  template    String   @default("Custom")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members     DomainMember[]
+  tasks       Task[]
+}
+
+model DomainMember {
+  id        String   @id @default(uuid())
+  userId    String
+  domainId  String
+  role      String   @default("MEMBER") // ADMIN, MEMBER
+  status    String   @default("ACCEPTED") // PENDING, ACCEPTED
+  pendingRole String? // SUB_ADMIN
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  domain    Domain   @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, domainId])
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  status      String   @default("PENDING") // PENDING, IN_PROGRESS, COMPLETED
+  priority    String   @default("MEDIUM") // LOW, MEDIUM, HIGH
+  dueDate     DateTime?
+  domainId    String
+  assigneeId  String?
+  creatorId   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  domain      Domain   @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  assignee    User?    @relation("AssignedTasks", fields: [assigneeId], references: [id], onDelete: SetNull)
+  creator     User     @relation("CreatedTasks", fields: [creatorId], references: [id], onDelete: Cascade)
+}
+
+model OTP {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  code      String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
