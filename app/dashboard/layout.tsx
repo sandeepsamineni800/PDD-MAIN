@@ -19,16 +19,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const mainContentRef = useRef<HTMLDivElement>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  const handleScroll = () => {
-    if (mainContentRef.current) {
-      setShowScrollTop(mainContentRef.current.scrollTop > 200);
-    }
-  };
+  useEffect(() => {
+    const handleWindowScroll = () => {
+      setShowScrollTop(window.scrollY > 200);
+    };
+
+    window.addEventListener('scroll', handleWindowScroll);
+    return () => window.removeEventListener('scroll', handleWindowScroll);
+  }, []);
 
   const scrollToTop = () => {
-    if (mainContentRef.current) {
-      mainContentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   
   const router = useRouter();
@@ -260,7 +261,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
       </aside>
       
-      <main className={styles.mainContent} ref={mainContentRef} onScroll={handleScroll}>
+      <main className={styles.mainContent} ref={mainContentRef}>
         <div className={styles.topbar}>
           <h1 className={styles.pageTitle}>{t('sidebar.overview')}</h1>
           
