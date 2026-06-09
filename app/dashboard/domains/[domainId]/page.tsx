@@ -2,7 +2,7 @@
 
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
-import { CheckSquare, User, Clock, Users, UserPlus, Send, Trash2, Edit2, X, Save, Calendar, CheckCircle, XCircle } from 'lucide-react';
+import { CheckSquare, User, Clock, Users, UserPlus, Send, Trash2, Edit2, X, Save, Calendar, CheckCircle, XCircle, MoreVertical, Check } from 'lucide-react';
 import styles from './page.module.css';
 
 export default function DomainDetail({ params }: { params: Promise<{ domainId: string }> }) {
@@ -58,6 +58,7 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
   const [inviting, setInviting] = useState(false);
   const [inviteError, setInviteError] = useState('');
   const [inviteSuccess, setInviteSuccess] = useState('');
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchData();
@@ -529,14 +530,41 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
                         </div>
                         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                           {(canManageTasks || task.assigneeId === currentUser?.id) ? (
-                            <button 
-                              className="btn-icon" 
-                              style={{ color: task.status === 'COMPLETED' ? 'var(--warning)' : 'var(--success)' }}
-                              onClick={() => handleToggleTaskStatus(task, task.status === 'COMPLETED' ? 'PENDING' : 'COMPLETED')}
-                              title={task.status === 'COMPLETED' ? "Mark as Pending" : "Mark as Completed"}
-                            >
-                              {task.status === 'COMPLETED' ? <XCircle size={16} /> : <CheckCircle size={16} />}
-                            </button>
+                            task.status === 'PENDING_APPROVAL' ? (
+                              canManageTasks ? (
+                                <>
+                                  <button 
+                                    className="btn-icon" 
+                                    style={{ color: 'var(--success)' }}
+                                    onClick={() => handleToggleTaskStatus(task, 'COMPLETED')}
+                                    title="Accept & Complete"
+                                  >
+                                    <CheckCircle size={16} />
+                                  </button>
+                                  <button 
+                                    className="btn-icon" 
+                                    style={{ color: 'var(--danger)' }}
+                                    onClick={() => handleToggleTaskStatus(task, 'IN_PROGRESS')}
+                                    title="Reject (Back to In Progress)"
+                                  >
+                                    <XCircle size={16} />
+                                  </button>
+                                </>
+                              ) : (
+                                <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#f59e0b', background: 'rgba(245, 158, 11, 0.1)', padding: '2px 8px', borderRadius: '4px' }}>
+                                  Pending Approval
+                                </span>
+                              )
+                            ) : (
+                              <button 
+                                className="btn-icon" 
+                                style={{ color: task.status === 'COMPLETED' ? 'var(--warning)' : 'var(--success)' }}
+                                onClick={() => handleToggleTaskStatus(task, task.status === 'COMPLETED' ? 'PENDING' : 'COMPLETED')}
+                                title={task.status === 'COMPLETED' ? "Mark as Pending" : "Mark as Completed"}
+                              >
+                                {task.status === 'COMPLETED' ? <XCircle size={16} /> : <CheckCircle size={16} />}
+                              </button>
+                            )
                           ) : (
                             <div style={{ width: 16, height: 16 }}></div>
                           )}
@@ -544,6 +572,38 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
                             <>
                               <button className="btn-icon" onClick={() => startEditingTask(task)}><Edit2 size={16} /></button>
                               <button className="btn-icon text-danger" onClick={() => handleDeleteTask(task.id)}><Trash2 size={16} /></button>
+                              <div style={{ position: 'relative' }}>
+                                <button 
+                                  className="btn-icon" 
+                                  onClick={() => setOpenMenuId(openMenuId === task.id ? null : task.id)}
+                                >
+                                  <MoreVertical size={16} />
+                                </button>
+                                {openMenuId === task.id && (
+                                  <div style={{ 
+                                    position: 'absolute', 
+                                    right: 0, 
+                                    top: '100%', 
+                                    background: 'var(--surface-1)', 
+                                    border: '1px solid var(--border-color)', 
+                                    borderRadius: '8px', 
+                                    boxShadow: 'var(--shadow-md)', 
+                                    zIndex: 10,
+                                    minWidth: '150px',
+                                    padding: '0.5rem'
+                                  }}>
+                                    <button 
+                                      style={{ width: '100%', textAlign: 'left', padding: '0.5rem', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--success)', fontSize: '0.85rem' }}
+                                      onClick={() => {
+                                        handleToggleTaskStatus(task, 'COMPLETED');
+                                        setOpenMenuId(null);
+                                      }}
+                                    >
+                                      <Check size={14} /> Manual Complete
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
                             </>
                           )}
                         </div>

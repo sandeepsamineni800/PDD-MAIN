@@ -29,13 +29,18 @@ export async function PUT(request: Request, { params }: { params: Promise<{ doma
       return NextResponse.json({ error: 'You are not authorized to modify this task' }, { status: 403 });
     }
 
+    let finalStatus = status;
+    if (membership.role === 'MEMBER' && status === 'COMPLETED') {
+      finalStatus = 'PENDING_APPROVAL';
+    }
+
     const updatedTask = await prisma.task.update({
       where: { id: taskId, domainId },
       data: { 
         title, 
         description, 
         priority, 
-        status,
+        status: finalStatus,
         dueDate: dueDate ? new Date(dueDate) : null
       }
     });
