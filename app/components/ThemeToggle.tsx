@@ -1,13 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Settings, Moon, Sun } from 'lucide-react';
+import { Settings, Moon, Sun, Type } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { useFontSize } from '@/lib/FontSizeContext';
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { fontSize, setFontSize } = useFontSize();
 
   useEffect(() => {
     setMounted(true);
@@ -67,10 +69,12 @@ export default function ThemeToggle() {
           padding: '0.5rem',
           display: 'flex',
           flexDirection: 'column',
-          gap: '0.5rem',
+          gap: '0.2rem',
           boxShadow: 'var(--shadow-glass)',
-          animation: 'fadeIn 0.2s ease-out'
+          animation: 'fadeIn 0.2s ease-out',
+          minWidth: '150px'
         }}>
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', padding: '0.25rem 0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Theme</div>
           <button 
             onClick={() => toggleTheme('light')}
             style={{
@@ -104,6 +108,59 @@ export default function ThemeToggle() {
             }}
           >
             <Moon size={16} /> Dark Mode
+          </button>
+
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', padding: '0.25rem 0.5rem', marginTop: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Font Size</div>
+          <button 
+            onClick={() => { setFontSize('small'); setIsOpen(false); }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.5rem 1rem',
+              background: fontSize === 'small' ? 'var(--bg-tertiary)' : 'transparent',
+              border: 'none',
+              color: 'var(--text-primary)',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            <Type size={14} /> Small
+          </button>
+          <button 
+            onClick={() => { setFontSize('medium'); setIsOpen(false); }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.5rem 1rem',
+              background: fontSize === 'medium' ? 'var(--bg-tertiary)' : 'transparent',
+              border: 'none',
+              color: 'var(--text-primary)',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            <Type size={16} /> Medium
+          </button>
+          <button 
+            onClick={() => { setFontSize('large'); setIsOpen(false); }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.5rem 1rem',
+              background: fontSize === 'large' ? 'var(--bg-tertiary)' : 'transparent',
+              border: 'none',
+              color: 'var(--text-primary)',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            <Type size={18} /> Large
           </button>
         </div>
       )}

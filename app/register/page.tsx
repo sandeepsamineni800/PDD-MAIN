@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import AnimatedBackground from '../components/AnimatedBackground';
-import FontSizeSwitcher from '../components/FontSizeSwitcher';
 import styles from '../login/page.module.css'; // Reusing login styles
 
 export default function Register() {
@@ -44,9 +43,6 @@ export default function Register() {
   return (
     <div className={styles.authContainer}>
       <AnimatedBackground />
-      <div style={{ position: 'absolute', top: 20, right: 20, zIndex: 10 }}>
-        <FontSizeSwitcher />
-      </div>
       <div className={`${styles.authBox} glass-panel animate-fade-in`}>
         <h1 className={styles.title}>Create Account</h1>
         <p className={styles.subtitle}>Start managing your domains today</p>
