@@ -8,6 +8,16 @@
   overflow: hidden;
 }
 
+.contentWrapper {
+  width: 100%;
+  max-width: 600px;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
 .skipButton {
   position: absolute;
   top: env(safe-area-inset-top, 20px);
@@ -143,7 +153,7 @@
 .skipButtonTopRight {
   position: absolute;
   top: max(env(safe-area-inset-top, 12px), 12px);
-  right: calc(0.75rem + 50px);
+  right: 12px;
   background: rgba(220, 53, 69, 0.1);
   color: #ef4444;
   border: 1px solid rgba(239, 68, 68, 0.3);
@@ -159,4 +169,10 @@
 .skipButtonTopRight:hover {
   background: rgba(220, 53, 69, 0.2);
   transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .skipButtonTopRight {
+    right: calc(0.75rem + 50px);
+  }
 }
