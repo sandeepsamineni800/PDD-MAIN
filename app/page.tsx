@@ -85,9 +85,6 @@ export default function Onboarding() {
 
   return (
     <div className={styles.container}>
-      <button onClick={finishOnboarding} className={styles.skipButton}>
-        Skip
-      </button>
 
       <div className={styles.slidesContainer}>
         <AnimatePresence initial={false} custom={direction} mode="wait">
@@ -136,6 +133,10 @@ export default function Onboarding() {
       </div>
 
       <div className={styles.controls}>
+        <button onClick={finishOnboarding} className={styles.skipButtonBottom}>
+          Skip
+        </button>
+
         <div className={styles.indicators}>
           {slides.map((_, index) => (
             <div 
