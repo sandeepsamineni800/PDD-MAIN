@@ -8,16 +8,6 @@
   overflow: hidden;
 }
 
-.contentWrapper {
-  width: 100%;
-  max-width: 600px;
-  height: 100vh;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
 .skipButton {
   position: absolute;
   top: env(safe-area-inset-top, 20px);
@@ -80,18 +70,21 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 2.25rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
+  max-width: 800px;
+  width: 90%;
 }
 
 .description {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   color: var(--text-secondary);
-  max-width: 320px;
-  line-height: 1.5;
+  max-width: 600px;
+  width: 90%;
+  line-height: 1.6;
 }
 
 .controls {
@@ -153,7 +146,7 @@
 .skipButtonTopRight {
   position: absolute;
   top: max(env(safe-area-inset-top, 12px), 12px);
-  right: 12px;
+  right: calc(0.75rem + 50px);
   background: rgba(220, 53, 69, 0.1);
   color: #ef4444;
   border: 1px solid rgba(239, 68, 68, 0.3);
@@ -169,10 +162,4 @@
 .skipButtonTopRight:hover {
   background: rgba(220, 53, 69, 0.2);
   transform: translateY(-2px);
-}
-
-@media (max-width: 600px) {
-  .skipButtonTopRight {
-    right: calc(0.75rem + 50px);
-  }
 }
