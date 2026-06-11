@@ -85,79 +85,80 @@ export default function Onboarding() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.contentWrapper}>
+
+      {currentSlide < slides.length - 1 && (
         <button onClick={finishOnboarding} className={styles.skipButtonTopRight}>
           Skip
         </button>
+      )}
 
-        <div className={styles.slidesContainer}>
-          <AnimatePresence initial={false} custom={direction} mode="wait">
-            <motion.div
-              key={currentSlide}
-              custom={direction}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 },
-                scale: { duration: 0.2 }
-              }}
-              className={styles.slide}
+      <div className={styles.slidesContainer}>
+        <AnimatePresence initial={false} custom={direction} mode="wait">
+          <motion.div
+            key={currentSlide}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              x: { type: "spring", stiffness: 300, damping: 30 },
+              opacity: { duration: 0.2 },
+              scale: { duration: 0.2 }
+            }}
+            className={styles.slide}
+          >
+            <motion.div 
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.3 }}
+              className={styles.iconContainer}
             >
-              <motion.div 
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.1, duration: 0.3 }}
-                className={styles.iconContainer}
-              >
-                <CurrentIcon size={48} className={styles.icon} />
-              </motion.div>
-              
-              <motion.h1 
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.3 }}
-                className={styles.title}
-              >
-                {slides[currentSlide].title}
-              </motion.h1>
-              
-              <motion.p 
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.3 }}
-                className={styles.description}
-              >
-                {slides[currentSlide].description}
-              </motion.p>
+              <CurrentIcon size={48} className={styles.icon} />
             </motion.div>
-          </AnimatePresence>
+            
+            <motion.h1 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.3 }}
+              className={styles.title}
+            >
+              {slides[currentSlide].title}
+            </motion.h1>
+            
+            <motion.p 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.3 }}
+              className={styles.description}
+            >
+              {slides[currentSlide].description}
+            </motion.p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      <div className={styles.controls}>
+        <div className={styles.indicators}>
+          {slides.map((_, index) => (
+            <div 
+              key={index} 
+              className={`${styles.dot} ${index === currentSlide ? styles.dotActive : ''}`}
+            />
+          ))}
         </div>
 
-        <div className={styles.controls}>
-          <div className={styles.indicators}>
-            {slides.map((_, index) => (
-              <div 
-                key={index} 
-                className={`${styles.dot} ${index === currentSlide ? styles.dotActive : ''}`}
-              />
-            ))}
-          </div>
-
-          <button onClick={nextSlide} className={styles.nextButton}>
-            {currentSlide === slides.length - 1 ? (
-              <>
-                Get Started <CheckCircle2 size={20} />
-              </>
-            ) : (
-              <>
-                Next <ArrowRight size={20} />
-              </>
-            )}
-          </button>
-        </div>
+        <button onClick={nextSlide} className={styles.nextButton}>
+          {currentSlide === slides.length - 1 ? (
+            <>
+              Get Started <CheckCircle2 size={20} />
+            </>
+          ) : (
+            <>
+              Next <ArrowRight size={20} />
+            </>
+          )}
+        </button>
       </div>
     </div>
   );
