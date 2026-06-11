@@ -50,6 +50,17 @@ export default function RootLayout({
                   else document.documentElement.style.setProperty('--base-font-size', '16px');
                 }
               } catch (e) {}
+
+              // Force unregister all old service workers to break PWA cache
+              try {
+                if ('serviceWorker' in navigator) {
+                  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    for(let registration of registrations) {
+                      registration.unregister();
+                    }
+                  });
+                }
+              } catch (e) {}
             `,
           }}
         />

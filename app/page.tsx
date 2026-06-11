@@ -35,7 +35,7 @@ export default function Onboarding() {
 
   useEffect(() => {
     // Check if user has already seen onboarding or is logged in
-    const hasSeen = document.cookie.includes('hasSeenOnboarding=true');
+    const hasSeen = document.cookie.includes('hasSeenOnboardingV2=true');
     const hasToken = document.cookie.includes('token=');
     if (hasSeen || hasToken) {
       router.replace(hasToken ? '/dashboard' : '/login');
@@ -46,7 +46,7 @@ export default function Onboarding() {
 
   const finishOnboarding = () => {
     // Set cookie to not show again for 1 year
-    document.cookie = "hasSeenOnboarding=true; max-age=31536000; path=/";
+    document.cookie = "hasSeenOnboardingV2=true; max-age=31536000; path=/";
     router.push('/login');
   };
 
