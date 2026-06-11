@@ -29,12 +29,19 @@ export async function GET() {
           select: {
             status: true
           }
+        },
+        _count: {
+          select: {
+            members: true
+          }
         }
       }
     });
 
     // Calculate progress for each domain
-    const progressData = domains.map(domain => {
+    const progressData = domains
+      .filter(domain => domain.tasks.length > 0 || domain._count.members > 1)
+      .map(domain => {
       const totalTasks = domain.tasks.length;
       const completedTasks = domain.tasks.filter(t => t.status === 'DONE').length;
       const progressPercentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
