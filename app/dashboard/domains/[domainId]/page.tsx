@@ -572,38 +572,7 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
                             <>
                               <button className="btn-icon" onClick={() => startEditingTask(task)}><Edit2 size={16} /></button>
                               <button className="btn-icon text-danger" onClick={() => handleDeleteTask(task.id)}><Trash2 size={16} /></button>
-                              <div style={{ position: 'relative' }}>
-                                <button 
-                                  className="btn-icon" 
-                                  onClick={() => setOpenMenuId(openMenuId === task.id ? null : task.id)}
-                                >
-                                  <MoreVertical size={16} />
-                                </button>
-                                {openMenuId === task.id && (
-                                  <div style={{ 
-                                    position: 'absolute', 
-                                    right: 0, 
-                                    top: '100%', 
-                                    background: 'var(--surface-1)', 
-                                    border: '1px solid var(--border-color)', 
-                                    borderRadius: '8px', 
-                                    boxShadow: 'var(--shadow-md)', 
-                                    zIndex: 10,
-                                    minWidth: '150px',
-                                    padding: '0.5rem'
-                                  }}>
-                                    <button 
-                                      style={{ width: '100%', textAlign: 'left', padding: '0.5rem', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--success)', fontSize: '0.85rem' }}
-                                      onClick={() => {
-                                        handleToggleTaskStatus(task, 'COMPLETED');
-                                        setOpenMenuId(null);
-                                      }}
-                                    >
-                                      <Check size={14} /> Manual Complete
-                                    </button>
-                                  </div>
-                                )}
-                              </div>
+
                             </>
                           )}
                         </div>

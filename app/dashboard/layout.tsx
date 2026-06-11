@@ -5,13 +5,14 @@ import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { LayoutDashboard, Users, LogOut, Loader2, PlusCircle, Settings, Moon, Sun, Menu, Mail, Type, FileText, ArrowUp, BarChart } from 'lucide-react';
 import { useLanguage } from '@/lib/i18nContext';
+import { useFontSize } from '@/lib/FontSizeContext';
 import styles from './layout.module.css';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<{name: string, email: string} | null>(null);
   const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState('dark');
-  const [fontSize, setFontSize] = useState('16px');
+  const { fontSize, setFontSize } = useFontSize();
   const [showSettings, setShowSettings] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [invitationsCount, setInvitationsCount] = useState(0);
@@ -67,27 +68,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     setTheme(savedTheme);
-
-    const savedFontSize = localStorage.getItem('fontSize') || '16px';
-    setFontSize(savedFontSize);
-    document.documentElement.style.setProperty('--base-font-size', savedFontSize);
   }, []);
 
   const toggleTheme = (newTheme: string) => {
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
-  };
-
-  const changeFontSize = (size: string) => {
-    let px = '16px';
-    if (size === 'small') px = '14px';
-    if (size === 'medium') px = '16px';
-    if (size === 'large') px = '18px';
-    
-    setFontSize(px);
-    localStorage.setItem('fontSize', px);
-    document.documentElement.style.setProperty('--base-font-size', px);
   };
 
   const changeLanguage = (newLang: string) => {
@@ -207,22 +193,22 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', padding: '0.5rem 1rem', marginTop: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>{t('sidebar.fontSize')}</div>
                 <button 
-                  onClick={() => changeFontSize('small')} 
-                  className={`${styles.navItem} ${fontSize === '14px' ? styles.active : ''}`}
+                  onClick={() => setFontSize('small')} 
+                  className={`${styles.navItem} ${fontSize === 'small' ? styles.active : ''}`}
                   style={{ background: 'transparent', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                 >
                   <Type size={14} /> {t('sidebar.fontSmall')}
                 </button>
                 <button 
-                  onClick={() => changeFontSize('medium')} 
-                  className={`${styles.navItem} ${fontSize === '16px' ? styles.active : ''}`}
+                  onClick={() => setFontSize('medium')} 
+                  className={`${styles.navItem} ${fontSize === 'medium' ? styles.active : ''}`}
                   style={{ background: 'transparent', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                 >
                   <Type size={16} /> {t('sidebar.fontMedium')}
                 </button>
                 <button 
-                  onClick={() => changeFontSize('large')} 
-                  className={`${styles.navItem} ${fontSize === '18px' ? styles.active : ''}`}
+                  onClick={() => setFontSize('large')} 
+                  className={`${styles.navItem} ${fontSize === 'large' ? styles.active : ''}`}
                   style={{ background: 'transparent', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                 >
                   <Type size={18} /> {t('sidebar.fontLarge')}

@@ -4,6 +4,7 @@ import "./globals.css";
 import GlobalSplash from "./components/GlobalSplash";
 import ThemeToggle from "./components/ThemeToggle";
 import { LanguageProvider } from "@/lib/i18nContext";
+import { FontSizeProvider } from "@/lib/FontSizeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,9 +43,11 @@ export default function RootLayout({
                 if (theme) {
                   document.documentElement.setAttribute('data-theme', theme);
                 }
-                var fontSize = localStorage.getItem('fontSize');
+                var fontSize = localStorage.getItem('app-font-size');
                 if (fontSize) {
-                  document.documentElement.style.setProperty('--base-font-size', fontSize);
+                  if (fontSize === 'small') document.documentElement.style.setProperty('--base-font-size', '14px');
+                  else if (fontSize === 'large') document.documentElement.style.setProperty('--base-font-size', '18px');
+                  else document.documentElement.style.setProperty('--base-font-size', '16px');
                 }
               } catch (e) {}
             `,
@@ -52,13 +55,15 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-        <LanguageProvider>
-          <GlobalSplash />
-          <ThemeToggle />
-          <main>
-            {children}
-          </main>
-        </LanguageProvider>
+        <FontSizeProvider>
+          <LanguageProvider>
+            <GlobalSplash />
+            <ThemeToggle />
+            <main>
+              {children}
+            </main>
+          </LanguageProvider>
+        </FontSizeProvider>
       </body>
     </html>
   );

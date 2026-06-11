@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Mail, KeyRound, Lock, ArrowLeft } from 'lucide-react';
 import AnimatedBackground from '../components/AnimatedBackground';
+import FontSizeSwitcher from '../components/FontSizeSwitcher';
 import styles from './page.module.css';
 
 type AuthMode = 'login' | 'forgot_password' | 'reset_password';
@@ -109,6 +110,9 @@ export default function Login() {
   return (
     <div className={styles.authContainer}>
       <AnimatedBackground />
+      <div style={{ position: 'absolute', top: 20, right: 20, zIndex: 10 }}>
+        <FontSizeSwitcher />
+      </div>
       <div className={`${styles.authBox} glass-panel animate-fade-in`}>
         {mode === 'login' && (
           <>
