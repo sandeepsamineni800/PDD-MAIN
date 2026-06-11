@@ -133,10 +133,6 @@ export default function Onboarding() {
       </div>
 
       <div className={styles.controls}>
-        <button onClick={finishOnboarding} className={styles.skipButtonBottom}>
-          Skip
-        </button>
-
         <div className={styles.indicators}>
           {slides.map((_, index) => (
             <div 
@@ -156,6 +152,12 @@ export default function Onboarding() {
               Next <ArrowRight size={20} />
             </>
           )}
+        </button>
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: 'calc(2rem + env(safe-area-inset-bottom, 0px))' }}>
+        <button onClick={finishOnboarding} className={styles.skipButtonBottom}>
+          Skip Onboarding
         </button>
       </div>
     </div>

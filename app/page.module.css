@@ -86,7 +86,7 @@
 
 .controls {
   padding: 2rem;
-  padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+  padding-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
