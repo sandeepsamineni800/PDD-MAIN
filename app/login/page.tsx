@@ -184,7 +184,7 @@ export default function Login() {
 
         {mode === 'forgot_password' && (
           <>
-            <button type="button" onClick={() => setMode('login')} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem', marginBottom: '1rem' }}>
+            <button type="button" onClick={() => { setMode('login'); setSuccess(''); setError(''); }} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem', marginBottom: '1rem' }}>
               <ArrowLeft size={16} /> Back to login
             </button>
             <h1 className={styles.title}>Forgot Password</h1>
@@ -263,7 +263,12 @@ export default function Login() {
                 {loading ? 'Resetting Password...' : 'Reset Password'}
               </button>
               
-              <button type="button" onClick={() => setMode('login')} className={`btn-secondary ${styles.submitBtn}`} style={{ marginTop: '0.5rem' }}>
+              <button 
+                type="button" 
+                onClick={() => { setMode('login'); setSuccess(''); setError(''); }} 
+                className={`btn-secondary ${styles.submitBtn}`} 
+                style={{ marginTop: '0.5rem' }}
+              >
                 Cancel
               </button>
             </form>
