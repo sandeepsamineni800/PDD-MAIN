@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import AnimatedBackground from '../components/AnimatedBackground';
@@ -15,10 +15,21 @@ export default function Register() {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [resendTimer, setResendTimer] = useState(0);
   const router = useRouter();
 
-  const handleSendOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (resendTimer > 0) {
+      interval = setInterval(() => {
+        setResendTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [resendTimer]);
+
+  const handleSendOtp = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setLoading(true);
     setError('');
     setMessage('');
@@ -39,6 +50,7 @@ export default function Register() {
           setMessage('A verification code has been sent to your email.');
         }
         setStep(2);
+        setResendTimer(30); // 30 second cooldown
       } else {
         setError(data.error || 'Failed to send verification code');
       }
@@ -153,14 +165,32 @@ export default function Register() {
               {loading ? 'Verifying...' : 'Verify & Sign Up'}
             </button>
             
-            <button 
-              type="button" 
-              onClick={() => setStep(1)} 
-              className={styles.link} 
-              style={{ display: 'block', textAlign: 'center', marginTop: '1rem', background: 'none', border: 'none', width: '100%', cursor: 'pointer' }}
-            >
-              Back to registration
-            </button>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem', width: '100%' }}>
+              <button 
+                type="button" 
+                onClick={() => setStep(1)} 
+                className={styles.link} 
+                style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}
+              >
+                Back to start
+              </button>
+              
+              <button 
+                type="button" 
+                onClick={() => handleSendOtp()} 
+                disabled={resendTimer > 0 || loading}
+                className={styles.link} 
+                style={{ 
+                  background: 'none', 
+                  border: 'none', 
+                  cursor: resendTimer > 0 ? 'not-allowed' : 'pointer', 
+                  textAlign: 'right',
+                  opacity: resendTimer > 0 ? 0.5 : 1
+                }}
+              >
+                {resendTimer > 0 ? `Resend in ${resendTimer}s` : 'Resend Code'}
+              </button>
+            </div>
           </form>
         )}
 
