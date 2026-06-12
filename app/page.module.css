@@ -75,26 +75,26 @@
   color: var(--text-primary);
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
-  max-width: 800px;
+  max-width: 1200px;
   width: 90%;
 }
 
 .description {
   font-size: 1.25rem;
   color: var(--text-secondary);
-  max-width: 600px;
+  max-width: 1200px;
   width: 90%;
   line-height: 1.6;
 }
 
 .controls {
-  padding: 2rem;
+  padding: 2rem 5%;
   padding-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 600px;
+  max-width: 1200px;
   margin: 0 auto;
   z-index: 50;
 }
