@@ -13,10 +13,12 @@ const slides = [
     description: 'Create dedicated workspaces and domains for every aspect of your life or project.',
     icon: Layers,
     bgGradient: 'linear-gradient(135deg, #0f172a 0%, #312e81 100%)',
-    orbOne: 'rgba(99, 102, 241, 0.4)',
-    orbTwo: 'rgba(236, 72, 153, 0.3)',
-    iconBg: 'linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.1))',
-    iconColor: '#818cf8'
+    orbOne: 'rgba(255, 255, 255, 0.2)',
+    orbTwo: 'rgba(255, 255, 255, 0.1)',
+    iconBg: '#ffffff',
+    iconColor: '#312e81',
+    btnBg: '#ffffff',
+    btnColor: '#312e81'
   },
   {
     id: 2,
@@ -24,10 +26,12 @@ const slides = [
     description: 'Invite members, assign tasks, and track real-time progress together as a team.',
     icon: Users,
     bgGradient: 'linear-gradient(135deg, #022c22 0%, #064e3b 100%)',
-    orbOne: 'rgba(16, 185, 129, 0.4)',
-    orbTwo: 'rgba(14, 165, 233, 0.3)',
-    iconBg: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(14, 165, 233, 0.1))',
-    iconColor: '#34d399'
+    orbOne: 'rgba(255, 255, 255, 0.2)',
+    orbTwo: 'rgba(255, 255, 255, 0.1)',
+    iconBg: '#ffffff',
+    iconColor: '#064e3b',
+    btnBg: '#ffffff',
+    btnColor: '#064e3b'
   },
   {
     id: 3,
@@ -35,10 +39,12 @@ const slides = [
     description: 'Beautiful visual dashboards help you stay on top of your goals and deadlines.',
     icon: BarChart3,
     bgGradient: 'linear-gradient(135deg, #450a0a 0%, #7c2d12 100%)',
-    orbOne: 'rgba(245, 158, 11, 0.4)',
-    orbTwo: 'rgba(239, 68, 68, 0.3)',
-    iconBg: 'linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.1))',
-    iconColor: '#fbbf24'
+    orbOne: 'rgba(255, 255, 255, 0.2)',
+    orbTwo: 'rgba(255, 255, 255, 0.1)',
+    iconBg: '#ffffff',
+    iconColor: '#7c2d12',
+    btnBg: '#ffffff',
+    btnColor: '#7c2d12'
   }
 ];
 
@@ -170,7 +176,7 @@ export default function Onboarding() {
             <div 
               key={index} 
               className={`${styles.dot} ${index === currentSlide ? styles.dotActive : ''}`}
-              style={index === currentSlide ? { background: slides[currentSlide].iconColor } : {}}
+              style={index === currentSlide ? { background: slides[currentSlide].btnBg } : {}}
             />
           ))}
         </div>
@@ -179,7 +185,8 @@ export default function Onboarding() {
           onClick={nextSlide} 
           className={styles.nextButton}
           style={{
-            background: slides[currentSlide].iconColor,
+            background: slides[currentSlide].btnBg,
+            color: slides[currentSlide].btnColor,
             boxShadow: `0 4px 15px ${slides[currentSlide].orbTwo}`
           }}
         >
