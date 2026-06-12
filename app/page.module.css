@@ -13,9 +13,9 @@
   top: env(safe-area-inset-top, 20px);
   right: 20px;
   margin-top: 20px;
-  background: transparent;
+  background: #ef4444;
   border: none;
-  color: var(--text-muted);
+  color: #ffffff;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -26,8 +26,8 @@
 }
 
 .skipButton:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-primary);
+  background: #dc2626;
+  color: #ffffff;
 }
 
 .slidesContainer {
@@ -148,8 +148,8 @@
   position: absolute;
   top: max(env(safe-area-inset-top, 20px), 20px);
   right: max(env(safe-area-inset-right, 20px), 20px);
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
+  background: #ef4444; /* Red background */
+  color: #ffffff; /* White text */
   border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 8px 16px;
   border-radius: 30px;
@@ -162,6 +162,6 @@
 }
 
 .skipButtonTopRight:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: #dc2626; /* Darker red on hover */
   transform: translateY(-2px);
 }
