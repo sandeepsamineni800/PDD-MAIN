@@ -12,33 +12,33 @@ const slides = [
     title: 'Organize Your Life',
     description: 'Create dedicated workspaces and domains for every aspect of your life or project.',
     icon: Layers,
-    bgGradient: 'radial-gradient(circle at top left, rgba(99, 102, 241, 0.15), transparent 40%), radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.1), transparent 40%)',
+    bgGradient: 'linear-gradient(135deg, #0f172a 0%, #312e81 100%)',
     orbOne: 'rgba(99, 102, 241, 0.4)',
     orbTwo: 'rgba(236, 72, 153, 0.3)',
     iconBg: 'linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.1))',
-    iconColor: '#6366f1'
+    iconColor: '#818cf8'
   },
   {
     id: 2,
     title: 'Collaborate Seamlessly',
     description: 'Invite members, assign tasks, and track real-time progress together as a team.',
     icon: Users,
-    bgGradient: 'radial-gradient(circle at top right, rgba(16, 185, 129, 0.15), transparent 40%), radial-gradient(circle at bottom left, rgba(14, 165, 233, 0.1), transparent 40%)',
+    bgGradient: 'linear-gradient(135deg, #022c22 0%, #064e3b 100%)',
     orbOne: 'rgba(16, 185, 129, 0.4)',
     orbTwo: 'rgba(14, 165, 233, 0.3)',
     iconBg: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(14, 165, 233, 0.1))',
-    iconColor: '#10b981'
+    iconColor: '#34d399'
   },
   {
     id: 3,
     title: 'Track Your Progress',
     description: 'Beautiful visual dashboards help you stay on top of your goals and deadlines.',
     icon: BarChart3,
-    bgGradient: 'radial-gradient(circle at bottom right, rgba(245, 158, 11, 0.15), transparent 40%), radial-gradient(circle at top left, rgba(239, 68, 68, 0.1), transparent 40%)',
+    bgGradient: 'linear-gradient(135deg, #450a0a 0%, #7c2d12 100%)',
     orbOne: 'rgba(245, 158, 11, 0.4)',
     orbTwo: 'rgba(239, 68, 68, 0.3)',
     iconBg: 'linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.1))',
-    iconColor: '#f59e0b'
+    iconColor: '#fbbf24'
   }
 ];
 
