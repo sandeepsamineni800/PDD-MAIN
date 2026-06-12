@@ -40,7 +40,7 @@ export async function GET() {
 
     // Calculate progress for each domain
     const progressData = domains
-      .filter(domain => domain.tasks.length > 0 || domain._count.members > 1)
+      .filter(domain => domain.tasks.length > 0)
       .map(domain => {
       const totalTasks = domain.tasks.length;
       const completedTasks = domain.tasks.filter(t => t.status === 'DONE').length;
