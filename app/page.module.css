@@ -145,8 +145,8 @@
 
 .skipButtonTopRight {
   position: absolute;
-  top: max(env(safe-area-inset-top, 12px), 12px);
-  right: calc(0.75rem + 50px);
+  top: max(env(safe-area-inset-top, 20px), 20px);
+  right: max(env(safe-area-inset-right, 20px), 20px);
   background: rgba(220, 53, 69, 0.1);
   color: #ef4444;
   border: 1px solid rgba(239, 68, 68, 0.3);

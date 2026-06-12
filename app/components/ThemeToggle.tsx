@@ -32,8 +32,8 @@ export default function ThemeToggle() {
 
   if (!mounted) return null;
   
-  // Hide global floating settings toggle on the dashboard pages
-  if (pathname?.startsWith('/dashboard')) return null;
+  // Hide global floating settings toggle on the dashboard pages and the onboarding landing page
+  if (pathname === '/' || pathname?.startsWith('/dashboard')) return null;
 
   return (
     <div style={{ position: 'fixed', top: '0.75rem', right: '0.75rem', zIndex: 100000 }}>
