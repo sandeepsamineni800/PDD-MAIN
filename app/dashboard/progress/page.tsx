@@ -40,6 +40,9 @@ export default function ProgressPage() {
     );
   }
 
+  const adminDomains = domains.filter(d => d.role === 'ADMIN');
+  const memberDomains = domains.filter(d => d.role !== 'ADMIN');
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -56,35 +59,77 @@ export default function ProgressPage() {
           <p>You are not currently active in any domains. Create or join a domain to track its progress.</p>
         </div>
       ) : (
-        <div className={styles.grid}>
-          {domains.map(domain => (
-            <Link href={`/dashboard/domains/${domain.id}`} key={domain.id} style={{ textDecoration: 'none' }}>
-              <div className={styles.card}>
-                <div className={styles.cardHeader}>
-                  <div className={styles.domainName}>{domain.name}</div>
-                  <div className={`${styles.roleBadge} ${styles['role_' + domain.role]}`}>
-                    {domain.role}
-                  </div>
-                </div>
+        <>
+          {adminDomains.length > 0 && (
+            <div className={styles.section}>
+              <h2 className={styles.sectionTitle}>Domains I Manage (Admin)</h2>
+              <div className={styles.grid}>
+                {adminDomains.map(domain => (
+                  <Link href={`/dashboard/domains/${domain.id}`} key={domain.id} style={{ textDecoration: 'none' }}>
+                    <div className={styles.card}>
+                      <div className={styles.cardHeader}>
+                        <div className={styles.domainName}>{domain.name}</div>
+                        <div className={`${styles.roleBadge} ${styles['role_' + domain.role]}`}>
+                          {domain.role}
+                        </div>
+                      </div>
 
-                <div className={styles.statsRow}>
-                  <span>Completed: {domain.completedTasks}</span>
-                  <span>Total Tasks: {domain.totalTasks}</span>
-                </div>
+                      <div className={styles.statsRow}>
+                        <span>Completed: {domain.completedTasks}</span>
+                        <span>Total Tasks: {domain.totalTasks}</span>
+                      </div>
 
-                <div className={styles.progressContainer}>
-                  <div 
-                    className={styles.progressBar} 
-                    style={{ width: `${domain.progressPercentage}%` }}
-                  ></div>
-                </div>
-                <div className={styles.progressText}>
-                  {domain.progressPercentage}% Done
-                </div>
+                      <div className={styles.progressContainer}>
+                        <div 
+                          className={styles.progressBar} 
+                          style={{ width: `${domain.progressPercentage}%` }}
+                        ></div>
+                      </div>
+                      <div className={styles.progressText}>
+                        {domain.progressPercentage}% Done
+                      </div>
+                    </div>
+                  </Link>
+                ))}
               </div>
-            </Link>
-          ))}
-        </div>
+            </div>
+          )}
+
+          {memberDomains.length > 0 && (
+            <div className={styles.section}>
+              <h2 className={styles.sectionTitle}>Domains I Contribute To (Member)</h2>
+              <div className={styles.grid}>
+                {memberDomains.map(domain => (
+                  <Link href={`/dashboard/domains/${domain.id}`} key={domain.id} style={{ textDecoration: 'none' }}>
+                    <div className={styles.card}>
+                      <div className={styles.cardHeader}>
+                        <div className={styles.domainName}>{domain.name}</div>
+                        <div className={`${styles.roleBadge} ${styles['role_' + domain.role]}`}>
+                          {domain.role}
+                        </div>
+                      </div>
+
+                      <div className={styles.statsRow}>
+                        <span>Completed: {domain.completedTasks}</span>
+                        <span>Total Tasks: {domain.totalTasks}</span>
+                      </div>
+
+                      <div className={styles.progressContainer}>
+                        <div 
+                          className={styles.progressBar} 
+                          style={{ width: `${domain.progressPercentage}%` }}
+                        ></div>
+                      </div>
+                      <div className={styles.progressText}>
+                        {domain.progressPercentage}% Done
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
