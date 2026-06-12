@@ -7,7 +7,7 @@ import AnimatedBackground from '../components/AnimatedBackground';
 import styles from '../login/page.module.css'; // Reusing login styles
 
 export default function Register() {
-  const [step, setStep] = useState<1 | 2>(1);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -50,7 +50,7 @@ export default function Register() {
           setMessage('A verification code has been sent to your email.');
         }
         setStep(2);
-        setResendTimer(30); // 30 second cooldown
+        setResendTimer(30);
       } else {
         setError(data.error || 'Failed to send verification code');
       }
@@ -61,7 +61,33 @@ export default function Register() {
     }
   };
 
-  const handleVerifyAndRegister = async (e: React.FormEvent) => {
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const res = await fetch('/api/auth/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp }),
+      });
+
+      if (res.ok) {
+        setMessage('Email verified successfully! You can now choose a password.');
+        setStep(3);
+      } else {
+        const data = await res.json();
+        setError(data.error || 'Invalid verification code');
+      }
+    } catch (err) {
+      setError('An unexpected error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -74,7 +100,6 @@ export default function Register() {
       });
 
       if (res.ok) {
-        // Redirect to login after successful signup
         router.push('/login?registered=true');
         router.refresh();
       } else {
@@ -98,7 +123,12 @@ export default function Register() {
         {error && <div className={styles.error}>{error}</div>}
         {message && <div style={{ color: '#10b981', marginBottom: '1rem', textAlign: 'center', fontSize: '0.9rem' }}>{message}</div>}
 
-        <form onSubmit={handleVerifyAndRegister} className={styles.form}>
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          if (step === 1) handleSendOtp(e);
+          else if (step === 2) handleVerifyOtp(e);
+          else handleRegister(e);
+        }} className={styles.form}>
           <div className="input-group">
             <label className="input-label" htmlFor="name">Full Name</label>
             <input
@@ -107,6 +137,7 @@ export default function Register() {
               className="input-field"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              disabled={step > 1}
               required
             />
           </div>
@@ -119,12 +150,12 @@ export default function Register() {
               className="input-field"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={step > 1}
               required
             />
             {step === 1 && (
               <button 
-                type="button" 
-                onClick={handleSendOtp} 
+                type="submit" 
                 className={`btn-secondary ${styles.submitBtn}`} 
                 style={{ marginTop: '0.5rem', padding: '0.5rem' }}
                 disabled={loading || !email}
@@ -134,54 +165,75 @@ export default function Register() {
             )}
           </div>
 
-          {step === 2 && (
+          {step >= 2 && (
             <div className="input-group animate-fade-in" style={{ padding: '1rem', background: 'rgba(16, 185, 129, 0.05)', borderRadius: '8px', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
-              <label className="input-label" htmlFor="otp" style={{ color: 'var(--success)' }}>Verification Code</label>
-              <input
-                id="otp"
-                type="text"
-                className="input-field"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                placeholder="Enter 6-digit code"
-                maxLength={6}
-                required
-                style={{ textAlign: 'center', letterSpacing: '0.25rem', fontSize: '1.25rem', fontWeight: 'bold' }}
-              />
-              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
-                <button 
-                  type="button" 
-                  onClick={() => handleSendOtp()} 
-                  disabled={resendTimer > 0 || loading}
-                  className={styles.link} 
-                  style={{ background: 'none', border: 'none', cursor: resendTimer > 0 ? 'not-allowed' : 'pointer', fontSize: '0.8rem', opacity: resendTimer > 0 ? 0.5 : 1 }}
-                >
-                  {resendTimer > 0 ? `Resend in ${resendTimer}s` : 'Resend Code'}
-                </button>
-              </div>
+              <label className="input-label" htmlFor="otp" style={{ color: 'var(--success)' }}>
+                {step === 3 ? 'Email Verified ✓' : 'Verification Code'}
+              </label>
+              {step === 2 ? (
+                <>
+                  <input
+                    id="otp"
+                    type="text"
+                    className="input-field"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    placeholder="Enter 6-digit code"
+                    maxLength={6}
+                    required
+                    style={{ textAlign: 'center', letterSpacing: '0.25rem', fontSize: '1.25rem', fontWeight: 'bold' }}
+                  />
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem', alignItems: 'center' }}>
+                    <button 
+                      type="submit"
+                      disabled={loading || otp.length !== 6}
+                      className={`btn-primary ${styles.submitBtn}`}
+                      style={{ width: '48%', margin: 0, padding: '0.5rem' }}
+                    >
+                      {loading ? 'Verifying...' : 'Verify Code'}
+                    </button>
+                    
+                    <button 
+                      type="button" 
+                      onClick={() => handleSendOtp()} 
+                      disabled={resendTimer > 0 || loading}
+                      className={styles.link} 
+                      style={{ width: '48%', background: 'none', border: 'none', cursor: resendTimer > 0 ? 'not-allowed' : 'pointer', fontSize: '0.9rem', opacity: resendTimer > 0 ? 0.5 : 1, textAlign: 'right' }}
+                    >
+                      {resendTimer > 0 ? `Resend in ${resendTimer}s` : 'Resend Code'}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div style={{ textAlign: 'center', color: 'var(--success)', fontWeight: 'bold', fontSize: '1.2rem' }}>
+                  {otp}
+                </div>
+              )}
             </div>
           )}
 
-          <div className="input-group">
-            <label className="input-label" htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              className="input-field"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <button 
-            type="submit" 
-            className={`btn-primary ${styles.submitBtn}`} 
-            disabled={loading || step === 1}
-            style={{ opacity: step === 1 ? 0.5 : 1 }}
-          >
-            {step === 1 ? 'Verify Email to Continue' : (loading ? 'Creating Account...' : 'Verify & Sign Up')}
-          </button>
+          {step === 3 && (
+            <div className="input-group animate-fade-in">
+              <label className="input-label" htmlFor="password">Choose Password</label>
+              <input
+                id="password"
+                type="password"
+                className="input-field"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={6}
+              />
+              <button 
+                type="submit" 
+                className={`btn-primary ${styles.submitBtn}`} 
+                disabled={loading}
+                style={{ marginTop: '1rem' }}
+              >
+                {loading ? 'Creating Account...' : 'Sign Up'}
+              </button>
+            </div>
+          )}
         </form>
 
         <div className={styles.footer}>
