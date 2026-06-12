@@ -34,11 +34,10 @@ export default function Onboarding() {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if user has already seen onboarding or is logged in
-    const hasSeen = document.cookie.includes('hasSeenOnboardingV2=true');
+    // If user is already logged in, redirect to dashboard
     const hasToken = document.cookie.includes('token=');
-    if (hasSeen || hasToken) {
-      router.replace(hasToken ? '/dashboard' : '/login');
+    if (hasToken) {
+      router.replace('/dashboard');
     } else {
       setMounted(true);
     }
