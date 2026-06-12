@@ -124,6 +124,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <span>{t('sidebar.newDomain')}</span>
           </Link>
           <Link 
+            href="/dashboard/domains/new" 
+            className={`${styles.navItem} ${pathname === '/dashboard/domains/new' ? styles.active : ''}`}
+          >
+            <PlusCircle size={20} />
+            <span>Create Domain</span>
+          </Link>
+          <Link 
             href="/dashboard/invitations" 
             className={`${styles.navItem} ${pathname === '/dashboard/invitations' ? styles.active : ''}`}
             style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
