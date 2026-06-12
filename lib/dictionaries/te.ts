@@ -34,7 +34,7 @@ export const te = {
   "dashboard.loading": "డొమైన్‌లను లోడ్ చేస్తోంది...",
   "dashboard.noWorkspaces": "ఇంకా వర్క్‌స్పేస్‌లు లేవు",
   "dashboard.noWorkspacesDesc": "మీ మొదటి వర్క్‌స్పేస్‌ను సృష్టించండి లేదా ఇప్పటికే ఉన్న దానికి టాస్క్‌లను జోడించండి.",
-  "dashboard.createWorkspace": "వర్క్‌స్పేస్‌ సృష్టించండి",
+  "dashboard.createWorkspace": "కొత్త డొమైన్",
   "dashboard.template": "టెంప్లేట్",
   "dashboard.created": "సృష్టించబడింది",
   "dashboard.noDesc": "వివరణ అందించబడలేదు.",
@@ -44,7 +44,7 @@ export const te = {
   "newDomain.nameLabel": "వర్క్‌స్పేస్ పేరు",
   "newDomain.descLabel": "వివరణ",
   "newDomain.templateLabel": "వర్క్‌స్పేస్ టెంప్లేట్",
-  "newDomain.createBtn": "వర్క్‌స్పేస్ సృష్టించండి",
+  "newDomain.createBtn": "కొత్త డొమైన్",
   "newDomain.cancel": "రద్దు చేయండి",
   
   // Domain Detail

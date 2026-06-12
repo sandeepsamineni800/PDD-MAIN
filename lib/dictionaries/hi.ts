@@ -34,7 +34,7 @@ export const hi = {
   "dashboard.loading": "डोमेन लोड हो रहे हैं...",
   "dashboard.noWorkspaces": "अभी तक कोई कार्यक्षेत्र नहीं",
   "dashboard.noWorkspacesDesc": "अपना पहला कार्यक्षेत्र बनाएं या इसे यहां देखने के लिए मौजूदा एक में कार्य जोड़ें।",
-  "dashboard.createWorkspace": "कार्यक्षेत्र बनाएँ",
+  "dashboard.createWorkspace": "नया डोमेन",
   "dashboard.template": "टेम्पलेट",
   "dashboard.created": "बनाया गया",
   "dashboard.noDesc": "कोई विवरण प्रदान नहीं किया गया।",
@@ -44,7 +44,7 @@ export const hi = {
   "newDomain.nameLabel": "कार्यक्षेत्र का नाम",
   "newDomain.descLabel": "विवरण",
   "newDomain.templateLabel": "कार्यक्षेत्र टेम्पलेट",
-  "newDomain.createBtn": "कार्यक्षेत्र बनाएँ",
+  "newDomain.createBtn": "नया डोमेन",
   "newDomain.cancel": "रद्द करें",
   
   // Domain Detail

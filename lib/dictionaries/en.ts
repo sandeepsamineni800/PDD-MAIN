@@ -34,7 +34,7 @@ export const en = {
   "dashboard.loading": "Loading domains...",
   "dashboard.noWorkspaces": "No Workspaces Yet",
   "dashboard.noWorkspacesDesc": "Create your first workspace or add tasks to an existing one to see it here.",
-  "dashboard.createWorkspace": "Create Workspace",
+  "dashboard.createWorkspace": "New Domain",
   "dashboard.template": "Template",
   "dashboard.created": "Created",
   "dashboard.noDesc": "No description provided.",
@@ -44,7 +44,7 @@ export const en = {
   "newDomain.nameLabel": "Workspace Name",
   "newDomain.descLabel": "Description",
   "newDomain.templateLabel": "Workspace Template",
-  "newDomain.createBtn": "Create Workspace",
+  "newDomain.createBtn": "New Domain",
   "newDomain.cancel": "Cancel",
   
   // Domain Detail

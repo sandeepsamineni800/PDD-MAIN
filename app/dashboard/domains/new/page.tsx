@@ -161,7 +161,7 @@ export default function NewDomain() {
                   <Loader2 className="animate-spin" size={18} />
                   Creating...
                 </>
-              ) : 'Create Workspace'}
+              ) : 'New Domain'}
             </button>
           </div>
         </div>
