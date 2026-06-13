@@ -29,6 +29,35 @@ export default function Dashboard() {
   const [editName, setEditName] = useState('');
   const [editDesc, setEditDesc] = useState('');
 
+  // Quick Create State
+  const [quickCreate, setQuickCreate] = useState(false);
+  const [quickName, setQuickName] = useState('');
+  const [quickDesc, setQuickDesc] = useState('');
+  const [isCreating, setIsCreating] = useState(false);
+
+  const handleQuickCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!quickName.trim()) return;
+    setIsCreating(true);
+    try {
+      const res = await fetch('/api/domains', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: quickName, description: quickDesc, template: 'Custom' })
+      });
+      if (res.ok) {
+        setQuickCreate(false);
+        setQuickName('');
+        setQuickDesc('');
+        fetchDomains();
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsCreating(false);
+    }
+  };
+
   const fetchDomains = async () => {
     try {
       const [res, meRes] = await Promise.all([
@@ -108,7 +137,7 @@ export default function Dashboard() {
         </Link>
       </div>
 
-      {domains.filter(d => d._count.tasks > 0 || d.members.length > 1).length === 0 ? (
+      {domains.length === 0 ? (
         <div className={styles.emptyState}>
           <Layers size={48} className={styles.emptyIcon} />
           <h3 className={styles.emptyTitle}>{t('dashboard.noWorkspaces')}</h3>
@@ -123,13 +152,13 @@ export default function Dashboard() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
           
           {/* Admin Workspaces */}
-          {domains.filter(d => (d._count.tasks > 0 || d.members.length > 1) && d.members.find(m => m.user?.id === currentUser?.id || m.userId === currentUser?.id)?.role === 'ADMIN').length > 0 && (
+          {domains.filter(d => d.members.find(m => m.user?.id === currentUser?.id || m.userId === currentUser?.id)?.role === 'ADMIN').length > 0 && (
             <div>
               <h3 style={{ marginBottom: '1.5rem', fontSize: '1.25rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>
                 {t('dashboard.myWorkspaces')}
               </h3>
               <div className={styles.domainsGrid}>
-                {domains.filter(d => (d._count.tasks > 0 || d.members.length > 1) && d.members.find(m => m.user?.id === currentUser?.id || m.userId === currentUser?.id)?.role === 'ADMIN').map((domain) => (
+                {domains.filter(d => d.members.find(m => m.user?.id === currentUser?.id || m.userId === currentUser?.id)?.role === 'ADMIN').map((domain) => (
                   <div 
                     key={domain.id} 
                     className={`${styles.domainCard} glass-panel`}
@@ -200,18 +229,67 @@ export default function Dashboard() {
                     )}
                   </div>
                 ))}
+                
+                {/* Quick Create Card */}
+                <div 
+                  className={`${styles.domainCard} glass-panel`}
+                  style={{ 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    justifyContent: quickCreate ? 'flex-start' : 'center', 
+                    alignItems: quickCreate ? 'stretch' : 'center',
+                    cursor: quickCreate ? 'default' : 'pointer',
+                    border: '1px dashed var(--border-color)',
+                    background: 'rgba(255, 255, 255, 0.02)'
+                  }}
+                  onClick={() => !quickCreate && setQuickCreate(true)}
+                >
+                  {quickCreate ? (
+                    <form className={styles.editForm} onSubmit={handleQuickCreate} onClick={(e) => e.stopPropagation()}>
+                      <input 
+                        className="input-field" 
+                        value={quickName} 
+                        onChange={e => setQuickName(e.target.value)} 
+                        placeholder="New Domain Name"
+                        required
+                        autoFocus
+                      />
+                      <textarea 
+                        className="input-field" 
+                        value={quickDesc} 
+                        onChange={e => setQuickDesc(e.target.value)} 
+                        placeholder="Description (Optional)"
+                        rows={2}
+                        style={{ marginTop: '0.5rem' }}
+                      />
+                      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                        <button type="submit" className="btn-primary" disabled={isCreating}>
+                          {isCreating ? 'Creating...' : 'Create'}
+                        </button>
+                        <button type="button" className="btn-secondary" onClick={(e) => { e.stopPropagation(); setQuickCreate(false); setQuickName(''); setQuickDesc(''); }}>
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: 'var(--text-muted)' }}>
+                      <PlusCircle size={32} />
+                      <span style={{ marginTop: '1rem', fontWeight: 600 }}>Quick Create Domain</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}
 
           {/* Member Workspaces */}
-          {domains.filter(d => (d._count.tasks > 0 || d.members.length > 1) && d.members.find(m => m.user?.id === currentUser?.id || m.userId === currentUser?.id)?.role !== 'ADMIN').length > 0 && (
+          {domains.filter(d => d.members.find(m => m.user?.id === currentUser?.id || m.userId === currentUser?.id)?.role !== 'ADMIN').length > 0 && (
             <div>
               <h3 style={{ marginBottom: '1.5rem', fontSize: '1.25rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>
                 {t('dashboard.sharedWithMe')}
               </h3>
               <div className={styles.domainsGrid}>
-                {domains.filter(d => (d._count.tasks > 0 || d.members.length > 1) && d.members.find(m => m.user?.id === currentUser?.id || m.userId === currentUser?.id)?.role !== 'ADMIN').map((domain) => (
+                {domains.filter(d => d.members.find(m => m.user?.id === currentUser?.id || m.userId === currentUser?.id)?.role !== 'ADMIN').map((domain) => (
                   <div 
                     key={domain.id} 
                     className={`${styles.domainCard} glass-panel`}
