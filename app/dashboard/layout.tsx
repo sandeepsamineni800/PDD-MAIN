@@ -34,10 +34,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         body: JSON.stringify({ name: quickName, description: quickDesc, template: 'Custom' })
       });
       if (res.ok) {
+        const data = await res.json();
         setQuickCreateSidebar(false);
         setQuickName('');
         setQuickDesc('');
-        router.push('/dashboard');
+        router.push(`/dashboard/domains/${data.domain.id}`);
       }
     } catch (err) {
       console.error(err);

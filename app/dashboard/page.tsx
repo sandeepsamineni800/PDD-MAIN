@@ -46,10 +46,11 @@ export default function Dashboard() {
         body: JSON.stringify({ name: quickName, description: quickDesc, template: 'Custom' })
       });
       if (res.ok) {
+        const data = await res.json();
         setQuickCreate(false);
         setQuickName('');
         setQuickDesc('');
-        fetchDomains();
+        router.push(`/dashboard/domains/${data.domain.id}`);
       }
     } catch (err) {
       console.error(err);
