@@ -200,27 +200,7 @@ export default function Dashboard() {
                   </div>
                 ))}
                 
-                {/* Quick Create Card */}
-                <Link href="/dashboard/domains/create" style={{ textDecoration: 'none' }}>
-                  <div 
-                    className={`${styles.domainCard} glass-panel`}
-                    style={{ 
-                      display: 'flex', 
-                      flexDirection: 'column', 
-                      justifyContent: 'center', 
-                      alignItems: 'center',
-                      cursor: 'pointer',
-                      border: '1px dashed var(--border-color)',
-                      background: 'rgba(255, 255, 255, 0.02)',
-                      height: '100%'
-                    }}
-                  >
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: 'var(--text-muted)' }}>
-                      <PlusCircle size={32} />
-                      <span style={{ marginTop: '1rem', fontWeight: 600 }}>Quick Create Domain</span>
-                    </div>
-                  </div>
-                </Link>
+                {/* End of Quick Create Card removal */}
               </div>
             </div>
           )}
