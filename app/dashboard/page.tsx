@@ -24,40 +24,9 @@ export default function Dashboard() {
   const router = useRouter();
   const { t } = useLanguage();
 
-  // Edit Domain State
   const [editingDomainId, setEditingDomainId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
   const [editDesc, setEditDesc] = useState('');
-
-  // Quick Create State
-  const [quickCreate, setQuickCreate] = useState(false);
-  const [quickName, setQuickName] = useState('');
-  const [quickDesc, setQuickDesc] = useState('');
-  const [isCreating, setIsCreating] = useState(false);
-
-  const handleQuickCreate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!quickName.trim()) return;
-    setIsCreating(true);
-    try {
-      const res = await fetch('/api/domains', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: quickName, description: quickDesc, template: 'Custom' })
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setQuickCreate(false);
-        setQuickName('');
-        setQuickDesc('');
-        router.push(`/dashboard/domains/${data.domain.id}`);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsCreating(false);
-    }
-  };
 
   const fetchDomains = async () => {
     try {
@@ -232,53 +201,26 @@ export default function Dashboard() {
                 ))}
                 
                 {/* Quick Create Card */}
-                <div 
-                  className={`${styles.domainCard} glass-panel`}
-                  style={{ 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    justifyContent: quickCreate ? 'flex-start' : 'center', 
-                    alignItems: quickCreate ? 'stretch' : 'center',
-                    cursor: quickCreate ? 'default' : 'pointer',
-                    border: '1px dashed var(--border-color)',
-                    background: 'rgba(255, 255, 255, 0.02)'
-                  }}
-                  onClick={() => !quickCreate && setQuickCreate(true)}
-                >
-                  {quickCreate ? (
-                    <form className={styles.editForm} onSubmit={handleQuickCreate} onClick={(e) => e.stopPropagation()}>
-                      <input 
-                        className="input-field" 
-                        value={quickName} 
-                        onChange={e => setQuickName(e.target.value)} 
-                        placeholder="New Domain Name"
-                        required
-                        autoFocus
-                      />
-                      <textarea 
-                        className="input-field" 
-                        value={quickDesc} 
-                        onChange={e => setQuickDesc(e.target.value)} 
-                        placeholder="Description (Optional)"
-                        rows={2}
-                        style={{ marginTop: '0.5rem' }}
-                      />
-                      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-                        <button type="submit" className="btn-primary" disabled={isCreating}>
-                          {isCreating ? 'Creating...' : 'Create'}
-                        </button>
-                        <button type="button" className="btn-secondary" onClick={(e) => { e.stopPropagation(); setQuickCreate(false); setQuickName(''); setQuickDesc(''); }}>
-                          Cancel
-                        </button>
-                      </div>
-                    </form>
-                  ) : (
+                <Link href="/dashboard/domains/create" style={{ textDecoration: 'none' }}>
+                  <div 
+                    className={`${styles.domainCard} glass-panel`}
+                    style={{ 
+                      display: 'flex', 
+                      flexDirection: 'column', 
+                      justifyContent: 'center', 
+                      alignItems: 'center',
+                      cursor: 'pointer',
+                      border: '1px dashed var(--border-color)',
+                      background: 'rgba(255, 255, 255, 0.02)',
+                      height: '100%'
+                    }}
+                  >
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: 'var(--text-muted)' }}>
                       <PlusCircle size={32} />
                       <span style={{ marginTop: '1rem', fontWeight: 600 }}>Quick Create Domain</span>
                     </div>
-                  )}
-                </div>
+                  </div>
+                </Link>
               </div>
             </div>
           )}

@@ -13,39 +13,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState('dark');
   const { fontSize, setFontSize } = useFontSize();
-  const [showSettings, setShowSettings] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [invitationsCount, setInvitationsCount] = useState(0);
-  
-  // Sidebar Quick Create State
-  const [quickCreateSidebar, setQuickCreateSidebar] = useState(false);
-  const [quickName, setQuickName] = useState('');
-  const [quickDesc, setQuickDesc] = useState('');
-  const [isCreating, setIsCreating] = useState(false);
-
-  const handleSidebarQuickCreate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!quickName.trim()) return;
-    setIsCreating(true);
-    try {
-      const res = await fetch('/api/domains', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: quickName, description: quickDesc, template: 'Custom' })
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setQuickCreateSidebar(false);
-        setQuickName('');
-        setQuickDesc('');
-        router.push(`/dashboard/domains/${data.domain.id}`);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsCreating(false);
-    }
-  };
 
   const { language, setLanguage, t } = useLanguage();
   const mainContentRef = useRef<HTMLDivElement>(null);
@@ -155,39 +125,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <span>{t('sidebar.newDomain')}</span>
           </Link>
           
-          {/* Quick Create Domain in Sidebar */}
-          <button 
-            onClick={() => setQuickCreateSidebar(!quickCreateSidebar)}
-            className={`${styles.navItem} ${quickCreateSidebar ? styles.active : ''}`}
+          <Link 
+            href="/dashboard/domains/create" 
+            className={`${styles.navItem} ${pathname === '/dashboard/domains/create' ? styles.active : ''}`}
           >
             <PlusCircle size={20} />
             <span>Create Domain</span>
-          </button>
-          
-          {quickCreateSidebar && (
-            <form onSubmit={handleSidebarQuickCreate} style={{ padding: '0 1rem 1rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <input 
-                className="input-field" 
-                style={{ padding: '0.4rem', fontSize: '0.8rem' }}
-                value={quickName} 
-                onChange={e => setQuickName(e.target.value)} 
-                placeholder="Domain Name"
-                required
-                autoFocus
-              />
-              <textarea 
-                className="input-field" 
-                style={{ padding: '0.4rem', fontSize: '0.8rem', minHeight: '50px' }}
-                value={quickDesc} 
-                onChange={e => setQuickDesc(e.target.value)} 
-                placeholder="Description"
-                rows={2}
-              />
-              <button type="submit" className="btn-primary" style={{ padding: '0.4rem', fontSize: '0.8rem' }} disabled={isCreating}>
-                {isCreating ? 'Creating...' : 'Create'}
-              </button>
-            </form>
-          )}
+          </Link>
 
           <Link 
             href="/dashboard/invitations" 
