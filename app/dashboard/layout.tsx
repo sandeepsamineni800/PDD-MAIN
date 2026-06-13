@@ -158,7 +158,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <button 
             onClick={() => setQuickCreateSidebar(!quickCreateSidebar)}
             className={`${styles.navItem} ${quickCreateSidebar ? styles.active : ''}`}
-            style={{ background: 'transparent', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', outline: 'none' }}
           >
             <PlusCircle size={20} />
             <span>Create Domain</span>
@@ -233,7 +232,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <button 
               onClick={() => setShowSettings(!showSettings)} 
               className={styles.navItem} 
-              style={{ width: '100%', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left' }}
             >
               <Settings size={20} />
               <span>{t('sidebar.settings')}</span>
@@ -245,14 +243,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <button 
                   onClick={() => toggleTheme('light')} 
                   className={`${styles.navItem} ${theme === 'light' ? styles.active : ''}`}
-                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                  style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                 >
                   <Sun size={16} /> {t('sidebar.lightMode')}
                 </button>
                 <button 
                   onClick={() => toggleTheme('dark')} 
                   className={`${styles.navItem} ${theme === 'dark' ? styles.active : ''}`}
-                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                  style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                 >
                   <Moon size={16} /> {t('sidebar.darkMode')}
                 </button>
@@ -261,21 +259,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <button 
                   onClick={() => setFontSize('small')} 
                   className={`${styles.navItem} ${fontSize === 'small' ? styles.active : ''}`}
-                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                  style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                 >
                   <Type size={14} /> {t('sidebar.fontSmall')}
                 </button>
                 <button 
                   onClick={() => setFontSize('medium')} 
                   className={`${styles.navItem} ${fontSize === 'medium' ? styles.active : ''}`}
-                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                  style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                 >
                   <Type size={16} /> {t('sidebar.fontMedium')}
                 </button>
                 <button 
                   onClick={() => setFontSize('large')} 
                   className={`${styles.navItem} ${fontSize === 'large' ? styles.active : ''}`}
-                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                  style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                 >
                   <Type size={18} /> {t('sidebar.fontLarge')}
                 </button>
@@ -284,21 +282,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <button 
                   onClick={() => changeLanguage('English')} 
                   className={`${styles.navItem} ${language === 'en' ? styles.active : ''}`}
-                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                  style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                 >
                   English
                 </button>
                 <button 
                   onClick={() => changeLanguage('Telugu')} 
                   className={`${styles.navItem} ${language === 'te' ? styles.active : ''}`}
-                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                  style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                 >
                   Telugu (తెలుగు)
                 </button>
                 <button 
                   onClick={() => changeLanguage('Hindi')} 
                   className={`${styles.navItem} ${language === 'hi' ? styles.active : ''}`}
-                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                  style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                 >
                   Hindi (हिंदी)
                 </button>
