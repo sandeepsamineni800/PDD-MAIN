@@ -76,6 +76,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     localStorage.setItem('theme', newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
     setIsMobileMenuOpen(false);
+    setShowSettings(false);
   };
 
   const changeLanguage = (newLang: string) => {
@@ -84,6 +85,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     if (newLang === 'Hindi') langCode = 'hi';
     setLanguage(langCode);
     setIsMobileMenuOpen(false);
+    setShowSettings(false);
   };
 
   const handleLogout = async () => {
@@ -211,21 +213,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', padding: '0.5rem 1rem', marginTop: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>{t('sidebar.fontSize')}</div>
                 <button 
-                  onClick={() => { setFontSize('small'); setIsMobileMenuOpen(false); }} 
+                  onClick={() => { setFontSize('small'); setIsMobileMenuOpen(false); setShowSettings(false); }} 
                   className={`${styles.navItem} ${fontSize === 'small' ? styles.active : ''}`}
                   style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                 >
                   <Type size={14} /> {t('sidebar.fontSmall')}
                 </button>
                 <button 
-                  onClick={() => { setFontSize('medium'); setIsMobileMenuOpen(false); }} 
+                  onClick={() => { setFontSize('medium'); setIsMobileMenuOpen(false); setShowSettings(false); }} 
                   className={`${styles.navItem} ${fontSize === 'medium' ? styles.active : ''}`}
                   style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                 >
                   <Type size={16} /> {t('sidebar.fontMedium')}
                 </button>
                 <button 
-                  onClick={() => { setFontSize('large'); setIsMobileMenuOpen(false); }} 
+                  onClick={() => { setFontSize('large'); setIsMobileMenuOpen(false); setShowSettings(false); }} 
                   className={`${styles.navItem} ${fontSize === 'large' ? styles.active : ''}`}
                   style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                 >
