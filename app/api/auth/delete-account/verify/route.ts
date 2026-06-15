@@ -40,7 +40,7 @@ export async function POST(request: Request) {
 
     // OTP is valid. Gather emails for notifications before deleting data
     const memberRoles = await prisma.domainMember.findMany({
-      where: { userId: userId, role: 'MEMBER' },
+      where: { userId: userId, role: { in: ['MEMBER', 'SUB_ADMIN'] } },
       include: { domain: true }
     });
 
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
       include: { domain: true }
     });
 
-    // 1. Get Admins/Sub-Admins for domains where user is a MEMBER to notify
+    // 1. Get Admins/Sub-Admins for domains where user is a MEMBER or SUB_ADMIN to notify
     const memberDomainIds = memberRoles.map(m => m.domainId);
     let adminsToNotify: { userId: string, email: string, domainName: string }[] = [];
     if (memberDomainIds.length > 0) {
@@ -76,7 +76,12 @@ export async function POST(request: Request) {
       // 1. Delete the OTP record so it can't be reused
       await tx.oTP.delete({ where: { id: otpRecord.id } });
 
-      // 2. Delete all domains they are an Admin of
+      // 2. Delete all tasks assigned to the deleting user in any domain
+      await tx.task.deleteMany({
+        where: { assigneeId: userId }
+      });
+
+      // 3. Delete all domains they are an Admin of
       if (adminDomainIds.length > 0) {
         await tx.domain.deleteMany({
           where: {
@@ -85,7 +90,7 @@ export async function POST(request: Request) {
         });
       }
 
-      // 3. Delete the user
+      // 4. Delete the user
       await tx.user.delete({
         where: { id: userId }
       });
