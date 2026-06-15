@@ -1,6 +1,4 @@
 {
-  "OTP": [],
-  "Task": [],
   "User": [
     {
       "id": "5e1f5c0e-1c4f-456b-8301-0c51a32aa0b4",
@@ -17,6 +15,21 @@
       "password": "$2b$10$KLEje6ymei6es3uzM8hOKe4vybAUFj5anqfeB4AHxcOnaN/H.GRjK",
       "createdAt": 1781509710189,
       "updatedAt": 1781509829727
+    }
+  ],
+  "Task": [
+    {
+      "id": "2a731ee3-8cda-4d86-a637-15678b053e18",
+      "title": "module",
+      "description": "",
+      "status": "PENDING",
+      "priority": "MEDIUM",
+      "dueDate": 1782777600000,
+      "domainId": "16ea2528-1f5b-4de7-b85a-6d3dca5d81e0",
+      "assigneeId": "5e1f5c0e-1c4f-456b-8301-0c51a32aa0b4",
+      "creatorId": "c37830b7-b53e-437a-8584-55502df33f62",
+      "createdAt": 1781510680168,
+      "updatedAt": 1781510680168
     }
   ],
   "Domain": [
@@ -45,6 +58,7 @@
       "updatedAt": 1781510504046
     }
   ],
+  "OTP": [],
   "DomainMember": [
     {
       "id": "84fd7ea3-ba81-4486-8f0a-1b9af14857b2",
@@ -52,8 +66,8 @@
       "domainId": "cb42026b-5512-479b-ab8d-8ab63a83319f",
       "role": "ADMIN",
       "status": "ACCEPTED",
-      "pendingRole": null,
-      "createdAt": 1781510105628
+      "createdAt": 1781510105628,
+      "pendingRole": null
     },
     {
       "id": "54478c7b-3e20-486b-9c86-3e9a2e389195",
@@ -61,8 +75,8 @@
       "domainId": "16ea2528-1f5b-4de7-b85a-6d3dca5d81e0",
       "role": "ADMIN",
       "status": "ACCEPTED",
-      "pendingRole": null,
-      "createdAt": 1781510342802
+      "createdAt": 1781510342802,
+      "pendingRole": null
     },
     {
       "id": "9227b4c3-1856-4669-877f-de744e594928",
@@ -70,8 +84,8 @@
       "domainId": "16ea2528-1f5b-4de7-b85a-6d3dca5d81e0",
       "role": "MEMBER",
       "status": "ACCEPTED",
-      "pendingRole": null,
-      "createdAt": 1781510428831
+      "createdAt": 1781510428831,
+      "pendingRole": null
     },
     {
       "id": "d67c0f8d-2eda-4d97-914f-dcd05da248c0",
@@ -79,8 +93,8 @@
       "domainId": "8cfcdf53-c13f-486d-a5a3-f18552ef4c3c",
       "role": "ADMIN",
       "status": "ACCEPTED",
-      "pendingRole": null,
-      "createdAt": 1781510504046
+      "createdAt": 1781510504046,
+      "pendingRole": null
     },
     {
       "id": "8945c7aa-ce54-41fb-9b4d-5fba370a46d5",
@@ -88,8 +102,8 @@
       "domainId": "8cfcdf53-c13f-486d-a5a3-f18552ef4c3c",
       "role": "MEMBER",
       "status": "ACCEPTED",
-      "pendingRole": null,
-      "createdAt": 1781510521982
+      "createdAt": 1781510521982,
+      "pendingRole": null
     }
   ]
 }

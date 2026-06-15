@@ -14,8 +14,13 @@ export async function POST(request: Request) {
     const cleanEmail = email.trim().toLowerCase();
 
     // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email: cleanEmail }
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        email: {
+          equals: cleanEmail,
+          mode: 'insensitive'
+        }
+      }
     });
 
     if (existingUser) {

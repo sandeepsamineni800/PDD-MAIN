@@ -14,7 +14,14 @@ export async function POST(request: Request) {
     const cleanEmail = email.trim().toLowerCase();
     console.log(`[LOGIN ATTEMPT] Raw: "${email}" -> Cleaned: "${cleanEmail}"`);
 
-    const user = await prisma.user.findUnique({ where: { email: cleanEmail } });
+    const user = await prisma.user.findFirst({
+      where: {
+        email: {
+          equals: cleanEmail,
+          mode: 'insensitive'
+        }
+      }
+    });
     if (!user) {
       console.log(`[LOGIN FAILED] User not found in DB for email: "${cleanEmail}"`);
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });

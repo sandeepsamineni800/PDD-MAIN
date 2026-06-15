@@ -51,9 +51,16 @@ export async function POST(request: Request, { params }: { params: Promise<{ dom
       return NextResponse.json({ error: 'Only Admins and Sub-Admins can add members' }, { status: 403 });
     }
 
+    const cleanEmail = email.trim().toLowerCase();
+
     // Find the user to add by email
-    const userToAdd = await prisma.user.findUnique({
-      where: { email }
+    const userToAdd = await prisma.user.findFirst({
+      where: {
+        email: {
+          equals: cleanEmail,
+          mode: 'insensitive'
+        }
+      }
     });
 
     if (!userToAdd) {

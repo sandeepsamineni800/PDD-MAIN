@@ -13,7 +13,14 @@ export async function POST(request: Request) {
 
     const cleanEmail = email.trim().toLowerCase();
 
-    const existingUser = await prisma.user.findUnique({ where: { email: cleanEmail } });
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        email: {
+          equals: cleanEmail,
+          mode: 'insensitive'
+        }
+      }
+    });
     if (existingUser) {  
       return NextResponse.json({ error: 'Email already exists' }, { status: 400 });
     }
