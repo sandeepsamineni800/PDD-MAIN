@@ -54,13 +54,8 @@ export async function POST(request: Request, { params }: { params: Promise<{ dom
     const cleanEmail = email.trim().toLowerCase();
 
     // Find the user to add by email
-    const userToAdd = await prisma.user.findFirst({
-      where: {
-        email: {
-          equals: cleanEmail,
-          mode: 'insensitive'
-        }
-      }
+    const userToAdd = await prisma.user.findUnique({
+      where: { email: cleanEmail }
     });
 
     if (!userToAdd) {

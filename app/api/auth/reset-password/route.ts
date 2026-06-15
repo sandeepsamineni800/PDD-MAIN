@@ -35,13 +35,8 @@ export async function POST(request: Request) {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     // Update user password
-    const userToUpdate = await prisma.user.findFirst({
-      where: {
-        email: {
-          equals: cleanEmail,
-          mode: 'insensitive'
-        }
-      }
+    const userToUpdate = await prisma.user.findUnique({
+      where: { email: cleanEmail }
     });
 
     if (!userToUpdate) {

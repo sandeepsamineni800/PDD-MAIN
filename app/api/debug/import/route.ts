@@ -159,8 +159,23 @@ export async function GET(request: Request) {
         }
       }
     }
+    const dbUsers = await prisma.user.findMany({ select: { id: true, name: true, email: true } });
+    const dbDomains = await prisma.domain.findMany({ select: { id: true, name: true } });
+    const backupSummary = {
+      users: backup.User ? backup.User.map((u: any) => u.email) : [],
+      domains: backup.Domain ? backup.Domain.map((d: any) => d.name) : []
+    };
 
-    return NextResponse.json({ success: true, message: 'Data imported successfully!', stats });
+    return NextResponse.json({
+      success: true,
+      message: 'Data imported successfully!',
+      stats,
+      backupSummary,
+      database: {
+        users: dbUsers,
+        domains: dbDomains
+      }
+    });
   } catch (error: any) {
     console.error('Import error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
