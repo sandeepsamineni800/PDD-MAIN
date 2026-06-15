@@ -1,21 +1,17 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import * as jose from 'jose';
+import { getUserFromCookies } from '@/lib/auth';
 import bcrypt from 'bcryptjs';
 import prisma from '@/lib/prisma';
 
 export async function POST(request: Request) {
   try {
-    const cookieStore = cookies();
-    const token = cookieStore.get('auth-token')?.value;
+    const authUser = await getUserFromCookies();
 
-    if (!token) {
+    if (!authUser) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback-secret-key-for-development');
-    const { payload } = await jose.jwtVerify(token, secret);
-    const userId = payload.id as string;
+    const userId = authUser.id;
 
     const { oldPassword, newPassword } = await request.json();
 

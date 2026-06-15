@@ -1,20 +1,16 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import * as jose from 'jose';
+import { getUserFromCookies } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
 export async function POST(request: Request) {
   try {
-    const cookieStore = cookies();
-    const token = cookieStore.get('auth-token')?.value;
+    const authUser = await getUserFromCookies();
 
-    if (!token) {
+    if (!authUser) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback-secret-key-for-development');
-    const { payload } = await jose.jwtVerify(token, secret);
-    const userId = payload.id as string;
+    const userId = authUser.id;
 
     const { otp } = await request.json();
 
@@ -42,45 +38,65 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid or expired verification code' }, { status: 400 });
     }
 
-    // OTP is valid. Proceed with Account Deletion in a transaction
+    // OTP is valid. Gather emails for notifications before deleting data
+    const memberRoles = await prisma.domainMember.findMany({
+      where: { userId: userId, role: 'MEMBER' },
+      include: { domain: true }
+    });
+
+    const adminRoles = await prisma.domainMember.findMany({
+      where: { userId: userId, role: 'ADMIN' },
+      include: { domain: true }
+    });
+
+    // 1. Get emails of Admins for domains where user is a MEMBER
+    const memberDomainIds = memberRoles.map(m => m.domainId);
+    let adminsToNotify: { email: string, domainName: string }[] = [];
+    if (memberDomainIds.length > 0) {
+      const admins = await prisma.domainMember.findMany({
+        where: { domainId: { in: memberDomainIds }, role: 'ADMIN' },
+        include: { user: true, domain: true }
+      });
+      adminsToNotify = admins.map(a => ({ email: a.user.email, domainName: a.domain.name }));
+    }
+
+    // 2. Get emails of Members for domains where user is an ADMIN
+    const adminDomainIds = adminRoles.map(a => a.domainId);
+    let membersToNotify: { email: string, domainName: string }[] = [];
+    if (adminDomainIds.length > 0) {
+      const members = await prisma.domainMember.findMany({
+        where: { domainId: { in: adminDomainIds }, userId: { not: userId } },
+        include: { user: true, domain: true }
+      });
+      membersToNotify = members.map(m => ({ email: m.user.email, domainName: m.domain.name }));
+    }
+
+    // Proceed with Account Deletion in a transaction
     await prisma.$transaction(async (tx) => {
       // 1. Delete the OTP record so it can't be reused
       await tx.oTP.delete({ where: { id: otpRecord.id } });
 
-      // 2. Find all domains where this user is an ADMIN
-      const adminMemberships = await tx.domainMember.findMany({
-        where: {
-          userId: userId,
-          role: 'ADMIN'
-        },
-        select: {
-          domainId: true
-        }
-      });
-
-      const domainIdsToDelete = adminMemberships.map(m => m.domainId);
-
-      // 3. Delete all domains they are an Admin of
-      // Note: Because Prisma schema has onDelete: Cascade, deleting the Domain 
-      // will automatically delete all Tasks and DomainMembers inside that domain.
-      if (domainIdsToDelete.length > 0) {
+      // 2. Delete all domains they are an Admin of
+      if (adminDomainIds.length > 0) {
         await tx.domain.deleteMany({
           where: {
-            id: { in: domainIdsToDelete }
+            id: { in: adminDomainIds }
           }
         });
       }
 
-      // 4. Delete the user
-      // Note: Because Prisma schema has onDelete: Cascade, this will automatically delete
-      // any remaining DomainMemberships (where they were just a MEMBER),
-      // and any Tasks they created. It will also SetNull on assigneeId for tasks assigned to them.
+      // 3. Delete the user
       await tx.user.delete({
         where: { id: userId }
       });
     });
 
-    // 5. Clear the auth cookie to log them out
+    // Fire off emails asynchronously in the background so it doesn't slow down the response
+    sendDeletionNotifications(user.name, adminsToNotify, membersToNotify).catch(err => {
+      console.error('Failed to send background deletion emails:', err);
+    });
+
+    // Clear the auth cookie to log them out
     const response = NextResponse.json({ success: true, message: 'Account deleted successfully' });
     response.cookies.set('auth-token', '', { maxAge: 0 });
 
@@ -89,4 +105,62 @@ export async function POST(request: Request) {
     console.error('Delete account verify error:', error);
     return NextResponse.json({ error: error?.message || 'Failed to delete account' }, { status: 500 });
   }
+}
+
+async function sendDeletionNotifications(
+  deletedUserName: string, 
+  adminsToNotify: { email: string, domainName: string }[], 
+  membersToNotify: { email: string, domainName: string }[]
+) {
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    console.warn('[DEVELOPMENT MODE] Skipping deletion notification emails.');
+    return;
+  }
+
+  const nodemailer = require('nodemailer');
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS.replace(/\s+/g, '')
+    }
+  });
+
+  const promises = [];
+
+  // Notify Admins that a Member left
+  for (const admin of adminsToNotify) {
+    promises.push(transporter.sendMail({
+      from: `"Multi-Domain Scheduler" <${process.env.EMAIL_USER}>`,
+      to: admin.email,
+      subject: `Member Left Domain: ${admin.domainName}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2 style="color: #333;">Member Account Deleted</h2>
+          <p>This is an automated notification to let you know that <strong>${deletedUserName}</strong> has permanently deleted their account.</p>
+          <p>Because of this, they have been automatically removed from your domain: <strong>${admin.domainName}</strong>.</p>
+        </div>
+      `
+    }));
+  }
+
+  // Notify Members that an Admin deleted the domain
+  for (const member of membersToNotify) {
+    promises.push(transporter.sendMail({
+      from: `"Multi-Domain Scheduler" <${process.env.EMAIL_USER}>`,
+      to: member.email,
+      subject: `Domain Deleted: ${member.domainName}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2 style="color: #ef4444;">Domain Deleted</h2>
+          <p>This is an automated notification to let you know that the admin <strong>${deletedUserName}</strong> has permanently deleted their account.</p>
+          <p>Because they were the administrator, the domain <strong>${member.domainName}</strong> and all its associated tasks have been permanently deleted.</p>
+        </div>
+      `
+    }));
+  }
+
+  await Promise.allSettled(promises);
 }
