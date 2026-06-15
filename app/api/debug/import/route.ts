@@ -28,6 +28,8 @@ export async function GET(request: Request) {
       tasks: 0,
     };
 
+    const userIdMap: Record<string, string> = {};
+
     // 1. Import Users
     if (backup.User) {
       for (const u of backup.User) {
@@ -44,7 +46,7 @@ export async function GET(request: Request) {
         });
 
         if (!existing) {
-          await prisma.user.create({
+          const newUser = await prisma.user.create({
             data: {
               id: u.id,
               name: u.name,
@@ -54,6 +56,7 @@ export async function GET(request: Request) {
               updatedAt: new Date(u.updatedAt),
             }
           });
+          userIdMap[u.id] = newUser.id;
           stats.users++;
         } else {
           // Update password in case there is a mismatch
@@ -63,6 +66,7 @@ export async function GET(request: Request) {
               password: u.password
             }
           });
+          userIdMap[u.id] = existing.id;
         }
       }
     }
@@ -93,19 +97,27 @@ export async function GET(request: Request) {
     // 3. Import Domain Members
     if (backup.DomainMember) {
       for (const m of backup.DomainMember) {
+        const actualUserId = userIdMap[m.userId] || m.userId;
+        
+        // Check if domain member exists using unique compound constraint (userId, domainId)
         const existing = await prisma.domainMember.findUnique({
-          where: { id: m.id }
+          where: {
+            userId_domainId: {
+              userId: actualUserId,
+              domainId: m.domainId
+            }
+          }
         });
 
         if (!existing) {
-          const userExists = await prisma.user.findUnique({ where: { id: m.userId } });
+          const userExists = await prisma.user.findUnique({ where: { id: actualUserId } });
           const domainExists = await prisma.domain.findUnique({ where: { id: m.domainId } });
 
           if (userExists && domainExists) {
             await prisma.domainMember.create({
               data: {
                 id: m.id,
-                userId: m.userId,
+                userId: actualUserId,
                 domainId: m.domainId,
                 role: m.role,
                 status: m.status,
@@ -122,20 +134,22 @@ export async function GET(request: Request) {
     // 4. Import Tasks
     if (backup.Task) {
       for (const t of backup.Task) {
+        const actualCreatorId = userIdMap[t.creatorId] || t.creatorId;
+        let actualAssigneeId = t.assigneeId ? (userIdMap[t.assigneeId] || t.assigneeId) : null;
+
         const existing = await prisma.task.findUnique({
           where: { id: t.id }
         });
 
         if (!existing) {
           const domainExists = await prisma.domain.findUnique({ where: { id: t.domainId } });
-          const creatorExists = await prisma.user.findUnique({ where: { id: t.creatorId } });
+          const creatorExists = await prisma.user.findUnique({ where: { id: actualCreatorId } });
 
           if (domainExists && creatorExists) {
-            let assigneeId = t.assigneeId;
-            if (assigneeId) {
-              const assigneeExists = await prisma.user.findUnique({ where: { id: assigneeId } });
+            if (actualAssigneeId) {
+              const assigneeExists = await prisma.user.findUnique({ where: { id: actualAssigneeId } });
               if (!assigneeExists) {
-                assigneeId = null;
+                actualAssigneeId = null;
               }
             }
 
@@ -148,8 +162,8 @@ export async function GET(request: Request) {
                 priority: t.priority,
                 dueDate: t.dueDate ? new Date(t.dueDate) : null,
                 domainId: t.domainId,
-                assigneeId,
-                creatorId: t.creatorId,
+                assigneeId: actualAssigneeId,
+                creatorId: actualCreatorId,
                 createdAt: new Date(t.createdAt),
                 updatedAt: new Date(t.updatedAt),
               }
