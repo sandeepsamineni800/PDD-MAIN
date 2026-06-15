@@ -49,66 +49,30 @@ export async function POST(request: Request) {
       include: { domain: true }
     });
 
-    // 1. Get emails of Admins for domains where user is a MEMBER
+    // 1. Get Admins/Sub-Admins for domains where user is a MEMBER to notify
     const memberDomainIds = memberRoles.map(m => m.domainId);
-    let adminsToNotify: { email: string, domainName: string }[] = [];
+    let adminsToNotify: { userId: string, email: string, domainName: string }[] = [];
     if (memberDomainIds.length > 0) {
       const admins = await prisma.domainMember.findMany({
-        where: { domainId: { in: memberDomainIds }, role: 'ADMIN' },
+        where: { domainId: { in: memberDomainIds }, role: { in: ['ADMIN', 'SUB_ADMIN'] }, userId: { not: userId } },
         include: { user: true, domain: true }
       });
-      adminsToNotify = admins.map(a => ({ email: a.user.email, domainName: a.domain.name }));
+      adminsToNotify = admins.map(a => ({ userId: a.userId, email: a.user.email, domainName: a.domain.name }));
     }
 
-    // 2. Get emails of Members for domains where user is an ADMIN
+    // 2. Get Members for domains where user is an ADMIN to notify
     const adminDomainIds = adminRoles.map(a => a.domainId);
-    let membersToNotify: { email: string, domainName: string }[] = [];
+    let membersToNotify: { userId: string, email: string, domainName: string }[] = [];
     if (adminDomainIds.length > 0) {
       const members = await prisma.domainMember.findMany({
         where: { domainId: { in: adminDomainIds }, userId: { not: userId } },
         include: { user: true, domain: true }
       });
-      membersToNotify = members.map(m => ({ email: m.user.email, domainName: m.domain.name }));
+      membersToNotify = members.map(m => ({ userId: m.userId, email: m.user.email, domainName: m.domain.name }));
     }
 
     // Proceed with Account Deletion in a transaction
     await prisma.$transaction(async (tx) => {
-      // Create notifications for Admins (if the deleting user is a member)
-      if (memberDomainIds.length > 0) {
-        const admins = await tx.domainMember.findMany({
-          where: { domainId: { in: memberDomainIds }, role: { in: ['ADMIN', 'SUB_ADMIN'] }, userId: { not: userId } },
-          include: { domain: true }
-        });
-        for (const a of admins) {
-          await tx.notification.create({
-            data: {
-              userId: a.userId,
-              type: 'USER_DELETED_ACCOUNT',
-              title: 'Member Account Deleted',
-              content: `The member "${user.name}" has permanently deleted their account and left the domain "${a.domain.name}".`
-            }
-          });
-        }
-      }
-
-      // Create notifications for Domain Members (if the deleting user is an Admin, so domains are deleted)
-      if (adminDomainIds.length > 0) {
-        const members = await tx.domainMember.findMany({
-          where: { domainId: { in: adminDomainIds }, userId: { not: userId } },
-          include: { domain: true }
-        });
-        for (const m of members) {
-          await tx.notification.create({
-            data: {
-              userId: m.userId,
-              type: 'ADMIN_DELETED_ACCOUNT',
-              title: 'Domain Deleted (Admin Left)',
-              content: `The admin "${user.name}" has permanently deleted their account, so the domain "${m.domain.name}" has been deleted.`
-            }
-          });
-        }
-      }
-
       // 1. Delete the OTP record so it can't be reused
       await tx.oTP.delete({ where: { id: otpRecord.id } });
 
@@ -125,7 +89,34 @@ export async function POST(request: Request) {
       await tx.user.delete({
         where: { id: userId }
       });
+    }, {
+      timeout: 15000 // 15 seconds timeout
     });
+
+    // Create notifications for Admins and Domain Members in bulk outside the transaction
+    const notificationsToCreate = [];
+    for (const a of adminsToNotify) {
+      notificationsToCreate.push({
+        userId: a.userId,
+        type: 'USER_DELETED_ACCOUNT',
+        title: 'Member Account Deleted',
+        content: `The member "${user.name}" has permanently deleted their account and left the domain "${a.domainName}".`
+      });
+    }
+    for (const m of membersToNotify) {
+      notificationsToCreate.push({
+        userId: m.userId,
+        type: 'ADMIN_DELETED_ACCOUNT',
+        title: 'Domain Deleted (Admin Left)',
+        content: `The admin "${user.name}" has permanently deleted their account, so the domain "${m.domainName}" has been deleted.`
+      });
+    }
+
+    if (notificationsToCreate.length > 0) {
+      await prisma.notification.createMany({
+        data: notificationsToCreate
+      });
+    }
 
     // Fire off emails asynchronously in the background so it doesn't slow down the response
     sendDeletionNotifications(user.name, adminsToNotify, membersToNotify).catch(err => {
