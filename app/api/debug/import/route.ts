@@ -175,6 +175,23 @@ export async function GET(request: Request) {
     }
     const dbUsers = await prisma.user.findMany({ select: { id: true, name: true, email: true } });
     const dbDomains = await prisma.domain.findMany({ select: { id: true, name: true } });
+    const dbMembers = await prisma.domainMember.findMany({
+      select: {
+        id: true,
+        userId: true,
+        domainId: true,
+        role: true
+      }
+    });
+    const dbTasks = await prisma.task.findMany({
+      select: {
+        id: true,
+        title: true,
+        domainId: true,
+        assigneeId: true,
+        creatorId: true
+      }
+    });
     const backupSummary = {
       users: backup.User ? backup.User.map((u: any) => u.email) : [],
       domains: backup.Domain ? backup.Domain.map((d: any) => d.name) : []
@@ -187,7 +204,9 @@ export async function GET(request: Request) {
       backupSummary,
       database: {
         users: dbUsers,
-        domains: dbDomains
+        domains: dbDomains,
+        members: dbMembers,
+        tasks: dbTasks
       }
     });
   } catch (error: any) {
