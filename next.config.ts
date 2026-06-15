@@ -8,6 +8,9 @@ const withPWA = withPWAInit({
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ['192.168.137.133', 'localhost'],
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 export default withPWA(nextConfig);

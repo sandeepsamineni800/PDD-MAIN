@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "backend/**",
+    "frontend/**",
+    "mobile-app/**",
+    "expo-mobile-app/**",
+    "temp_mysql/**",
   ]),
 ]);
 
