@@ -50,7 +50,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             .then(r => r.json())
             .then(data => {
               if (data.invitations) {
-                setInvitationsCount(data.invitations.length);
+                const total = data.invitations.length + (data.notifications ? data.notifications.length : 0);
+                setInvitationsCount(total);
               }
             }).catch(console.error);
             

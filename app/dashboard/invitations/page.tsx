@@ -7,6 +7,7 @@ import styles from './page.module.css';
 
 export default function InvitationsPage() {
   const [invitations, setInvitations] = useState<any[]>([]);
+  const [notifications, setNotifications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const router = useRouter();
@@ -20,7 +21,8 @@ export default function InvitationsPage() {
       const res = await fetch('/api/invitations');
       if (res.ok) {
         const data = await res.json();
-        setInvitations(data.invitations);
+        setInvitations(data.invitations || []);
+        setNotifications(data.notifications || []);
       }
     } catch (error) {
       console.error(error);
@@ -60,25 +62,67 @@ export default function InvitationsPage() {
     }
   };
 
+  const handleDismissNotification = async (notificationId: string) => {
+    try {
+      const res = await fetch(`/api/notifications/${notificationId}`, {
+        method: 'DELETE'
+      });
+      if (res.ok) {
+        setNotifications(notifications.filter(n => n.id !== notificationId));
+        // Force reload to update the sidebar badge notification count
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (loading) {
     return <div className={styles.emptyState}><Loader2 className="spin" /></div>;
   }
+
+  const hasMessages = invitations.length > 0 || notifications.length > 0;
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h2>Pending Messages</h2>
-        <p>You have received messages to join the following domains.</p>
+        <p>You have received messages, invitations, and alerts here.</p>
       </div>
 
-      {invitations.length === 0 ? (
+      {!hasMessages ? (
         <div className={`${styles.emptyState} glass-panel`}>
           <MessageSquare size={48} style={{ marginBottom: '1rem', opacity: 0.5 }} />
           <h3>No Pending Messages</h3>
           <p>You're all caught up!</p>
         </div>
       ) : (
-        <div className="invitations-list">
+        <div className="invitations-list" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          {/* Notifications / System alerts first */}
+          {notifications.map((notif) => (
+            <div key={notif.id} className={`${styles.invitationCard} glass-panel`} style={{ borderColor: 'var(--accent-primary)' }}>
+              <div className={styles.domainInfo}>
+                <h3 style={{ color: 'var(--accent-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <MessageSquare size={18} />
+                  {notif.title}
+                </h3>
+                <p style={{ marginTop: '0.5rem' }}>{notif.content}</p>
+                <p style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                  Received: {new Date(notif.createdAt).toLocaleString()}
+                </p>
+              </div>
+              <div className={styles.actions}>
+                <button 
+                  className={styles.rejectBtn}
+                  onClick={() => handleDismissNotification(notif.id)}
+                >
+                  <X size={18} /> Dismiss
+                </button>
+              </div>
+            </div>
+          ))}
+
+          {/* Invitations list */}
           {invitations.map((inv) => {
             const isRoleUpgrade = inv.status === 'ACCEPTED' && inv.pendingRole !== null;
             const adminName = inv.domain?.members?.[0]?.user?.name || 'an Admin';

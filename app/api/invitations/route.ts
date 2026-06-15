@@ -27,7 +27,12 @@ export async function GET() {
       }
     });
 
-    return NextResponse.json({ invitations });
+    const notifications = await prisma.notification.findMany({
+      where: { userId: user.id },
+      orderBy: { createdAt: 'desc' }
+    });
+
+    return NextResponse.json({ invitations, notifications });
   } catch (error) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

@@ -36,6 +36,12 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ d
     const user = await getUserFromCookies();
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
+    const dbUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { name: true }
+    });
+    const userName = dbUser?.name || 'Admin';
+
     const { domainId } = await params;
 
     // Verify user is an admin of the domain
@@ -47,11 +53,37 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ d
       return NextResponse.json({ error: 'Only admins can delete this domain' }, { status: 403 });
     }
 
+    // Get the domain details and all members (except the admin themselves) to notify
+    const domain = await prisma.domain.findUnique({
+      where: { id: domainId },
+      include: {
+        members: {
+          where: { userId: { not: user.id } }
+        }
+      }
+    });
+
+    if (!domain) {
+      return NextResponse.json({ error: 'Domain not found' }, { status: 404 });
+    }
+
     // Prisma schema uses onDelete: Cascade for DomainMember and Task,
     // so deleting the domain will automatically clean up related records.
     await prisma.domain.delete({
       where: { id: domainId }
     });
+
+    // Create notifications for all former members in the database
+    for (const member of domain.members) {
+      await prisma.notification.create({
+        data: {
+          userId: member.userId,
+          type: 'DOMAIN_DELETED',
+          title: 'Domain Deleted',
+          content: `The domain "${domain.name}" has been deleted by the admin "${userName}".`
+        }
+      });
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {

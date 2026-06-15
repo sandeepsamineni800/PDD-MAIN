@@ -73,6 +73,42 @@ export async function POST(request: Request) {
 
     // Proceed with Account Deletion in a transaction
     await prisma.$transaction(async (tx) => {
+      // Create notifications for Admins (if the deleting user is a member)
+      if (memberDomainIds.length > 0) {
+        const admins = await tx.domainMember.findMany({
+          where: { domainId: { in: memberDomainIds }, role: { in: ['ADMIN', 'SUB_ADMIN'] }, userId: { not: userId } },
+          include: { domain: true }
+        });
+        for (const a of admins) {
+          await tx.notification.create({
+            data: {
+              userId: a.userId,
+              type: 'USER_DELETED_ACCOUNT',
+              title: 'Member Account Deleted',
+              content: `The member "${user.name}" has permanently deleted their account and left the domain "${a.domain.name}".`
+            }
+          });
+        }
+      }
+
+      // Create notifications for Domain Members (if the deleting user is an Admin, so domains are deleted)
+      if (adminDomainIds.length > 0) {
+        const members = await tx.domainMember.findMany({
+          where: { domainId: { in: adminDomainIds }, userId: { not: userId } },
+          include: { domain: true }
+        });
+        for (const m of members) {
+          await tx.notification.create({
+            data: {
+              userId: m.userId,
+              type: 'ADMIN_DELETED_ACCOUNT',
+              title: 'Domain Deleted (Admin Left)',
+              content: `The admin "${user.name}" has permanently deleted their account, so the domain "${m.domain.name}" has been deleted.`
+            }
+          });
+        }
+      }
+
       // 1. Delete the OTP record so it can't be reused
       await tx.oTP.delete({ where: { id: otpRecord.id } });
 
