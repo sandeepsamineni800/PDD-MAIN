@@ -11,8 +11,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
+    const cleanEmail = email.trim().toLowerCase();
+
     const user = await prisma.user.findUnique({
-      where: { email }
+      where: { email: cleanEmail }
     });
 
     if (!user) {
@@ -26,13 +28,13 @@ export async function POST(request: Request) {
 
     // Delete any existing OTPs for this email to prevent spam
     await prisma.oTP.deleteMany({
-      where: { email }
+      where: { email: cleanEmail }
     });
 
     // Save new OTP to database
     await prisma.oTP.create({
       data: {
-        email,
+        email: cleanEmail,
         code: otp,
         expiresAt
       }

@@ -14,10 +14,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Password must be at least 6 characters' }, { status: 400 });
     }
 
+    const cleanEmail = email.trim().toLowerCase();
+
     // Find the OTP
     const validOtp = await prisma.oTP.findFirst({
       where: {
-        email,
+        email: cleanEmail,
         code: otp,
         expiresAt: {
           gt: new Date() // Must not be expired
@@ -34,7 +36,7 @@ export async function POST(request: Request) {
 
     // Update user password
     await prisma.user.update({
-      where: { email },
+      where: { email: cleanEmail },
       data: { password: hashedPassword }
     });
 

@@ -11,15 +11,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing credentials' }, { status: 400 });
     }
 
-    const user = await prisma.user.findUnique({ where: { email } });
+    const cleanEmail = email.trim().toLowerCase();
+    console.log(`[LOGIN ATTEMPT] Raw: "${email}" -> Cleaned: "${cleanEmail}"`);
+
+    const user = await prisma.user.findUnique({ where: { email: cleanEmail } });
     if (!user) {
+      console.log(`[LOGIN FAILED] User not found in DB for email: "${cleanEmail}"`);
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
+      console.log(`[LOGIN FAILED] Password mismatch for user: "${cleanEmail}"`);
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
+
+    console.log(`[LOGIN SUCCESS] User logged in: "${cleanEmail}"`);
 
     const token = signToken({ id: user.id, email: user.email });
 

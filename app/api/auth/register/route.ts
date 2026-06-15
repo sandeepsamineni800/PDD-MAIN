@@ -11,13 +11,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields including OTP' }, { status: 400 });
     }
 
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+    const cleanEmail = email.trim().toLowerCase();
+
+    const existingUser = await prisma.user.findUnique({ where: { email: cleanEmail } });
     if (existingUser) {  
       return NextResponse.json({ error: 'Email already exists' }, { status: 400 });
     }
 
     // Verify OTP
-    const otpRecord = await prisma.oTP.findUnique({ where: { email } });
+    const otpRecord = await prisma.oTP.findUnique({ where: { email: cleanEmail } });
     if (!otpRecord) {
       return NextResponse.json({ error: 'Verification code expired or not requested' }, { status: 400 });
     }
@@ -27,19 +29,19 @@ export async function POST(request: Request) {
     }
     
     if (new Date() > otpRecord.expiresAt) {
-      await prisma.oTP.delete({ where: { email } });
+      await prisma.oTP.delete({ where: { email: cleanEmail } });
       return NextResponse.json({ error: 'Verification code has expired' }, { status: 400 });
     }
 
     // OTP is valid, clean it up
-    await prisma.oTP.delete({ where: { email } });
+    await prisma.oTP.delete({ where: { email: cleanEmail } });
 
     const hashedPassword = await bcrypt.hash(password, 10);
  
     const user = await prisma.user.create({
       data: {
         name,
-        email,
+        email: cleanEmail,
         password: hashedPassword,
       },
     });
