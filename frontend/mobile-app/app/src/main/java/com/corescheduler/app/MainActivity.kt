@@ -2,6 +2,7 @@ package com.corescheduler.app
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.webkit.CookieManager
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -23,13 +24,18 @@ class MainActivity : AppCompatActivity() {
         val webSettings: WebSettings = webView.settings
         webSettings.javaScriptEnabled = true
         webSettings.domStorageEnabled = true
+
+        // Enable cookies and third party cookies inside WebView
+        val cookieManager = CookieManager.getInstance()
+        cookieManager.setAcceptCookie(true)
+        cookieManager.setAcceptThirdPartyCookies(webView, true)
         
         // Force links and redirects to open in the WebView instead of the device browser
         webView.webViewClient = WebViewClient()
         webView.webChromeClient = WebChromeClient()
 
-        // TODO: REPLACE THIS URL WITH YOUR LIVE DEPLOYED RENDER OR VERCEL URL
-        val appUrl = "https://your-scheduler-app.onrender.com"
+        // The live Render URL for your deployed web application
+        val appUrl = "https://pdd-main-oyhb.onrender.com"
         
         webView.loadUrl(appUrl)
     }
