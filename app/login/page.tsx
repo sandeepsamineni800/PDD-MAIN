@@ -154,7 +154,7 @@ export default function Login() {
               <div className="input-group">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <label className="input-label" htmlFor="password">Password</label>
-                  <button type="button" onClick={() => { setMode('forgot_password'); setError(''); setSuccess(''); }} style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', fontSize: '0.75rem', cursor: 'pointer', padding: 0 }}>Forgot password?</button>
+                  <button type="button" onClick={() => { setMode('forgot_password'); setError(''); setSuccess(''); setLoading(false); }} style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', fontSize: '0.75rem', cursor: 'pointer', padding: 0 }}>Forgot password?</button>
                 </div>
                 <div style={{ position: 'relative' }}>
                   <Lock size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
@@ -184,7 +184,7 @@ export default function Login() {
 
         {mode === 'forgot_password' && (
           <>
-            <button type="button" onClick={() => { setMode('login'); setSuccess(''); setError(''); }} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem', marginBottom: '1rem' }}>
+            <button type="button" onClick={() => { setMode('login'); setSuccess(''); setError(''); setLoading(false); }} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem', marginBottom: '1rem' }}>
               <ArrowLeft size={16} /> Back to login
             </button>
             <h1 className={styles.title}>Forgot Password</h1>
