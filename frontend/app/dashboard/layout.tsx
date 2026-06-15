@@ -72,6 +72,22 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     setTheme(savedTheme);
   }, []);
 
+  useEffect(() => {
+    const refreshInvitations = () => {
+      fetch('/api/invitations')
+        .then(r => r.json())
+        .then(data => {
+          if (data.invitations) {
+            const total = data.invitations.length + (data.notifications ? data.notifications.length : 0);
+            setInvitationsCount(total);
+          }
+        }).catch(console.error);
+    };
+
+    window.addEventListener('messages-updated', refreshInvitations);
+    return () => window.removeEventListener('messages-updated', refreshInvitations);
+  }, []);
+
   const toggleTheme = (newTheme: string) => {
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);

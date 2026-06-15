@@ -51,8 +51,8 @@ export default function InvitationsPage() {
           // Force a full refresh so the sidebar updates to show the new domain
           window.location.href = `/dashboard/domains/${domainId}`;
         } else {
-          // Force reload to update the sidebar badge notification
-          window.location.reload();
+          // Dispatch event to update the sidebar badge notification without reloading
+          window.dispatchEvent(new Event('messages-updated'));
         }
       }
     } catch (error) {
@@ -69,8 +69,8 @@ export default function InvitationsPage() {
       });
       if (res.ok) {
         setNotifications(notifications.filter(n => n.id !== notificationId));
-        // Force reload to update the sidebar badge notification count
-        window.location.reload();
+        // Dispatch event to update the sidebar badge notification count without reloading
+        window.dispatchEvent(new Event('messages-updated'));
       }
     } catch (error) {
       console.error(error);
