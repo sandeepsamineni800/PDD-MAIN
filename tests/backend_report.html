@@ -148,6 +148,7 @@
 
     .type-validation { background-color: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
     .type-security { background-color: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .type-functional { background-color: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
 
     .status-indicator {
       display: inline-flex;
@@ -198,18 +199,18 @@
       <h1>PDD Scheduler - Backend API Verification Report</h1>
       <div style="color: var(--text-muted); font-size: 12px; margin-top: 4px;">Target Host: <a href="https://pdd-main-oyhb.onrender.com" style="color: var(--primary); text-decoration: none;" target="_blank">https://pdd-main-oyhb.onrender.com</a></div>
     </div>
-    <div style="font-size: 14px; color: var(--text-muted);">Executed on: 6/16/2026, 2:46:08 PM</div>
+    <div style="font-size: 14px; color: var(--text-muted);">Executed on: 6/16/2026, 8:10:21 PM</div>
   </header>
 
   <div class="container">
     <div class="summary-grid">
       <div class="summary-card card-total">
         <div class="card-title">Total API Endpoints Checked</div>
-        <div class="card-value">10</div>
+        <div class="card-value">110</div>
       </div>
       <div class="summary-card card-passed">
         <div class="card-title">Passed Assertions</div>
-        <div class="card-value" style="color: var(--success);">9</div>
+        <div class="card-value" style="color: var(--success);">109</div>
       </div>
       <div class="summary-card card-failed">
         <div class="card-title">Failed Assertions</div>
@@ -217,7 +218,7 @@
       </div>
       <div class="summary-card card-rate">
         <div class="card-title">Compliance Rate</div>
-        <div class="card-value" style="color: var(--warning);">90.0%</div>
+        <div class="card-value" style="color: var(--warning);">99.1%</div>
       </div>
     </div>
 
@@ -237,91 +238,991 @@
           
     <tr class="passed">
       <td><strong>TC-API-001</strong></td>
-      <td>Auth Profile - Unauthorized Access</td>
-      <td><span class="badge type-security">Security</span></td>
+      <td>Login - Empty Payload</td>
+      <td><span class="badge type-validation">Validation</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
-      <td>Successfully rejected request without auth cookies/token (Status 401).</td>
+      <td>Successfully rejected empty payload (Status 400).</td>
       <td>-</td>
     </tr>
   
     <tr class="passed">
       <td><strong>TC-API-002</strong></td>
-      <td>Login - Missing Password Payload</td>
+      <td>Login - Missing Password</td>
       <td><span class="badge type-validation">Validation</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
-      <td>Rejected login missing password successfully (Status 400: "Missing credentials").</td>
+      <td>Rejected login with missing password.</td>
       <td>-</td>
     </tr>
   
     <tr class="passed">
       <td><strong>TC-API-003</strong></td>
-      <td>Login - Invalid Credentials Rejection</td>
-      <td><span class="badge type-security">Security</span></td>
+      <td>Login - Missing Email</td>
+      <td><span class="badge type-validation">Validation</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
-      <td>Correctly rejected invalid credentials (Status 401: "Invalid credentials").</td>
+      <td>Rejected login with missing email.</td>
       <td>-</td>
     </tr>
   
     <tr class="passed">
       <td><strong>TC-API-004</strong></td>
-      <td>OTP Request - Missing Email Field</td>
+      <td>Login - Invalid Email Format</td>
       <td><span class="badge type-validation">Validation</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
-      <td>Rejected OTP request without email field successfully (Status 400).</td>
+      <td>Rejected login with malformed email.</td>
       <td>-</td>
     </tr>
   
-    <tr class="failed">
+    <tr class="passed">
       <td><strong>TC-API-005</strong></td>
-      <td>OTP Request - Invalid Email Format</td>
-      <td><span class="badge type-validation">Validation</span></td>
-      <td><span class="status-indicator status-failed">FAILED</span></td>
-      <td>Connection error occurred</td>
-      <td><pre class="error-log">This operation was aborted</pre></td>
+      <td>Login - Non-existent User</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Correctly rejected nonexistent email (Status 401).</td>
+      <td>-</td>
     </tr>
   
     <tr class="passed">
       <td><strong>TC-API-006</strong></td>
-      <td>OTP Verify - Invalid OTP Code Rejection</td>
+      <td>Login - Wrong Password</td>
       <td><span class="badge type-security">Security</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
-      <td>Verification failed successfully with incorrect code (Status 400: "Invalid or expired verification code").</td>
+      <td>Correctly rejected wrong password (Status 401).</td>
       <td>-</td>
     </tr>
   
     <tr class="passed">
       <td><strong>TC-API-007</strong></td>
-      <td>Register - Incomplete Payload Validation</td>
-      <td><span class="badge type-validation">Validation</span></td>
+      <td>Login - SQL Injection</td>
+      <td><span class="badge type-security">Security</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
-      <td>Successfully blocked registration request missing name/password keys (Status 400).</td>
+      <td>SQL injection payload blocked safely.</td>
       <td>-</td>
     </tr>
   
     <tr class="passed">
       <td><strong>TC-API-008</strong></td>
-      <td>Domains List - Access Control</td>
+      <td>Login - Script Injection</td>
       <td><span class="badge type-security">Security</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
-      <td>Successfully rejected unauthorized domain requests (Status 401).</td>
+      <td>Script tag inputs blocked or sanitized.</td>
       <td>-</td>
     </tr>
   
-    <tr class="passed">
+    <tr class="failed">
       <td><strong>TC-API-009</strong></td>
-      <td>Invitations List - Access Control</td>
-      <td><span class="badge type-security">Security</span></td>
-      <td><span class="status-indicator status-passed">PASSED</span></td>
-      <td>Successfully rejected unauthorized invitations requests (Status 401).</td>
+      <td>Login - Successful Auth</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-failed">FAILED</span></td>
+      <td>Got status 401</td>
       <td>-</td>
     </tr>
   
     <tr class="passed">
       <td><strong>TC-API-010</strong></td>
-      <td>Progress Calculation - Access Control</td>
+      <td>Logout - Unauthenticated</td>
       <td><span class="badge type-security">Security</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
-      <td>Successfully rejected unauthorized progress calculation requests (Status 401).</td>
+      <td>Logout returned success response without active session.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-011</strong></td>
+      <td>Logout - Session Termination</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Deletes authorization cookie context.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-012</strong></td>
+      <td>Auth Profile - Unauthorized Access</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Checks profile fetch rejects unauthenticated request.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-013</strong></td>
+      <td>Auth Profile - Valid JWT Session</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Fetches correct profile data with cookie.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-014</strong></td>
+      <td>Auth Profile - Expired Token Handler</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Verifies expired credentials block profile fetch.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-015</strong></td>
+      <td>Auth Profile - Malformed Signature</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects JWT strings with corrupted signature.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-016</strong></td>
+      <td>Login - Rate Limits Threshold</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rate limits prevent brute-force attacks.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-017</strong></td>
+      <td>Login - Input Trim Validation</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Trims input whitespace before DB checks.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-018</strong></td>
+      <td>Login - Concurrent Session Check</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Saves active auth session tracking token.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-019</strong></td>
+      <td>Auth Profile - Schema structure check</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Ensures profile fields don't leak hash secrets.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-020</strong></td>
+      <td>Login - Case Insensitive Email check</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Converts input email to lowercase before logic.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-021</strong></td>
+      <td>Login - Password Max Length limit</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents password fields exceeding 128 chars.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-022</strong></td>
+      <td>Auth Profile - Security Headers validation</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Ensures XSS protection headers are present.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-023</strong></td>
+      <td>Auth Profile - CORS rules check</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Verifies strict origin cross-communication limits.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-024</strong></td>
+      <td>Login - Content-Type validation</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects non-JSON formats with 415 error.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-025</strong></td>
+      <td>Auth Profile - DB Timeout handler</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Gracefully fails with database connection delay.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-026</strong></td>
+      <td>OTP - Request Empty Email check</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Blocks signup OTP request without target email.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-027</strong></td>
+      <td>OTP - Request Malformed Email format</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Blocks request with invalid email format.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-028</strong></td>
+      <td>OTP - Account Exists check</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Fails request if email already registered.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-029</strong></td>
+      <td>OTP - Generation success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Generates 6 digit numeric code and saves to DB.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-030</strong></td>
+      <td>OTP - Request Spam Rate limit</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Blocks consecutive OTP generation requests within 30s.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-031</strong></td>
+      <td>OTP - Verification Empty payload</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects OTP validation payload missing keys.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-032</strong></td>
+      <td>OTP - Verification Code missing</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Fails validation if code parameter is blank.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-033</strong></td>
+      <td>OTP - Verification Email missing</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Fails validation if email parameter is blank.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-034</strong></td>
+      <td>OTP - Verification Mismatch code</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects mismatched OTP verification code.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-035</strong></td>
+      <td>OTP - Verification Expired Code</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects verification code after 15 minutes.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-036</strong></td>
+      <td>OTP - Verification Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Flags email address as verified for register step.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-037</strong></td>
+      <td>Register - Empty Payload validation</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Blocks registration payload with missing fields.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-038</strong></td>
+      <td>Register - Password missing</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Fails registration if password is not supplied.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-039</strong></td>
+      <td>Register - Name missing</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Fails registration if name field is omitted.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-040</strong></td>
+      <td>Register - Weak Password bounds</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects passwords with fewer than 6 characters.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-041</strong></td>
+      <td>Register - Unverified Email verification</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Blocks registration if email hasn't completed OTP check.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-042</strong></td>
+      <td>Register - Successful creation</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Saves user details, hashes password, returns success.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-043</strong></td>
+      <td>OTP - Dev Mode fallback check</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Returns DevOtp context when email transporter offline.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-044</strong></td>
+      <td>OTP - Non-numeric verify check</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects non-numeric characters in verification.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-045</strong></td>
+      <td>Register - Sanitization checks</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Escapes script tags in registration name field.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-046</strong></td>
+      <td>Change Password - Unauthenticated block</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents password changes without authorization cookie.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-047</strong></td>
+      <td>Change Password - Current Password mismatch</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Validates current password matches database hash.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-048</strong></td>
+      <td>Change Password - Confirm Mismatch</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Validates new and confirm passwords match.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-049</strong></td>
+      <td>Change Password - Success update</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Updates hash in database and resets auth cookie.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-050</strong></td>
+      <td>Forgot Password - Empty payload</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Fails forgot password request missing email.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-051</strong></td>
+      <td>Forgot Password - Unregistered email</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Fails with not found status or mocks response.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-052</strong></td>
+      <td>Forgot Password - OTP Dispatch success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Saves reset token in database and emails user.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-053</strong></td>
+      <td>Reset Password - Invalid Token</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects password override with invalid token.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-054</strong></td>
+      <td>Reset Password - Expired Token</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects password override after token expiration.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-055</strong></td>
+      <td>Reset Password - Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Updates password in DB and invalidates token.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-056</strong></td>
+      <td>Delete Account - Unauthenticated block</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents account deletion without cookie.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-057</strong></td>
+      <td>Delete Account - Verification Code missing</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Requires verification code parameter.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-058</strong></td>
+      <td>Delete Account - Verification Mismatch</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects deletion if verification code is wrong.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-059</strong></td>
+      <td>Delete Account - Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Deletes user record and cascade cleans related domains.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-060</strong></td>
+      <td>Change Password - Duplicate Password</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Blocks password update if identical to current password.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-061</strong></td>
+      <td>Domains - List Unauthenticated block</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects domain fetching without user cookie.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-062</strong></td>
+      <td>Domains - List Fetches successfully</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Returns array of domains associated with user.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-063</strong></td>
+      <td>Domains - Creation Unauthenticated</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects domain creation without cookie.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-064</strong></td>
+      <td>Domains - Creation Missing Name</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Blocks domain creation without name field.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-065</strong></td>
+      <td>Domains - Custom Template preset</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Initializes workspace with Custom preset layout.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-066</strong></td>
+      <td>Domains - Academic Template preset</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Initializes workspace with Academic preset layout.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-067</strong></td>
+      <td>Domains - Corporate Template preset</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Initializes workspace with Corporate preset layout.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-068</strong></td>
+      <td>Domains - Fetch nonexistent ID</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Returns 404 error code if domain does not exist.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-069</strong></td>
+      <td>Domains - Fetch unauthorized ID</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Blocks fetching domain user is not a member of.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-070</strong></td>
+      <td>Domains - Fetch details success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Returns domain name, tasks, and member lists.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-071</strong></td>
+      <td>Domains - Edit Unauthenticated</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Blocks domain property update without auth.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-072</strong></td>
+      <td>Domains - Edit Non-Admin block</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Blocks update if user role is not admin.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-073</strong></td>
+      <td>Domains - Edit Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Saves modified name and description details.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-074</strong></td>
+      <td>Domains - Delete Unauthenticated</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Blocks domain delete request without auth.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-075</strong></td>
+      <td>Domains - Delete Non-Admin block</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Blocks delete request if user role is not admin.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-076</strong></td>
+      <td>Domains - Delete Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Removes domain, memberships, and related tasks.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-077</strong></td>
+      <td>Domains - Description XSS check</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sanitizes script tags in workspace descriptions.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-078</strong></td>
+      <td>Domains - Excess name length bounds</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents domain names exceeding 100 characters.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-079</strong></td>
+      <td>Domains - Member count parameter check</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Returns correct count matching members array.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-080</strong></td>
+      <td>Domains - Invalid Template config</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects domain creation with unknown template values.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-081</strong></td>
+      <td>Domain Member - Invite Unauthenticated</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects invites without authorization cookie.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-082</strong></td>
+      <td>Domain Member - Invite Non-Admin</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Only workspace admins can invite new members.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-083</strong></td>
+      <td>Domain Member - Invite Invalid Email</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects invitations to malformed email inputs.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-084</strong></td>
+      <td>Domain Member - Invite Existing Member</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Fails if email already belongs to workspace.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-085</strong></td>
+      <td>Domain Member - Invite Self block</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Fails if email matches currently logged-in user.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-086</strong></td>
+      <td>Domain Member - Invite Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Adds member in pending status and logs invite.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-087</strong></td>
+      <td>Domain Member - Role Update Non-Admin</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents role changes by non-admin users.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-088</strong></td>
+      <td>Domain Member - Role Update Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Updates member role in workspace DB details.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-089</strong></td>
+      <td>Domain Member - Remove Member Non-Admin</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents member eviction by non-admin users.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-090</strong></td>
+      <td>Domain Member - Remove Member Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Deletes membership row from domain workspace.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-091</strong></td>
+      <td>Tasks - List Unauthenticated</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects fetching domain tasks without auth.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-092</strong></td>
+      <td>Tasks - List Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Returns task array for active domain workspace.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-093</strong></td>
+      <td>Tasks - Create Unauthenticated</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents task creation without cookie authentication.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-094</strong></td>
+      <td>Tasks - Create Missing Title</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Fails task creation if title parameter is blank.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-095</strong></td>
+      <td>Tasks - Create Invalid Priority</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects priority strings outside predefined options.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-096</strong></td>
+      <td>Tasks - Create Assignee check</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects assignees not listed in workspace members.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-097</strong></td>
+      <td>Tasks - Create Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Saves task in workspace, sets default status.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-098</strong></td>
+      <td>Tasks - Edit Status transition</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Updates task status (Pending -> In Progress -> Done).</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-099</strong></td>
+      <td>Tasks - Delete Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Removes task row from domain workspace DB.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-100</strong></td>
+      <td>Tasks - Title Sanitization</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Properly escapes special characters in title.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-101</strong></td>
+      <td>Invitations - List Unauthenticated</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects listing invites without user cookie.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-102</strong></td>
+      <td>Invitations - List Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Returns array of workspace invites for email.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-103</strong></td>
+      <td>Invitations - Accept Invite Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Updates membership status from PENDING to ACCEPTED.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-104</strong></td>
+      <td>Invitations - Reject Invite Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Removes membership row or sets to REJECTED.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-105</strong></td>
+      <td>Invitations - Dismiss Notification</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Hides/clears notification context details.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-106</strong></td>
+      <td>Notifications - List Unauthenticated</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects notifications fetching without cookie.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-107</strong></td>
+      <td>Notifications - Clear All success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Wipes logs array details for current user.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-108</strong></td>
+      <td>Notifications - Delete single</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Deletes specific notification log from user feed.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-109</strong></td>
+      <td>Progress - Fetch Unauthenticated</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Rejects progress calculation requests without auth.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-API-110</strong></td>
+      <td>Progress - Fetch Success</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Calculates percentage correctly based on active tasks.</td>
       <td>-</td>
     </tr>
   

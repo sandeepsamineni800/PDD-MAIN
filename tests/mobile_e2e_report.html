@@ -147,9 +147,10 @@
     }
 
     .type-functional { background-color: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
-    .type-ui\/ux { background-color: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    .type-uiux { background-color: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
     .type-validation { background-color: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
     .type-security { background-color: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .type-e2eintegration { background-color: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
 
     .status-indicator {
       display: inline-flex;
@@ -200,18 +201,18 @@
       <h1>PDD Scheduler - Mobile WebView E2E Emulation Report</h1>
       <div style="color: var(--text-muted); font-size: 12px; margin-top: 4px;">Device: <span style="color: var(--primary);">Samsung Galaxy S8+ Viewport Emulation</span></div>
     </div>
-    <div style="font-size: 14px; color: var(--text-muted);">Executed on: 6/16/2026, 2:45:58 PM</div>
+    <div style="font-size: 14px; color: var(--text-muted);">Executed on: 6/16/2026, 8:16:43 PM</div>
   </header>
 
   <div class="container">
     <div class="summary-grid">
       <div class="summary-card card-total">
         <div class="card-title">Total Mobile E2E Scenarios</div>
-        <div class="card-value">15</div>
+        <div class="card-value">115</div>
       </div>
       <div class="summary-card card-passed">
         <div class="card-title">Passed Scenarios</div>
-        <div class="card-value" style="color: var(--success);">15</div>
+        <div class="card-value" style="color: var(--success);">115</div>
       </div>
       <div class="summary-card card-failed">
         <div class="card-title">Failed Scenarios</div>
@@ -249,7 +250,7 @@
     <tr class="passed">
       <td><strong>TC-MOB-002</strong></td>
       <td>Mobile Viewport Scale Bounds</td>
-      <td><span class="badge type-ui/ux">UI/UX</span></td>
+      <td><span class="badge type-uiux">UI/UX</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
       <td>Viewport scaling matches mobile constraints (Detected width: 360px).</td>
       <td>-</td>
@@ -258,7 +259,7 @@
     <tr class="passed">
       <td><strong>TC-MOB-003</strong></td>
       <td>Mobile Login Fields Stacking</td>
-      <td><span class="badge type-ui/ux">UI/UX</span></td>
+      <td><span class="badge type-uiux">UI/UX</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
       <td>Login email and password inputs stack vertically as expected on narrow screens.</td>
       <td>-</td>
@@ -267,7 +268,7 @@
     <tr class="passed">
       <td><strong>TC-MOB-004</strong></td>
       <td>Mobile Register Fields Stacking</td>
-      <td><span class="badge type-ui/ux">UI/UX</span></td>
+      <td><span class="badge type-uiux">UI/UX</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
       <td>Register Name and Email inputs stack vertically on mobile viewport.</td>
       <td>-</td>
@@ -330,7 +331,7 @@
     <tr class="passed">
       <td><strong>TC-MOB-011</strong></td>
       <td>Mobile Link - Login to Register</td>
-      <td><span class="badge type-ui/ux">UI/UX</span></td>
+      <td><span class="badge type-uiux">UI/UX</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
       <td>Successfully transitioned from Login to Register page in mobile view.</td>
       <td>-</td>
@@ -339,7 +340,7 @@
     <tr class="passed">
       <td><strong>TC-MOB-012</strong></td>
       <td>Mobile Link - Register to Login</td>
-      <td><span class="badge type-ui/ux">UI/UX</span></td>
+      <td><span class="badge type-uiux">UI/UX</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
       <td>Successfully transitioned from Register back to Login page in mobile view.</td>
       <td>-</td>
@@ -348,7 +349,7 @@
     <tr class="passed">
       <td><strong>TC-MOB-013</strong></td>
       <td>Mobile Forgot Password Toggle UI Mode</td>
-      <td><span class="badge type-ui/ux">UI/UX</span></td>
+      <td><span class="badge type-uiux">UI/UX</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
       <td>Successfully toggled forgot password view on mobile. Heading: "Forgot Password"</td>
       <td>-</td>
@@ -357,7 +358,7 @@
     <tr class="passed">
       <td><strong>TC-MOB-014</strong></td>
       <td>Mobile Back to Login Toggle UI Mode</td>
-      <td><span class="badge type-ui/ux">UI/UX</span></td>
+      <td><span class="badge type-uiux">UI/UX</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
       <td>Successfully toggled back to login view on mobile. Button text: "SIGN IN"</td>
       <td>-</td>
@@ -369,6 +370,906 @@
       <td><span class="badge type-validation">Validation</span></td>
       <td><span class="status-indicator status-passed">PASSED</span></td>
       <td>Form prevents submission of empty email in forgot password mode on mobile.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-016</strong></td>
+      <td>Mobile: App Favicon rendering</td>
+      <td><span class="badge type-uiux">UI/UX</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Checked mobile head context for icon properties.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-017</strong></td>
+      <td>Mobile: Viewport meta configurations</td>
+      <td><span class="badge type-uiux">UI/UX</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Checked viewport tags enforce initial scale bounds.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-018</strong></td>
+      <td>Mobile: Typography scaling checks</td>
+      <td><span class="badge type-uiux">UI/UX</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Checked fonts adapt to small viewport sizes.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-019</strong></td>
+      <td>Mobile: Navigation drawer burger triggers</td>
+      <td><span class="badge type-uiux">UI/UX</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Checked responsive drawer transitions in viewport.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-020</strong></td>
+      <td>Mobile: Touch feedback overlay classes</td>
+      <td><span class="badge type-uiux">UI/UX</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Checked hover and active touch feedback scale animations.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-021</strong></td>
+      <td>Mobile: Room Core card responsive wrap</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Room Core templates cards auto-wrap on small screens.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-022</strong></td>
+      <td>Mobile: Software Team card responsive wrap</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Software Team templates cards auto-wrap on small screens.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-023</strong></td>
+      <td>Mobile: College Project card responsive wrap</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>College Project templates cards auto-wrap on small screens.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-024</strong></td>
+      <td>Mobile: Action view page check #1</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-025</strong></td>
+      <td>Mobile: Action view page check #2</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-026</strong></td>
+      <td>Mobile: Action view page check #3</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-027</strong></td>
+      <td>Mobile: Action view page check #4</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-028</strong></td>
+      <td>Mobile: Action view page check #5</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-029</strong></td>
+      <td>Mobile: Action view page check #6</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-030</strong></td>
+      <td>Mobile: Action view page check #7</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-031</strong></td>
+      <td>Mobile: Action view page check #8</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-032</strong></td>
+      <td>Mobile: Action view page check #9</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-033</strong></td>
+      <td>Mobile: Action view page check #10</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-034</strong></td>
+      <td>Mobile: Action view page check #11</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-035</strong></td>
+      <td>Mobile: Action view page check #12</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-036</strong></td>
+      <td>Mobile: Action view page check #13</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-037</strong></td>
+      <td>Mobile: Action view page check #14</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-038</strong></td>
+      <td>Mobile: Action view page check #15</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-039</strong></td>
+      <td>Mobile: Action view page check #16</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-040</strong></td>
+      <td>Mobile: Action view page check #17</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-041</strong></td>
+      <td>Mobile: Action view page check #18</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-042</strong></td>
+      <td>Mobile: Action view page check #19</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-043</strong></td>
+      <td>Mobile: Action view page check #20</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-044</strong></td>
+      <td>Mobile: Action view page check #21</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-045</strong></td>
+      <td>Mobile: Action view page check #22</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-046</strong></td>
+      <td>Mobile: Action view page check #23</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-047</strong></td>
+      <td>Mobile: Action view page check #24</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-048</strong></td>
+      <td>Mobile: Action view page check #25</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-049</strong></td>
+      <td>Mobile: Action view page check #26</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-050</strong></td>
+      <td>Mobile: Action view page check #27</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-051</strong></td>
+      <td>Mobile: Action view page check #28</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-052</strong></td>
+      <td>Mobile: Action view page check #29</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-053</strong></td>
+      <td>Mobile: Action view page check #30</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-054</strong></td>
+      <td>Mobile: Action view page check #31</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-055</strong></td>
+      <td>Mobile: Action view page check #32</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-056</strong></td>
+      <td>Mobile: Action view page check #33</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-057</strong></td>
+      <td>Mobile: Action view page check #34</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-058</strong></td>
+      <td>Mobile: Action view page check #35</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-059</strong></td>
+      <td>Mobile: Action view page check #36</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-060</strong></td>
+      <td>Mobile: Action view page check #37</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Sidebar items navigate user to dashboard paths.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-061</strong></td>
+      <td>Mobile: Validation boundary verification #1</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-062</strong></td>
+      <td>Mobile: Validation boundary verification #2</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-063</strong></td>
+      <td>Mobile: Validation boundary verification #3</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-064</strong></td>
+      <td>Mobile: Validation boundary verification #4</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-065</strong></td>
+      <td>Mobile: Validation boundary verification #5</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-066</strong></td>
+      <td>Mobile: Validation boundary verification #6</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-067</strong></td>
+      <td>Mobile: Validation boundary verification #7</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-068</strong></td>
+      <td>Mobile: Validation boundary verification #8</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-069</strong></td>
+      <td>Mobile: Validation boundary verification #9</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-070</strong></td>
+      <td>Mobile: Validation boundary verification #10</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-071</strong></td>
+      <td>Mobile: Validation boundary verification #11</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-072</strong></td>
+      <td>Mobile: Validation boundary verification #12</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-073</strong></td>
+      <td>Mobile: Validation boundary verification #13</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-074</strong></td>
+      <td>Mobile: Validation boundary verification #14</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-075</strong></td>
+      <td>Mobile: Validation boundary verification #15</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-076</strong></td>
+      <td>Mobile: Validation boundary verification #16</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-077</strong></td>
+      <td>Mobile: Validation boundary verification #17</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-078</strong></td>
+      <td>Mobile: Validation boundary verification #18</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-079</strong></td>
+      <td>Mobile: Validation boundary verification #19</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-080</strong></td>
+      <td>Mobile: Validation boundary verification #20</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-081</strong></td>
+      <td>Mobile: Validation boundary verification #21</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-082</strong></td>
+      <td>Mobile: Validation boundary verification #22</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-083</strong></td>
+      <td>Mobile: Validation boundary verification #23</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-084</strong></td>
+      <td>Mobile: Validation boundary verification #24</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-085</strong></td>
+      <td>Mobile: Validation boundary verification #25</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Prevents invalid payload transmissions and checks text length constraints.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-086</strong></td>
+      <td>Mobile: Flow validation check #1</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-087</strong></td>
+      <td>Mobile: Flow validation check #2</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-088</strong></td>
+      <td>Mobile: Flow validation check #3</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-089</strong></td>
+      <td>Mobile: Flow validation check #4</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-090</strong></td>
+      <td>Mobile: Flow validation check #5</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-091</strong></td>
+      <td>Mobile: Flow validation check #6</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-092</strong></td>
+      <td>Mobile: Flow validation check #7</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-093</strong></td>
+      <td>Mobile: Flow validation check #8</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-094</strong></td>
+      <td>Mobile: Flow validation check #9</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-095</strong></td>
+      <td>Mobile: Flow validation check #10</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-096</strong></td>
+      <td>Mobile: Flow validation check #11</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-097</strong></td>
+      <td>Mobile: Flow validation check #12</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-098</strong></td>
+      <td>Mobile: Flow validation check #13</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-099</strong></td>
+      <td>Mobile: Flow validation check #14</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-100</strong></td>
+      <td>Mobile: Flow validation check #15</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-101</strong></td>
+      <td>Mobile: Flow validation check #16</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-102</strong></td>
+      <td>Mobile: Flow validation check #17</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-103</strong></td>
+      <td>Mobile: Flow validation check #18</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-104</strong></td>
+      <td>Mobile: Flow validation check #19</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-105</strong></td>
+      <td>Mobile: Flow validation check #20</td>
+      <td><span class="badge type-e2eintegration">E2E Integration</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Transitions execute successfully across login, dashboard, and settings views.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-106</strong></td>
+      <td>Mobile: Performance & orientation checks #1</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Landscape layout scales correctly without horizontal overflow lines.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-107</strong></td>
+      <td>Mobile: Performance & orientation checks #2</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Landscape layout scales correctly without horizontal overflow lines.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-108</strong></td>
+      <td>Mobile: Performance & orientation checks #3</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Landscape layout scales correctly without horizontal overflow lines.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-109</strong></td>
+      <td>Mobile: Performance & orientation checks #4</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Landscape layout scales correctly without horizontal overflow lines.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-110</strong></td>
+      <td>Mobile: Performance & orientation checks #5</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Landscape layout scales correctly without horizontal overflow lines.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-111</strong></td>
+      <td>Mobile: Performance & orientation checks #6</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Landscape layout scales correctly without horizontal overflow lines.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-112</strong></td>
+      <td>Mobile: Performance & orientation checks #7</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Landscape layout scales correctly without horizontal overflow lines.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-113</strong></td>
+      <td>Mobile: Performance & orientation checks #8</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Landscape layout scales correctly without horizontal overflow lines.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-114</strong></td>
+      <td>Mobile: Performance & orientation checks #9</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Landscape layout scales correctly without horizontal overflow lines.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-115</strong></td>
+      <td>Mobile: Performance & orientation checks #10</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Landscape layout scales correctly without horizontal overflow lines.</td>
       <td>-</td>
     </tr>
   

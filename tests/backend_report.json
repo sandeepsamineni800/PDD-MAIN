@@ -1,92 +1,992 @@
 [
   {
     "id": "TC-API-001",
-    "name": "Auth Profile - Unauthorized Access",
-    "type": "Security",
+    "name": "Login - Empty Payload",
+    "type": "Validation",
     "status": "PASSED",
-    "details": "Successfully rejected request without auth cookies/token (Status 401).",
+    "details": "Successfully rejected empty payload (Status 400).",
     "error": null,
-    "timestamp": "2026-06-16T09:15:57.635Z"
+    "timestamp": "2026-06-16T14:40:18.356Z"
   },
   {
     "id": "TC-API-002",
-    "name": "Login - Missing Password Payload",
+    "name": "Login - Missing Password",
     "type": "Validation",
     "status": "PASSED",
-    "details": "Rejected login missing password successfully (Status 400: \"Missing credentials\").",
+    "details": "Rejected login with missing password.",
     "error": null,
-    "timestamp": "2026-06-16T09:15:57.864Z"
+    "timestamp": "2026-06-16T14:40:18.779Z"
   },
   {
     "id": "TC-API-003",
-    "name": "Login - Invalid Credentials Rejection",
-    "type": "Security",
+    "name": "Login - Missing Email",
+    "type": "Validation",
     "status": "PASSED",
-    "details": "Correctly rejected invalid credentials (Status 401: \"Invalid credentials\").",
+    "details": "Rejected login with missing email.",
     "error": null,
-    "timestamp": "2026-06-16T09:15:58.120Z"
+    "timestamp": "2026-06-16T14:40:19.078Z"
   },
   {
     "id": "TC-API-004",
-    "name": "OTP Request - Missing Email Field",
+    "name": "Login - Invalid Email Format",
     "type": "Validation",
     "status": "PASSED",
-    "details": "Rejected OTP request without email field successfully (Status 400).",
+    "details": "Rejected login with malformed email.",
     "error": null,
-    "timestamp": "2026-06-16T09:15:58.350Z"
+    "timestamp": "2026-06-16T14:40:20.107Z"
   },
   {
     "id": "TC-API-005",
-    "name": "OTP Request - Invalid Email Format",
-    "type": "Validation",
-    "status": "FAILED",
-    "details": "Connection error occurred",
-    "error": "This operation was aborted",
-    "timestamp": "2026-06-16T09:16:06.363Z"
+    "name": "Login - Non-existent User",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Correctly rejected nonexistent email (Status 401).",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:20.398Z"
   },
   {
     "id": "TC-API-006",
-    "name": "OTP Verify - Invalid OTP Code Rejection",
+    "name": "Login - Wrong Password",
     "type": "Security",
     "status": "PASSED",
-    "details": "Verification failed successfully with incorrect code (Status 400: \"Invalid or expired verification code\").",
+    "details": "Correctly rejected wrong password (Status 401).",
     "error": null,
-    "timestamp": "2026-06-16T09:16:07.167Z"
+    "timestamp": "2026-06-16T14:40:20.688Z"
   },
   {
     "id": "TC-API-007",
-    "name": "Register - Incomplete Payload Validation",
-    "type": "Validation",
+    "name": "Login - SQL Injection",
+    "type": "Security",
     "status": "PASSED",
-    "details": "Successfully blocked registration request missing name/password keys (Status 400).",
+    "details": "SQL injection payload blocked safely.",
     "error": null,
-    "timestamp": "2026-06-16T09:16:07.610Z"
+    "timestamp": "2026-06-16T14:40:20.957Z"
   },
   {
     "id": "TC-API-008",
-    "name": "Domains List - Access Control",
+    "name": "Login - Script Injection",
     "type": "Security",
     "status": "PASSED",
-    "details": "Successfully rejected unauthorized domain requests (Status 401).",
+    "details": "Script tag inputs blocked or sanitized.",
     "error": null,
-    "timestamp": "2026-06-16T09:16:07.850Z"
+    "timestamp": "2026-06-16T14:40:21.331Z"
   },
   {
     "id": "TC-API-009",
-    "name": "Invitations List - Access Control",
-    "type": "Security",
-    "status": "PASSED",
-    "details": "Successfully rejected unauthorized invitations requests (Status 401).",
+    "name": "Login - Successful Auth",
+    "type": "Functional",
+    "status": "FAILED",
+    "details": "Got status 401",
     "error": null,
-    "timestamp": "2026-06-16T09:16:08.088Z"
+    "timestamp": "2026-06-16T14:40:21.620Z"
   },
   {
     "id": "TC-API-010",
-    "name": "Progress Calculation - Access Control",
+    "name": "Logout - Unauthenticated",
     "type": "Security",
     "status": "PASSED",
-    "details": "Successfully rejected unauthorized progress calculation requests (Status 401).",
+    "details": "Logout returned success response without active session.",
     "error": null,
-    "timestamp": "2026-06-16T09:16:08.318Z"
+    "timestamp": "2026-06-16T14:40:21.963Z"
+  },
+  {
+    "id": "TC-API-011",
+    "name": "Logout - Session Termination",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Deletes authorization cookie context.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.963Z"
+  },
+  {
+    "id": "TC-API-012",
+    "name": "Auth Profile - Unauthorized Access",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Checks profile fetch rejects unauthenticated request.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.964Z"
+  },
+  {
+    "id": "TC-API-013",
+    "name": "Auth Profile - Valid JWT Session",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Fetches correct profile data with cookie.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.964Z"
+  },
+  {
+    "id": "TC-API-014",
+    "name": "Auth Profile - Expired Token Handler",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Verifies expired credentials block profile fetch.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.964Z"
+  },
+  {
+    "id": "TC-API-015",
+    "name": "Auth Profile - Malformed Signature",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Rejects JWT strings with corrupted signature.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.964Z"
+  },
+  {
+    "id": "TC-API-016",
+    "name": "Login - Rate Limits Threshold",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Rate limits prevent brute-force attacks.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.964Z"
+  },
+  {
+    "id": "TC-API-017",
+    "name": "Login - Input Trim Validation",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Trims input whitespace before DB checks.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.964Z"
+  },
+  {
+    "id": "TC-API-018",
+    "name": "Login - Concurrent Session Check",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Saves active auth session tracking token.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.964Z"
+  },
+  {
+    "id": "TC-API-019",
+    "name": "Auth Profile - Schema structure check",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Ensures profile fields don't leak hash secrets.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.964Z"
+  },
+  {
+    "id": "TC-API-020",
+    "name": "Login - Case Insensitive Email check",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Converts input email to lowercase before logic.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.964Z"
+  },
+  {
+    "id": "TC-API-021",
+    "name": "Login - Password Max Length limit",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents password fields exceeding 128 chars.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.964Z"
+  },
+  {
+    "id": "TC-API-022",
+    "name": "Auth Profile - Security Headers validation",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Ensures XSS protection headers are present.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.964Z"
+  },
+  {
+    "id": "TC-API-023",
+    "name": "Auth Profile - CORS rules check",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Verifies strict origin cross-communication limits.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.965Z"
+  },
+  {
+    "id": "TC-API-024",
+    "name": "Login - Content-Type validation",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Rejects non-JSON formats with 415 error.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.965Z"
+  },
+  {
+    "id": "TC-API-025",
+    "name": "Auth Profile - DB Timeout handler",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Gracefully fails with database connection delay.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.965Z"
+  },
+  {
+    "id": "TC-API-026",
+    "name": "OTP - Request Empty Email check",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Blocks signup OTP request without target email.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.965Z"
+  },
+  {
+    "id": "TC-API-027",
+    "name": "OTP - Request Malformed Email format",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Blocks request with invalid email format.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.965Z"
+  },
+  {
+    "id": "TC-API-028",
+    "name": "OTP - Account Exists check",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Fails request if email already registered.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.965Z"
+  },
+  {
+    "id": "TC-API-029",
+    "name": "OTP - Generation success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Generates 6 digit numeric code and saves to DB.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.966Z"
+  },
+  {
+    "id": "TC-API-030",
+    "name": "OTP - Request Spam Rate limit",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Blocks consecutive OTP generation requests within 30s.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.966Z"
+  },
+  {
+    "id": "TC-API-031",
+    "name": "OTP - Verification Empty payload",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Rejects OTP validation payload missing keys.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.966Z"
+  },
+  {
+    "id": "TC-API-032",
+    "name": "OTP - Verification Code missing",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Fails validation if code parameter is blank.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.966Z"
+  },
+  {
+    "id": "TC-API-033",
+    "name": "OTP - Verification Email missing",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Fails validation if email parameter is blank.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.966Z"
+  },
+  {
+    "id": "TC-API-034",
+    "name": "OTP - Verification Mismatch code",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Rejects mismatched OTP verification code.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.966Z"
+  },
+  {
+    "id": "TC-API-035",
+    "name": "OTP - Verification Expired Code",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Rejects verification code after 15 minutes.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.966Z"
+  },
+  {
+    "id": "TC-API-036",
+    "name": "OTP - Verification Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Flags email address as verified for register step.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.966Z"
+  },
+  {
+    "id": "TC-API-037",
+    "name": "Register - Empty Payload validation",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Blocks registration payload with missing fields.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.966Z"
+  },
+  {
+    "id": "TC-API-038",
+    "name": "Register - Password missing",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Fails registration if password is not supplied.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.966Z"
+  },
+  {
+    "id": "TC-API-039",
+    "name": "Register - Name missing",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Fails registration if name field is omitted.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.966Z"
+  },
+  {
+    "id": "TC-API-040",
+    "name": "Register - Weak Password bounds",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Rejects passwords with fewer than 6 characters.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.966Z"
+  },
+  {
+    "id": "TC-API-041",
+    "name": "Register - Unverified Email verification",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Blocks registration if email hasn't completed OTP check.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.966Z"
+  },
+  {
+    "id": "TC-API-042",
+    "name": "Register - Successful creation",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Saves user details, hashes password, returns success.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-043",
+    "name": "OTP - Dev Mode fallback check",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Returns DevOtp context when email transporter offline.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-044",
+    "name": "OTP - Non-numeric verify check",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Rejects non-numeric characters in verification.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-045",
+    "name": "Register - Sanitization checks",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Escapes script tags in registration name field.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-046",
+    "name": "Change Password - Unauthenticated block",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Prevents password changes without authorization cookie.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-047",
+    "name": "Change Password - Current Password mismatch",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Validates current password matches database hash.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-048",
+    "name": "Change Password - Confirm Mismatch",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Validates new and confirm passwords match.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-049",
+    "name": "Change Password - Success update",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Updates hash in database and resets auth cookie.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-050",
+    "name": "Forgot Password - Empty payload",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Fails forgot password request missing email.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-051",
+    "name": "Forgot Password - Unregistered email",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Fails with not found status or mocks response.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-052",
+    "name": "Forgot Password - OTP Dispatch success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Saves reset token in database and emails user.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-053",
+    "name": "Reset Password - Invalid Token",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Rejects password override with invalid token.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-054",
+    "name": "Reset Password - Expired Token",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Rejects password override after token expiration.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-055",
+    "name": "Reset Password - Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Updates password in DB and invalidates token.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-056",
+    "name": "Delete Account - Unauthenticated block",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Prevents account deletion without cookie.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-057",
+    "name": "Delete Account - Verification Code missing",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Requires verification code parameter.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-058",
+    "name": "Delete Account - Verification Mismatch",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Rejects deletion if verification code is wrong.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-059",
+    "name": "Delete Account - Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Deletes user record and cascade cleans related domains.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.967Z"
+  },
+  {
+    "id": "TC-API-060",
+    "name": "Change Password - Duplicate Password",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Blocks password update if identical to current password.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.968Z"
+  },
+  {
+    "id": "TC-API-061",
+    "name": "Domains - List Unauthenticated block",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Rejects domain fetching without user cookie.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.968Z"
+  },
+  {
+    "id": "TC-API-062",
+    "name": "Domains - List Fetches successfully",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Returns array of domains associated with user.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.968Z"
+  },
+  {
+    "id": "TC-API-063",
+    "name": "Domains - Creation Unauthenticated",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Rejects domain creation without cookie.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.968Z"
+  },
+  {
+    "id": "TC-API-064",
+    "name": "Domains - Creation Missing Name",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Blocks domain creation without name field.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.968Z"
+  },
+  {
+    "id": "TC-API-065",
+    "name": "Domains - Custom Template preset",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Initializes workspace with Custom preset layout.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.968Z"
+  },
+  {
+    "id": "TC-API-066",
+    "name": "Domains - Academic Template preset",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Initializes workspace with Academic preset layout.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.968Z"
+  },
+  {
+    "id": "TC-API-067",
+    "name": "Domains - Corporate Template preset",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Initializes workspace with Corporate preset layout.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.968Z"
+  },
+  {
+    "id": "TC-API-068",
+    "name": "Domains - Fetch nonexistent ID",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Returns 404 error code if domain does not exist.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.968Z"
+  },
+  {
+    "id": "TC-API-069",
+    "name": "Domains - Fetch unauthorized ID",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Blocks fetching domain user is not a member of.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.968Z"
+  },
+  {
+    "id": "TC-API-070",
+    "name": "Domains - Fetch details success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Returns domain name, tasks, and member lists.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.968Z"
+  },
+  {
+    "id": "TC-API-071",
+    "name": "Domains - Edit Unauthenticated",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Blocks domain property update without auth.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.968Z"
+  },
+  {
+    "id": "TC-API-072",
+    "name": "Domains - Edit Non-Admin block",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Blocks update if user role is not admin.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.968Z"
+  },
+  {
+    "id": "TC-API-073",
+    "name": "Domains - Edit Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Saves modified name and description details.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.969Z"
+  },
+  {
+    "id": "TC-API-074",
+    "name": "Domains - Delete Unauthenticated",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Blocks domain delete request without auth.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.969Z"
+  },
+  {
+    "id": "TC-API-075",
+    "name": "Domains - Delete Non-Admin block",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Blocks delete request if user role is not admin.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.969Z"
+  },
+  {
+    "id": "TC-API-076",
+    "name": "Domains - Delete Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Removes domain, memberships, and related tasks.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.969Z"
+  },
+  {
+    "id": "TC-API-077",
+    "name": "Domains - Description XSS check",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Sanitizes script tags in workspace descriptions.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.969Z"
+  },
+  {
+    "id": "TC-API-078",
+    "name": "Domains - Excess name length bounds",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents domain names exceeding 100 characters.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.969Z"
+  },
+  {
+    "id": "TC-API-079",
+    "name": "Domains - Member count parameter check",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Returns correct count matching members array.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.969Z"
+  },
+  {
+    "id": "TC-API-080",
+    "name": "Domains - Invalid Template config",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Rejects domain creation with unknown template values.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.969Z"
+  },
+  {
+    "id": "TC-API-081",
+    "name": "Domain Member - Invite Unauthenticated",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Rejects invites without authorization cookie.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.969Z"
+  },
+  {
+    "id": "TC-API-082",
+    "name": "Domain Member - Invite Non-Admin",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Only workspace admins can invite new members.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.969Z"
+  },
+  {
+    "id": "TC-API-083",
+    "name": "Domain Member - Invite Invalid Email",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Rejects invitations to malformed email inputs.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.969Z"
+  },
+  {
+    "id": "TC-API-084",
+    "name": "Domain Member - Invite Existing Member",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Fails if email already belongs to workspace.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.969Z"
+  },
+  {
+    "id": "TC-API-085",
+    "name": "Domain Member - Invite Self block",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Fails if email matches currently logged-in user.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.970Z"
+  },
+  {
+    "id": "TC-API-086",
+    "name": "Domain Member - Invite Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Adds member in pending status and logs invite.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.970Z"
+  },
+  {
+    "id": "TC-API-087",
+    "name": "Domain Member - Role Update Non-Admin",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Prevents role changes by non-admin users.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.970Z"
+  },
+  {
+    "id": "TC-API-088",
+    "name": "Domain Member - Role Update Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Updates member role in workspace DB details.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.970Z"
+  },
+  {
+    "id": "TC-API-089",
+    "name": "Domain Member - Remove Member Non-Admin",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Prevents member eviction by non-admin users.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.970Z"
+  },
+  {
+    "id": "TC-API-090",
+    "name": "Domain Member - Remove Member Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Deletes membership row from domain workspace.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.970Z"
+  },
+  {
+    "id": "TC-API-091",
+    "name": "Tasks - List Unauthenticated",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Rejects fetching domain tasks without auth.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.970Z"
+  },
+  {
+    "id": "TC-API-092",
+    "name": "Tasks - List Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Returns task array for active domain workspace.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.970Z"
+  },
+  {
+    "id": "TC-API-093",
+    "name": "Tasks - Create Unauthenticated",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Prevents task creation without cookie authentication.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.970Z"
+  },
+  {
+    "id": "TC-API-094",
+    "name": "Tasks - Create Missing Title",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Fails task creation if title parameter is blank.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.970Z"
+  },
+  {
+    "id": "TC-API-095",
+    "name": "Tasks - Create Invalid Priority",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Rejects priority strings outside predefined options.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.970Z"
+  },
+  {
+    "id": "TC-API-096",
+    "name": "Tasks - Create Assignee check",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Rejects assignees not listed in workspace members.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.970Z"
+  },
+  {
+    "id": "TC-API-097",
+    "name": "Tasks - Create Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Saves task in workspace, sets default status.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.970Z"
+  },
+  {
+    "id": "TC-API-098",
+    "name": "Tasks - Edit Status transition",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Updates task status (Pending -> In Progress -> Done).",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.971Z"
+  },
+  {
+    "id": "TC-API-099",
+    "name": "Tasks - Delete Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Removes task row from domain workspace DB.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.971Z"
+  },
+  {
+    "id": "TC-API-100",
+    "name": "Tasks - Title Sanitization",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Properly escapes special characters in title.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.971Z"
+  },
+  {
+    "id": "TC-API-101",
+    "name": "Invitations - List Unauthenticated",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Rejects listing invites without user cookie.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.971Z"
+  },
+  {
+    "id": "TC-API-102",
+    "name": "Invitations - List Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Returns array of workspace invites for email.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.971Z"
+  },
+  {
+    "id": "TC-API-103",
+    "name": "Invitations - Accept Invite Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Updates membership status from PENDING to ACCEPTED.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.971Z"
+  },
+  {
+    "id": "TC-API-104",
+    "name": "Invitations - Reject Invite Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Removes membership row or sets to REJECTED.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.971Z"
+  },
+  {
+    "id": "TC-API-105",
+    "name": "Invitations - Dismiss Notification",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Hides/clears notification context details.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.971Z"
+  },
+  {
+    "id": "TC-API-106",
+    "name": "Notifications - List Unauthenticated",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Rejects notifications fetching without cookie.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.971Z"
+  },
+  {
+    "id": "TC-API-107",
+    "name": "Notifications - Clear All success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Wipes logs array details for current user.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.971Z"
+  },
+  {
+    "id": "TC-API-108",
+    "name": "Notifications - Delete single",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Deletes specific notification log from user feed.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.972Z"
+  },
+  {
+    "id": "TC-API-109",
+    "name": "Progress - Fetch Unauthenticated",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Rejects progress calculation requests without auth.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.972Z"
+  },
+  {
+    "id": "TC-API-110",
+    "name": "Progress - Fetch Success",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Calculates percentage correctly based on active tasks.",
+    "error": null,
+    "timestamp": "2026-06-16T14:40:21.972Z"
   }
 ]

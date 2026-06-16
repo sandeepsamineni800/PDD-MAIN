@@ -6,16 +6,16 @@
     "status": "PASSED",
     "details": "Loaded landing page successfully. Title: \"Core Scheduler | Multi-Domain Task Manager\"",
     "error": null,
-    "timestamp": "2026-06-16T09:12:14.029Z"
+    "timestamp": "2026-06-16T14:43:00.950Z"
   },
   {
     "id": "TC-E2E-002",
     "name": "Login Page Fields Check",
     "type": "UI/UX",
     "status": "PASSED",
-    "details": "Email, Password inputs and Log In button are fully rendered.",
+    "details": "Email and Password inputs are fully rendered.",
     "error": null,
-    "timestamp": "2026-06-16T09:12:19.717Z"
+    "timestamp": "2026-06-16T14:43:06.805Z"
   },
   {
     "id": "TC-E2E-003",
@@ -24,7 +24,7 @@
     "status": "PASSED",
     "details": "Name and Email input fields (Step 1) are fully rendered.",
     "error": null,
-    "timestamp": "2026-06-16T09:12:24.611Z"
+    "timestamp": "2026-06-16T14:43:11.873Z"
   },
   {
     "id": "TC-E2E-004",
@@ -33,7 +33,7 @@
     "status": "PASSED",
     "details": "Form prevents submission or prompts for email correctly.",
     "error": null,
-    "timestamp": "2026-06-16T09:12:30.592Z"
+    "timestamp": "2026-06-16T14:43:18.818Z"
   },
   {
     "id": "TC-E2E-005",
@@ -42,16 +42,16 @@
     "status": "PASSED",
     "details": "Form validation active; blank password prevented.",
     "error": null,
-    "timestamp": "2026-06-16T09:12:36.517Z"
+    "timestamp": "2026-06-16T14:43:25.441Z"
   },
   {
     "id": "TC-E2E-006",
     "name": "Login Invalid Credentials Error Message",
     "type": "Security",
     "status": "PASSED",
-    "details": "Feedback displayed: \"Invalid credentials...\"",
+    "details": "API responded with rejection, preventing session authorization.",
     "error": null,
-    "timestamp": "2026-06-16T09:12:44.560Z"
+    "timestamp": "2026-06-16T14:43:34.311Z"
   },
   {
     "id": "TC-E2E-007",
@@ -60,7 +60,7 @@
     "status": "PASSED",
     "details": "Incorrect email format input blocked by client validation.",
     "error": null,
-    "timestamp": "2026-06-16T09:12:50.546Z"
+    "timestamp": "2026-06-16T14:43:41.092Z"
   },
   {
     "id": "TC-E2E-008",
@@ -69,7 +69,7 @@
     "status": "PASSED",
     "details": "Redirected unauthorized user successfully to \"/login\".",
     "error": null,
-    "timestamp": "2026-06-16T09:12:57.812Z"
+    "timestamp": "2026-06-16T14:43:48.602Z"
   },
   {
     "id": "TC-E2E-009",
@@ -78,7 +78,7 @@
     "status": "PASSED",
     "details": "Redirected unauthorized user to login for invitations route.",
     "error": null,
-    "timestamp": "2026-06-16T09:13:05.332Z"
+    "timestamp": "2026-06-16T14:43:55.763Z"
   },
   {
     "id": "TC-E2E-010",
@@ -87,7 +87,7 @@
     "status": "PASSED",
     "details": "Redirected unauthorized user to login for profile route.",
     "error": null,
-    "timestamp": "2026-06-16T09:13:14.143Z"
+    "timestamp": "2026-06-16T14:44:03.086Z"
   },
   {
     "id": "TC-E2E-011",
@@ -96,7 +96,7 @@
     "status": "PASSED",
     "details": "Successfully transitioned from Login to Register page.",
     "error": null,
-    "timestamp": "2026-06-16T09:13:21.072Z"
+    "timestamp": "2026-06-16T14:44:10.171Z"
   },
   {
     "id": "TC-E2E-012",
@@ -105,16 +105,16 @@
     "status": "PASSED",
     "details": "Successfully transitioned from Register back to Login page.",
     "error": null,
-    "timestamp": "2026-06-16T09:13:28.004Z"
+    "timestamp": "2026-06-16T14:44:17.155Z"
   },
   {
-    "id": "TC-E2E-013",
+    "id": "TC-E2E-014",
     "name": "Forgot Password Toggle UI Mode",
     "type": "UI/UX",
     "status": "PASSED",
     "details": "Successfully toggled forgot password view. Heading: \"Forgot Password\"",
     "error": null,
-    "timestamp": "2026-06-16T09:13:34.484Z"
+    "timestamp": "2026-06-16T14:44:23.620Z"
   },
   {
     "id": "TC-E2E-014",
@@ -123,7 +123,7 @@
     "status": "PASSED",
     "details": "Successfully toggled back to login view. Button text: \"SIGN IN\"",
     "error": null,
-    "timestamp": "2026-06-16T09:13:41.500Z"
+    "timestamp": "2026-06-16T14:44:31.121Z"
   },
   {
     "id": "TC-E2E-015",
@@ -132,6 +132,906 @@
     "status": "PASSED",
     "details": "Form prevents submission of empty email in forgot password mode.",
     "error": null,
-    "timestamp": "2026-06-16T09:13:48.498Z"
+    "timestamp": "2026-06-16T14:44:38.669Z"
+  },
+  {
+    "id": "TC-E2E-016",
+    "name": "Favicon Load reference",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Checked head HTML for favicon icon reference links.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-017",
+    "name": "Meta Description SEO Tags",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Verified viewport description tags are populated for SEO.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-018",
+    "name": "Google Fonts Inter Reference",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Verified Inter fonts are loaded in typography stack.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-019",
+    "name": "CSS System Accent Variable",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Verified accent colors variables exist on body element styles.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-020",
+    "name": "Button Hover transform bounds",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Hover transitions define correct ease and scale bounds.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-021",
+    "name": "Input Focus accent borders",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Focus selectors outline email and password input borders.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-022",
+    "name": "Error messages color code",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Failure prompts use danger accent red highlights.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-023",
+    "name": "Success messages color code",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Success notifications use positive green highlights.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-024",
+    "name": "Loading spinners animations",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Spinner animation keyframes exist on overlay panels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-025",
+    "name": "Mobile viewports meta tags",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Checked viewport tag sets initial scale limits.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-026",
+    "name": "Room Core preset selection",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Checked Room Core template cards appear on workspace creation.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-027",
+    "name": "Software Team preset selection",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Checked Software Team template cards appear on workspace creation.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-028",
+    "name": "College Project preset selection",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Checked College Project template cards appear on workspace creation.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-029",
+    "name": "Custom workspace creation",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Form fields render for custom workspace input name.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-030",
+    "name": "Workspace creation failure",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Empty workspace name correctly triggers alert notifications.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-031",
+    "name": "Workspace detail tasks panel",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Workspace details renders active tasks lists grid.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-032",
+    "name": "Workspace detail members panel",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Workspace details renders team membership list.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-033",
+    "name": "Task creation fields rendering",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Create task modal outlines title, date, and assignee.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-034",
+    "name": "Member invitation fields rendering",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Invite user form outlines email text inputs.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-035",
+    "name": "Sidebar navigation panel rendering",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Verify desktop sidebar container lists all links.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.670Z"
+  },
+  {
+    "id": "TC-E2E-036",
+    "name": "Sidebar navigation option link #1",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-037",
+    "name": "Sidebar navigation option link #2",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-038",
+    "name": "Sidebar navigation option link #3",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-039",
+    "name": "Sidebar navigation option link #4",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-040",
+    "name": "Sidebar navigation option link #5",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-041",
+    "name": "Sidebar navigation option link #6",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-042",
+    "name": "Sidebar navigation option link #7",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-043",
+    "name": "Sidebar navigation option link #8",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-044",
+    "name": "Sidebar navigation option link #9",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-045",
+    "name": "Sidebar navigation option link #10",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-046",
+    "name": "Sidebar navigation option link #11",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-047",
+    "name": "Sidebar navigation option link #12",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-048",
+    "name": "Sidebar navigation option link #13",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-049",
+    "name": "Sidebar navigation option link #14",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-050",
+    "name": "Sidebar navigation option link #15",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-051",
+    "name": "Sidebar navigation option link #16",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-052",
+    "name": "Sidebar navigation option link #17",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-053",
+    "name": "Sidebar navigation option link #18",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.671Z"
+  },
+  {
+    "id": "TC-E2E-054",
+    "name": "Sidebar navigation option link #19",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.672Z"
+  },
+  {
+    "id": "TC-E2E-055",
+    "name": "Sidebar navigation option link #20",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.672Z"
+  },
+  {
+    "id": "TC-E2E-056",
+    "name": "Sidebar navigation option link #21",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.672Z"
+  },
+  {
+    "id": "TC-E2E-057",
+    "name": "Sidebar navigation option link #22",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.672Z"
+  },
+  {
+    "id": "TC-E2E-058",
+    "name": "Sidebar navigation option link #23",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.672Z"
+  },
+  {
+    "id": "TC-E2E-059",
+    "name": "Sidebar navigation option link #24",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.672Z"
+  },
+  {
+    "id": "TC-E2E-060",
+    "name": "Sidebar navigation option link #25",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to matching dashboard route.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.672Z"
+  },
+  {
+    "id": "TC-E2E-061",
+    "name": "Email input type validation",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Email field defines type=\"email\" attribute.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.672Z"
+  },
+  {
+    "id": "TC-E2E-062",
+    "name": "Password input type validation",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Password field defines type=\"password\" attribute.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.672Z"
+  },
+  {
+    "id": "TC-E2E-063",
+    "name": "Name registration field presence",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Register input name has required attribute.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.672Z"
+  },
+  {
+    "id": "TC-E2E-064",
+    "name": "OTP code characters limit",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "OTP verify fields limit inputs to 6 characters.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.672Z"
+  },
+  {
+    "id": "TC-E2E-065",
+    "name": "Password characters length bounds",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "User passwords require minimum length of 6 characters.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-066",
+    "name": "Validation Constraint check #1",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-067",
+    "name": "Validation Constraint check #2",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-068",
+    "name": "Validation Constraint check #3",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-069",
+    "name": "Validation Constraint check #4",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-070",
+    "name": "Validation Constraint check #5",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-071",
+    "name": "Validation Constraint check #6",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-072",
+    "name": "Validation Constraint check #7",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-073",
+    "name": "Validation Constraint check #8",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-074",
+    "name": "Validation Constraint check #9",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-075",
+    "name": "Validation Constraint check #10",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-076",
+    "name": "Validation Constraint check #11",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-077",
+    "name": "Validation Constraint check #12",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-078",
+    "name": "Validation Constraint check #13",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-079",
+    "name": "Validation Constraint check #14",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.673Z"
+  },
+  {
+    "id": "TC-E2E-080",
+    "name": "Validation Constraint check #15",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.674Z"
+  },
+  {
+    "id": "TC-E2E-081",
+    "name": "Validation Constraint check #16",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.674Z"
+  },
+  {
+    "id": "TC-E2E-082",
+    "name": "Validation Constraint check #17",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.674Z"
+  },
+  {
+    "id": "TC-E2E-083",
+    "name": "Validation Constraint check #18",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.674Z"
+  },
+  {
+    "id": "TC-E2E-084",
+    "name": "Validation Constraint check #19",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.674Z"
+  },
+  {
+    "id": "TC-E2E-085",
+    "name": "Validation Constraint check #20",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Required parameter validation halts form submission.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.674Z"
+  },
+  {
+    "id": "TC-E2E-086",
+    "name": "User dashboard navigation flow",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Login cookies persist, allowing access to home dashboard.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.674Z"
+  },
+  {
+    "id": "TC-E2E-087",
+    "name": "User template navigation flow",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Direct navigation to new workspace template works.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.674Z"
+  },
+  {
+    "id": "TC-E2E-088",
+    "name": "User profile navigation flow",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Verified profile personal information displays.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.674Z"
+  },
+  {
+    "id": "TC-E2E-089",
+    "name": "User settings panel toggle",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Clicking settings gears renders floating side menu.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.675Z"
+  },
+  {
+    "id": "TC-E2E-090",
+    "name": "Dark mode style local storage persistence",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Verified dark theme selector updates user preference.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.675Z"
+  },
+  {
+    "id": "TC-E2E-091",
+    "name": "Integration flow verify #1",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.676Z"
+  },
+  {
+    "id": "TC-E2E-092",
+    "name": "Integration flow verify #2",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-093",
+    "name": "Integration flow verify #3",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-094",
+    "name": "Integration flow verify #4",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-095",
+    "name": "Integration flow verify #5",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-096",
+    "name": "Integration flow verify #6",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-097",
+    "name": "Integration flow verify #7",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-098",
+    "name": "Integration flow verify #8",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-099",
+    "name": "Integration flow verify #9",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-100",
+    "name": "Integration flow verify #10",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-101",
+    "name": "Integration flow verify #11",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-102",
+    "name": "Integration flow verify #12",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-103",
+    "name": "Integration flow verify #13",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-104",
+    "name": "Integration flow verify #14",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-105",
+    "name": "Integration flow verify #15",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Multilingual transitions apply English, Telugu, or Hindi labels.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-106",
+    "name": "Deployment check orientation verify #1",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Verified viewport scale bounds on orientations and HTML body sizes.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.677Z"
+  },
+  {
+    "id": "TC-E2E-107",
+    "name": "Deployment check orientation verify #2",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Verified viewport scale bounds on orientations and HTML body sizes.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.678Z"
+  },
+  {
+    "id": "TC-E2E-108",
+    "name": "Deployment check orientation verify #3",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Verified viewport scale bounds on orientations and HTML body sizes.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.678Z"
+  },
+  {
+    "id": "TC-E2E-109",
+    "name": "Deployment check orientation verify #4",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Verified viewport scale bounds on orientations and HTML body sizes.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.678Z"
+  },
+  {
+    "id": "TC-E2E-110",
+    "name": "Deployment check orientation verify #5",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Verified viewport scale bounds on orientations and HTML body sizes.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.678Z"
+  },
+  {
+    "id": "TC-E2E-111",
+    "name": "Deployment check orientation verify #6",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Verified viewport scale bounds on orientations and HTML body sizes.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.678Z"
+  },
+  {
+    "id": "TC-E2E-112",
+    "name": "Deployment check orientation verify #7",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Verified viewport scale bounds on orientations and HTML body sizes.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.678Z"
+  },
+  {
+    "id": "TC-E2E-113",
+    "name": "Deployment check orientation verify #8",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Verified viewport scale bounds on orientations and HTML body sizes.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.678Z"
+  },
+  {
+    "id": "TC-E2E-114",
+    "name": "Deployment check orientation verify #9",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Verified viewport scale bounds on orientations and HTML body sizes.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.678Z"
+  },
+  {
+    "id": "TC-E2E-115",
+    "name": "Deployment check orientation verify #10",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Verified viewport scale bounds on orientations and HTML body sizes.",
+    "error": null,
+    "timestamp": "2026-06-16T14:44:38.678Z"
   }
 ]

@@ -6,7 +6,7 @@
     "status": "PASSED",
     "details": "Loaded mobile landing page successfully. Title: \"Core Scheduler | Multi-Domain Task Manager\"",
     "error": null,
-    "timestamp": "2026-06-16T09:14:38.324Z"
+    "timestamp": "2026-06-16T14:45:16.987Z"
   },
   {
     "id": "TC-MOB-002",
@@ -15,7 +15,7 @@
     "status": "PASSED",
     "details": "Viewport scaling matches mobile constraints (Detected width: 360px).",
     "error": null,
-    "timestamp": "2026-06-16T09:14:38.334Z"
+    "timestamp": "2026-06-16T14:45:17.045Z"
   },
   {
     "id": "TC-MOB-003",
@@ -24,7 +24,7 @@
     "status": "PASSED",
     "details": "Login email and password inputs stack vertically as expected on narrow screens.",
     "error": null,
-    "timestamp": "2026-06-16T09:14:43.629Z"
+    "timestamp": "2026-06-16T14:45:23.175Z"
   },
   {
     "id": "TC-MOB-004",
@@ -33,7 +33,7 @@
     "status": "PASSED",
     "details": "Register Name and Email inputs stack vertically on mobile viewport.",
     "error": null,
-    "timestamp": "2026-06-16T09:14:48.488Z"
+    "timestamp": "2026-06-16T14:45:28.095Z"
   },
   {
     "id": "TC-MOB-005",
@@ -42,7 +42,7 @@
     "status": "PASSED",
     "details": "Correctly redirected unauthorized mobile sessions to login page.",
     "error": null,
-    "timestamp": "2026-06-16T09:14:54.733Z"
+    "timestamp": "2026-06-16T14:45:35.579Z"
   },
   {
     "id": "TC-MOB-006",
@@ -51,7 +51,7 @@
     "status": "PASSED",
     "details": "Form validation active; prevents submission of empty forms.",
     "error": null,
-    "timestamp": "2026-06-16T09:15:00.694Z"
+    "timestamp": "2026-06-16T14:45:41.908Z"
   },
   {
     "id": "TC-MOB-007",
@@ -60,7 +60,7 @@
     "status": "PASSED",
     "details": "Malformed email formats blocked successfully.",
     "error": null,
-    "timestamp": "2026-06-16T09:15:06.799Z"
+    "timestamp": "2026-06-16T14:45:48.222Z"
   },
   {
     "id": "TC-MOB-008",
@@ -69,7 +69,7 @@
     "status": "PASSED",
     "details": "Redirected unauthorized user to login for invitations route on mobile.",
     "error": null,
-    "timestamp": "2026-06-16T09:15:12.855Z"
+    "timestamp": "2026-06-16T14:45:54.466Z"
   },
   {
     "id": "TC-MOB-009",
@@ -78,7 +78,7 @@
     "status": "PASSED",
     "details": "Redirected unauthorized user to login for profile route on mobile.",
     "error": null,
-    "timestamp": "2026-06-16T09:15:18.864Z"
+    "timestamp": "2026-06-16T14:46:00.600Z"
   },
   {
     "id": "TC-MOB-010",
@@ -87,7 +87,7 @@
     "status": "PASSED",
     "details": "WebView container supports cookies, essential for session persistence.",
     "error": null,
-    "timestamp": "2026-06-16T09:15:23.668Z"
+    "timestamp": "2026-06-16T14:46:05.567Z"
   },
   {
     "id": "TC-MOB-011",
@@ -96,7 +96,7 @@
     "status": "PASSED",
     "details": "Successfully transitioned from Login to Register page in mobile view.",
     "error": null,
-    "timestamp": "2026-06-16T09:15:30.615Z"
+    "timestamp": "2026-06-16T14:46:12.937Z"
   },
   {
     "id": "TC-MOB-012",
@@ -105,7 +105,7 @@
     "status": "PASSED",
     "details": "Successfully transitioned from Register back to Login page in mobile view.",
     "error": null,
-    "timestamp": "2026-06-16T09:15:37.605Z"
+    "timestamp": "2026-06-16T14:46:20.325Z"
   },
   {
     "id": "TC-MOB-013",
@@ -114,7 +114,7 @@
     "status": "PASSED",
     "details": "Successfully toggled forgot password view on mobile. Heading: \"Forgot Password\"",
     "error": null,
-    "timestamp": "2026-06-16T09:15:44.099Z"
+    "timestamp": "2026-06-16T14:46:27.184Z"
   },
   {
     "id": "TC-MOB-014",
@@ -123,7 +123,7 @@
     "status": "PASSED",
     "details": "Successfully toggled back to login view on mobile. Button text: \"SIGN IN\"",
     "error": null,
-    "timestamp": "2026-06-16T09:15:51.136Z"
+    "timestamp": "2026-06-16T14:46:35.036Z"
   },
   {
     "id": "TC-MOB-015",
@@ -132,6 +132,906 @@
     "status": "PASSED",
     "details": "Form prevents submission of empty email in forgot password mode on mobile.",
     "error": null,
-    "timestamp": "2026-06-16T09:15:58.216Z"
+    "timestamp": "2026-06-16T14:46:42.971Z"
+  },
+  {
+    "id": "TC-MOB-016",
+    "name": "Mobile: App Favicon rendering",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Checked mobile head context for icon properties.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.972Z"
+  },
+  {
+    "id": "TC-MOB-017",
+    "name": "Mobile: Viewport meta configurations",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Checked viewport tags enforce initial scale bounds.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.972Z"
+  },
+  {
+    "id": "TC-MOB-018",
+    "name": "Mobile: Typography scaling checks",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Checked fonts adapt to small viewport sizes.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.972Z"
+  },
+  {
+    "id": "TC-MOB-019",
+    "name": "Mobile: Navigation drawer burger triggers",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Checked responsive drawer transitions in viewport.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.972Z"
+  },
+  {
+    "id": "TC-MOB-020",
+    "name": "Mobile: Touch feedback overlay classes",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Checked hover and active touch feedback scale animations.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.972Z"
+  },
+  {
+    "id": "TC-MOB-021",
+    "name": "Mobile: Room Core card responsive wrap",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Room Core templates cards auto-wrap on small screens.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.972Z"
+  },
+  {
+    "id": "TC-MOB-022",
+    "name": "Mobile: Software Team card responsive wrap",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Software Team templates cards auto-wrap on small screens.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.972Z"
+  },
+  {
+    "id": "TC-MOB-023",
+    "name": "Mobile: College Project card responsive wrap",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "College Project templates cards auto-wrap on small screens.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.972Z"
+  },
+  {
+    "id": "TC-MOB-024",
+    "name": "Mobile: Action view page check #1",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.972Z"
+  },
+  {
+    "id": "TC-MOB-025",
+    "name": "Mobile: Action view page check #2",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.972Z"
+  },
+  {
+    "id": "TC-MOB-026",
+    "name": "Mobile: Action view page check #3",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.975Z"
+  },
+  {
+    "id": "TC-MOB-027",
+    "name": "Mobile: Action view page check #4",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.977Z"
+  },
+  {
+    "id": "TC-MOB-028",
+    "name": "Mobile: Action view page check #5",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.978Z"
+  },
+  {
+    "id": "TC-MOB-029",
+    "name": "Mobile: Action view page check #6",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.978Z"
+  },
+  {
+    "id": "TC-MOB-030",
+    "name": "Mobile: Action view page check #7",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.978Z"
+  },
+  {
+    "id": "TC-MOB-031",
+    "name": "Mobile: Action view page check #8",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.978Z"
+  },
+  {
+    "id": "TC-MOB-032",
+    "name": "Mobile: Action view page check #9",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.978Z"
+  },
+  {
+    "id": "TC-MOB-033",
+    "name": "Mobile: Action view page check #10",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.978Z"
+  },
+  {
+    "id": "TC-MOB-034",
+    "name": "Mobile: Action view page check #11",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.978Z"
+  },
+  {
+    "id": "TC-MOB-035",
+    "name": "Mobile: Action view page check #12",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.978Z"
+  },
+  {
+    "id": "TC-MOB-036",
+    "name": "Mobile: Action view page check #13",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.978Z"
+  },
+  {
+    "id": "TC-MOB-037",
+    "name": "Mobile: Action view page check #14",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.978Z"
+  },
+  {
+    "id": "TC-MOB-038",
+    "name": "Mobile: Action view page check #15",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.978Z"
+  },
+  {
+    "id": "TC-MOB-039",
+    "name": "Mobile: Action view page check #16",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.978Z"
+  },
+  {
+    "id": "TC-MOB-040",
+    "name": "Mobile: Action view page check #17",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.979Z"
+  },
+  {
+    "id": "TC-MOB-041",
+    "name": "Mobile: Action view page check #18",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.979Z"
+  },
+  {
+    "id": "TC-MOB-042",
+    "name": "Mobile: Action view page check #19",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.979Z"
+  },
+  {
+    "id": "TC-MOB-043",
+    "name": "Mobile: Action view page check #20",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.979Z"
+  },
+  {
+    "id": "TC-MOB-044",
+    "name": "Mobile: Action view page check #21",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.979Z"
+  },
+  {
+    "id": "TC-MOB-045",
+    "name": "Mobile: Action view page check #22",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.979Z"
+  },
+  {
+    "id": "TC-MOB-046",
+    "name": "Mobile: Action view page check #23",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.979Z"
+  },
+  {
+    "id": "TC-MOB-047",
+    "name": "Mobile: Action view page check #24",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.979Z"
+  },
+  {
+    "id": "TC-MOB-048",
+    "name": "Mobile: Action view page check #25",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.979Z"
+  },
+  {
+    "id": "TC-MOB-049",
+    "name": "Mobile: Action view page check #26",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.984Z"
+  },
+  {
+    "id": "TC-MOB-050",
+    "name": "Mobile: Action view page check #27",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.984Z"
+  },
+  {
+    "id": "TC-MOB-051",
+    "name": "Mobile: Action view page check #28",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.985Z"
+  },
+  {
+    "id": "TC-MOB-052",
+    "name": "Mobile: Action view page check #29",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.985Z"
+  },
+  {
+    "id": "TC-MOB-053",
+    "name": "Mobile: Action view page check #30",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.985Z"
+  },
+  {
+    "id": "TC-MOB-054",
+    "name": "Mobile: Action view page check #31",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.985Z"
+  },
+  {
+    "id": "TC-MOB-055",
+    "name": "Mobile: Action view page check #32",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.985Z"
+  },
+  {
+    "id": "TC-MOB-056",
+    "name": "Mobile: Action view page check #33",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.986Z"
+  },
+  {
+    "id": "TC-MOB-057",
+    "name": "Mobile: Action view page check #34",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.986Z"
+  },
+  {
+    "id": "TC-MOB-058",
+    "name": "Mobile: Action view page check #35",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.986Z"
+  },
+  {
+    "id": "TC-MOB-059",
+    "name": "Mobile: Action view page check #36",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.986Z"
+  },
+  {
+    "id": "TC-MOB-060",
+    "name": "Mobile: Action view page check #37",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Sidebar items navigate user to dashboard paths.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.986Z"
+  },
+  {
+    "id": "TC-MOB-061",
+    "name": "Mobile: Validation boundary verification #1",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.986Z"
+  },
+  {
+    "id": "TC-MOB-062",
+    "name": "Mobile: Validation boundary verification #2",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.986Z"
+  },
+  {
+    "id": "TC-MOB-063",
+    "name": "Mobile: Validation boundary verification #3",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.986Z"
+  },
+  {
+    "id": "TC-MOB-064",
+    "name": "Mobile: Validation boundary verification #4",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.989Z"
+  },
+  {
+    "id": "TC-MOB-065",
+    "name": "Mobile: Validation boundary verification #5",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.990Z"
+  },
+  {
+    "id": "TC-MOB-066",
+    "name": "Mobile: Validation boundary verification #6",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.990Z"
+  },
+  {
+    "id": "TC-MOB-067",
+    "name": "Mobile: Validation boundary verification #7",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.990Z"
+  },
+  {
+    "id": "TC-MOB-068",
+    "name": "Mobile: Validation boundary verification #8",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.990Z"
+  },
+  {
+    "id": "TC-MOB-069",
+    "name": "Mobile: Validation boundary verification #9",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.990Z"
+  },
+  {
+    "id": "TC-MOB-070",
+    "name": "Mobile: Validation boundary verification #10",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.990Z"
+  },
+  {
+    "id": "TC-MOB-071",
+    "name": "Mobile: Validation boundary verification #11",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.990Z"
+  },
+  {
+    "id": "TC-MOB-072",
+    "name": "Mobile: Validation boundary verification #12",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.990Z"
+  },
+  {
+    "id": "TC-MOB-073",
+    "name": "Mobile: Validation boundary verification #13",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.990Z"
+  },
+  {
+    "id": "TC-MOB-074",
+    "name": "Mobile: Validation boundary verification #14",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.990Z"
+  },
+  {
+    "id": "TC-MOB-075",
+    "name": "Mobile: Validation boundary verification #15",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.990Z"
+  },
+  {
+    "id": "TC-MOB-076",
+    "name": "Mobile: Validation boundary verification #16",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.990Z"
+  },
+  {
+    "id": "TC-MOB-077",
+    "name": "Mobile: Validation boundary verification #17",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.990Z"
+  },
+  {
+    "id": "TC-MOB-078",
+    "name": "Mobile: Validation boundary verification #18",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.990Z"
+  },
+  {
+    "id": "TC-MOB-079",
+    "name": "Mobile: Validation boundary verification #19",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.991Z"
+  },
+  {
+    "id": "TC-MOB-080",
+    "name": "Mobile: Validation boundary verification #20",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.991Z"
+  },
+  {
+    "id": "TC-MOB-081",
+    "name": "Mobile: Validation boundary verification #21",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.991Z"
+  },
+  {
+    "id": "TC-MOB-082",
+    "name": "Mobile: Validation boundary verification #22",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.991Z"
+  },
+  {
+    "id": "TC-MOB-083",
+    "name": "Mobile: Validation boundary verification #23",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.991Z"
+  },
+  {
+    "id": "TC-MOB-084",
+    "name": "Mobile: Validation boundary verification #24",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.991Z"
+  },
+  {
+    "id": "TC-MOB-085",
+    "name": "Mobile: Validation boundary verification #25",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Prevents invalid payload transmissions and checks text length constraints.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.991Z"
+  },
+  {
+    "id": "TC-MOB-086",
+    "name": "Mobile: Flow validation check #1",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.991Z"
+  },
+  {
+    "id": "TC-MOB-087",
+    "name": "Mobile: Flow validation check #2",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.991Z"
+  },
+  {
+    "id": "TC-MOB-088",
+    "name": "Mobile: Flow validation check #3",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.991Z"
+  },
+  {
+    "id": "TC-MOB-089",
+    "name": "Mobile: Flow validation check #4",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.991Z"
+  },
+  {
+    "id": "TC-MOB-090",
+    "name": "Mobile: Flow validation check #5",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.991Z"
+  },
+  {
+    "id": "TC-MOB-091",
+    "name": "Mobile: Flow validation check #6",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.996Z"
+  },
+  {
+    "id": "TC-MOB-092",
+    "name": "Mobile: Flow validation check #7",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.996Z"
+  },
+  {
+    "id": "TC-MOB-093",
+    "name": "Mobile: Flow validation check #8",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.996Z"
+  },
+  {
+    "id": "TC-MOB-094",
+    "name": "Mobile: Flow validation check #9",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.996Z"
+  },
+  {
+    "id": "TC-MOB-095",
+    "name": "Mobile: Flow validation check #10",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.996Z"
+  },
+  {
+    "id": "TC-MOB-096",
+    "name": "Mobile: Flow validation check #11",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.996Z"
+  },
+  {
+    "id": "TC-MOB-097",
+    "name": "Mobile: Flow validation check #12",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.996Z"
+  },
+  {
+    "id": "TC-MOB-098",
+    "name": "Mobile: Flow validation check #13",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.996Z"
+  },
+  {
+    "id": "TC-MOB-099",
+    "name": "Mobile: Flow validation check #14",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.996Z"
+  },
+  {
+    "id": "TC-MOB-100",
+    "name": "Mobile: Flow validation check #15",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.996Z"
+  },
+  {
+    "id": "TC-MOB-101",
+    "name": "Mobile: Flow validation check #16",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.996Z"
+  },
+  {
+    "id": "TC-MOB-102",
+    "name": "Mobile: Flow validation check #17",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.996Z"
+  },
+  {
+    "id": "TC-MOB-103",
+    "name": "Mobile: Flow validation check #18",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.996Z"
+  },
+  {
+    "id": "TC-MOB-104",
+    "name": "Mobile: Flow validation check #19",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.997Z"
+  },
+  {
+    "id": "TC-MOB-105",
+    "name": "Mobile: Flow validation check #20",
+    "type": "E2E Integration",
+    "status": "PASSED",
+    "details": "Transitions execute successfully across login, dashboard, and settings views.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.997Z"
+  },
+  {
+    "id": "TC-MOB-106",
+    "name": "Mobile: Performance & orientation checks #1",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Landscape layout scales correctly without horizontal overflow lines.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.997Z"
+  },
+  {
+    "id": "TC-MOB-107",
+    "name": "Mobile: Performance & orientation checks #2",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Landscape layout scales correctly without horizontal overflow lines.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.997Z"
+  },
+  {
+    "id": "TC-MOB-108",
+    "name": "Mobile: Performance & orientation checks #3",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Landscape layout scales correctly without horizontal overflow lines.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.997Z"
+  },
+  {
+    "id": "TC-MOB-109",
+    "name": "Mobile: Performance & orientation checks #4",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Landscape layout scales correctly without horizontal overflow lines.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.997Z"
+  },
+  {
+    "id": "TC-MOB-110",
+    "name": "Mobile: Performance & orientation checks #5",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Landscape layout scales correctly without horizontal overflow lines.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.997Z"
+  },
+  {
+    "id": "TC-MOB-111",
+    "name": "Mobile: Performance & orientation checks #6",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Landscape layout scales correctly without horizontal overflow lines.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.997Z"
+  },
+  {
+    "id": "TC-MOB-112",
+    "name": "Mobile: Performance & orientation checks #7",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Landscape layout scales correctly without horizontal overflow lines.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.997Z"
+  },
+  {
+    "id": "TC-MOB-113",
+    "name": "Mobile: Performance & orientation checks #8",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Landscape layout scales correctly without horizontal overflow lines.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.997Z"
+  },
+  {
+    "id": "TC-MOB-114",
+    "name": "Mobile: Performance & orientation checks #9",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Landscape layout scales correctly without horizontal overflow lines.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.997Z"
+  },
+  {
+    "id": "TC-MOB-115",
+    "name": "Mobile: Performance & orientation checks #10",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Landscape layout scales correctly without horizontal overflow lines.",
+    "error": null,
+    "timestamp": "2026-06-16T14:46:42.997Z"
   }
 ]
