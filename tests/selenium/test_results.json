@@ -1,0 +1,915 @@
+{
+  "summary": {
+    "projectName": "PDD Core Scheduler",
+    "totalTests": 110,
+    "passed": 110,
+    "failed": 0,
+    "passRate": "100.0%",
+    "duration": "252.1s",
+    "timestamp": "2026-06-16T06:57:21.949Z",
+    "categories": {
+      "UI/UX Test": {
+        "total": 25,
+        "passed": 25
+      },
+      "Functional Test": {
+        "total": 35,
+        "passed": 35
+      },
+      "Validation Test": {
+        "total": 25,
+        "passed": 25
+      },
+      "E2E Integration Test": {
+        "total": 20,
+        "passed": 20
+      },
+      "Deployable Status Test": {
+        "total": 5,
+        "passed": 5
+      }
+    }
+  },
+  "tests": [
+    {
+      "id": "TC001",
+      "name": "Homepage loads correctly",
+      "category": "UI/UX Test",
+      "description": "Verify the homepage/onboarding page loads without errors",
+      "status": "PASS",
+      "duration": 3014
+    },
+    {
+      "id": "TC002",
+      "name": "Onboarding slide 1 content renders",
+      "category": "UI/UX Test",
+      "description": "Verify first onboarding slide shows Organize Your Life title",
+      "status": "PASS",
+      "duration": 2915
+    },
+    {
+      "id": "TC003",
+      "name": "Onboarding slide navigation buttons present",
+      "category": "UI/UX Test",
+      "description": "Verify Next button exists on onboarding slides",
+      "status": "PASS",
+      "duration": 2611
+    },
+    {
+      "id": "TC004",
+      "name": "Onboarding multi-slide content available",
+      "category": "UI/UX Test",
+      "description": "Verify all 3 onboarding slides content is defined",
+      "status": "PASS",
+      "duration": 2065
+    },
+    {
+      "id": "TC005",
+      "name": "Skip button visibility on onboarding",
+      "category": "UI/UX Test",
+      "description": "Verify Skip button is present on non-final onboarding slides",
+      "status": "PASS",
+      "duration": 2090
+    },
+    {
+      "id": "TC006",
+      "name": "Get Started CTA button present",
+      "category": "UI/UX Test",
+      "description": "Verify Get Started button on the final onboarding slide",
+      "status": "PASS",
+      "duration": 2365
+    },
+    {
+      "id": "TC007",
+      "name": "Login page layout renders correctly",
+      "category": "UI/UX Test",
+      "description": "Verify login page shows Welcome Back title, subtitle, fields, submit",
+      "status": "PASS",
+      "duration": 3270
+    },
+    {
+      "id": "TC008",
+      "name": "Register page layout renders correctly",
+      "category": "UI/UX Test",
+      "description": "Verify register page shows Create Account title with fields",
+      "status": "PASS",
+      "duration": 3839
+    },
+    {
+      "id": "TC009",
+      "name": "Dark theme applied as default",
+      "category": "UI/UX Test",
+      "description": "Verify the app uses dark theme as default color scheme",
+      "status": "PASS",
+      "duration": 2108
+    },
+    {
+      "id": "TC010",
+      "name": "Glassmorphism CSS styling applied",
+      "category": "UI/UX Test",
+      "description": "Verify glass-panel class with backdrop-filter blur on UI panels",
+      "status": "PASS",
+      "duration": 2081
+    },
+    {
+      "id": "TC011",
+      "name": "Animated background component renders",
+      "category": "UI/UX Test",
+      "description": "Verify AnimatedBackground component renders on auth pages",
+      "status": "PASS",
+      "duration": 2079
+    },
+    {
+      "id": "TC012",
+      "name": "Login form has email and password fields",
+      "category": "UI/UX Test",
+      "description": "Verify login form has both email and password input fields",
+      "status": "PASS",
+      "duration": 2906
+    },
+    {
+      "id": "TC013",
+      "name": "Sign Up navigation link on login page",
+      "category": "UI/UX Test",
+      "description": "Verify Sign up link on login page pointing to /register",
+      "status": "PASS",
+      "duration": 2106
+    },
+    {
+      "id": "TC014",
+      "name": "Sign In navigation link on register page",
+      "category": "UI/UX Test",
+      "description": "Verify Sign in link on register page pointing to /login",
+      "status": "PASS",
+      "duration": 2239
+    },
+    {
+      "id": "TC015",
+      "name": "Page title contains application name",
+      "category": "UI/UX Test",
+      "description": "Verify browser tab title contains Core Scheduler",
+      "status": "PASS",
+      "duration": 6
+    },
+    {
+      "id": "TC016",
+      "name": "Favicon loads correctly",
+      "category": "UI/UX Test",
+      "description": "Verify favicon/icon resource is referenced in HTML head",
+      "status": "PASS",
+      "duration": 3
+    },
+    {
+      "id": "TC017",
+      "name": "Meta description tag present",
+      "category": "UI/UX Test",
+      "description": "Verify meta description tag exists with SEO content",
+      "status": "PASS",
+      "duration": 5
+    },
+    {
+      "id": "TC018",
+      "name": "Inter font family loaded",
+      "category": "UI/UX Test",
+      "description": "Verify Google Font Inter is loaded and applied to body",
+      "status": "PASS",
+      "duration": 6
+    },
+    {
+      "id": "TC019",
+      "name": "CSS design system variables defined",
+      "category": "UI/UX Test",
+      "description": "Verify CSS custom properties like --accent-primary in :root",
+      "status": "PASS",
+      "duration": 4
+    },
+    {
+      "id": "TC020",
+      "name": "Button hover effects CSS applied",
+      "category": "UI/UX Test",
+      "description": "Verify btn-primary with hover transform and box-shadow",
+      "status": "PASS",
+      "duration": 3
+    },
+    {
+      "id": "TC021",
+      "name": "Input field focus styling works",
+      "category": "UI/UX Test",
+      "description": "Verify input fields show accent border and shadow on focus",
+      "status": "PASS",
+      "duration": 3924
+    },
+    {
+      "id": "TC022",
+      "name": "Error message styling with danger color",
+      "category": "UI/UX Test",
+      "description": "Verify error messages use var(--danger) color for feedback",
+      "status": "PASS",
+      "duration": 5
+    },
+    {
+      "id": "TC023",
+      "name": "Success message styling with success color",
+      "category": "UI/UX Test",
+      "description": "Verify success messages use var(--success) color",
+      "status": "PASS",
+      "duration": 5
+    },
+    {
+      "id": "TC024",
+      "name": "Loading spinner animation defined",
+      "category": "UI/UX Test",
+      "description": "Verify CSS spin animation keyframes for loading states",
+      "status": "PASS",
+      "duration": 3
+    },
+    {
+      "id": "TC025",
+      "name": "Responsive viewport meta tag present",
+      "category": "UI/UX Test",
+      "description": "Verify meta viewport with width=device-width for mobile",
+      "status": "PASS",
+      "duration": 5
+    },
+    {
+      "id": "TC026",
+      "name": "Login with valid credentials succeeds",
+      "category": "Functional Test",
+      "description": "Verify successful login redirects to dashboard",
+      "status": "PASS",
+      "duration": 6600
+    },
+    {
+      "id": "TC027",
+      "name": "Login with invalid credentials shows error",
+      "category": "Functional Test",
+      "description": "Verify failed login shows error message on screen",
+      "status": "PASS",
+      "duration": 5982
+    },
+    {
+      "id": "TC028",
+      "name": "Login with empty email shows validation",
+      "category": "Functional Test",
+      "description": "Verify HTML5 validation prevents empty email submission",
+      "status": "PASS",
+      "duration": 4438
+    },
+    {
+      "id": "TC029",
+      "name": "Login with empty password shows validation",
+      "category": "Functional Test",
+      "description": "Verify HTML5 validation prevents empty password submission",
+      "status": "PASS",
+      "duration": 4289
+    },
+    {
+      "id": "TC030",
+      "name": "Forgot password link present on login",
+      "category": "Functional Test",
+      "description": "Verify Forgot password link is visible and clickable",
+      "status": "PASS",
+      "duration": 3552
+    },
+    {
+      "id": "TC031",
+      "name": "Back to login from forgot password works",
+      "category": "Functional Test",
+      "description": "Verify back navigation from forgot password mode returns to login",
+      "status": "PASS",
+      "duration": 3139
+    },
+    {
+      "id": "TC032",
+      "name": "Register page shows step 1 fields",
+      "category": "Functional Test",
+      "description": "Verify register step 1 shows name and email fields",
+      "status": "PASS",
+      "duration": 4257
+    },
+    {
+      "id": "TC033",
+      "name": "Registration link from login page works",
+      "category": "Functional Test",
+      "description": "Verify Sign up link navigates to /register page",
+      "status": "PASS",
+      "duration": 4750
+    },
+    {
+      "id": "TC034",
+      "name": "Dashboard redirects unauthenticated to login",
+      "category": "Functional Test",
+      "description": "Verify unauthenticated users are redirected to /login",
+      "status": "PASS",
+      "duration": 5540
+    },
+    {
+      "id": "TC035",
+      "name": "Dashboard loads for authenticated users",
+      "category": "Functional Test",
+      "description": "Verify authenticated users can access the dashboard",
+      "status": "PASS",
+      "duration": 8797
+    },
+    {
+      "id": "TC036",
+      "name": "Dashboard displays Your Workspaces heading",
+      "category": "Functional Test",
+      "description": "Verify dashboard shows Your Workspaces or equivalent heading",
+      "status": "PASS",
+      "duration": 7
+    },
+    {
+      "id": "TC037",
+      "name": "Create workspace button visible on dashboard",
+      "category": "Functional Test",
+      "description": "Verify Create Workspace / New Domain button is visible",
+      "status": "PASS",
+      "duration": 6
+    },
+    {
+      "id": "TC038",
+      "name": "New domain page shows template selection",
+      "category": "Functional Test",
+      "description": "Verify template selection page renders with template cards",
+      "status": "PASS",
+      "duration": 4597
+    },
+    {
+      "id": "TC039",
+      "name": "Room Core template card displayed",
+      "category": "Functional Test",
+      "description": "Verify Room Core template is shown in template selection",
+      "status": "PASS",
+      "duration": 14
+    },
+    {
+      "id": "TC040",
+      "name": "Software Team template card displayed",
+      "category": "Functional Test",
+      "description": "Verify Software Team template is shown in template selection",
+      "status": "PASS",
+      "duration": 9
+    },
+    {
+      "id": "TC041",
+      "name": "College Project template card displayed",
+      "category": "Functional Test",
+      "description": "Verify College Project template is shown in template selection",
+      "status": "PASS",
+      "duration": 9
+    },
+    {
+      "id": "TC042",
+      "name": "Custom domain creation page loads",
+      "category": "Functional Test",
+      "description": "Verify custom domain creation form renders correctly",
+      "status": "PASS",
+      "duration": 4429
+    },
+    {
+      "id": "TC043",
+      "name": "Domain creation with name succeeds",
+      "category": "Functional Test",
+      "description": "Verify domain creation with valid name creates the domain",
+      "status": "PASS",
+      "duration": 50
+    },
+    {
+      "id": "TC044",
+      "name": "Domain creation without name shows error",
+      "category": "Functional Test",
+      "description": "Verify domain creation without name shows validation error",
+      "status": "PASS",
+      "duration": 30
+    },
+    {
+      "id": "TC045",
+      "name": "Domain detail page loads tasks section",
+      "category": "Functional Test",
+      "description": "Verify domain detail page displays Active Tasks section",
+      "status": "PASS",
+      "duration": 25
+    },
+    {
+      "id": "TC046",
+      "name": "Domain detail page loads members section",
+      "category": "Functional Test",
+      "description": "Verify domain detail page displays Team Members section",
+      "status": "PASS",
+      "duration": 20
+    },
+    {
+      "id": "TC047",
+      "name": "Task creation form renders for admin",
+      "category": "Functional Test",
+      "description": "Verify Create Task form appears for admin users",
+      "status": "PASS",
+      "duration": 15
+    },
+    {
+      "id": "TC048",
+      "name": "Invite member form renders for admin",
+      "category": "Functional Test",
+      "description": "Verify Invite Member form appears for admin users",
+      "status": "PASS",
+      "duration": 15
+    },
+    {
+      "id": "TC049",
+      "name": "Sidebar navigation contains all links",
+      "category": "Functional Test",
+      "description": "Verify sidebar has Dashboard, New Domain, Invitations, Progress, Terms, Profile links",
+      "status": "PASS",
+      "duration": 3
+    },
+    {
+      "id": "TC050",
+      "name": "Dashboard link in sidebar navigable",
+      "category": "Functional Test",
+      "description": "Verify clicking Dashboard in sidebar navigates to /dashboard",
+      "status": "PASS",
+      "duration": 3180
+    },
+    {
+      "id": "TC051",
+      "name": "New Domain link in sidebar navigable",
+      "category": "Functional Test",
+      "description": "Verify New Domain sidebar link navigates correctly",
+      "status": "PASS",
+      "duration": 3198
+    },
+    {
+      "id": "TC052",
+      "name": "Create Domain link in sidebar navigable",
+      "category": "Functional Test",
+      "description": "Verify Create Domain sidebar link navigates correctly",
+      "status": "PASS",
+      "duration": 3153
+    },
+    {
+      "id": "TC053",
+      "name": "Invitations link in sidebar navigable",
+      "category": "Functional Test",
+      "description": "Verify Invitations sidebar link navigates correctly",
+      "status": "PASS",
+      "duration": 3642
+    },
+    {
+      "id": "TC054",
+      "name": "Progress link in sidebar navigable",
+      "category": "Functional Test",
+      "description": "Verify Progress sidebar link navigates correctly",
+      "status": "PASS",
+      "duration": 3779
+    },
+    {
+      "id": "TC055",
+      "name": "Terms link in sidebar navigable",
+      "category": "Functional Test",
+      "description": "Verify Terms sidebar link navigates correctly",
+      "status": "PASS",
+      "duration": 3955
+    },
+    {
+      "id": "TC056",
+      "name": "Profile link in sidebar navigable",
+      "category": "Functional Test",
+      "description": "Verify Profile sidebar link navigates correctly",
+      "status": "PASS",
+      "duration": 3907
+    },
+    {
+      "id": "TC057",
+      "name": "Logout button present in sidebar",
+      "category": "Functional Test",
+      "description": "Verify logout button is visible in sidebar footer",
+      "status": "PASS",
+      "duration": 9
+    },
+    {
+      "id": "TC058",
+      "name": "Logout functionality works",
+      "category": "Functional Test",
+      "description": "Verify clicking logout clears session and redirects to login",
+      "status": "PASS",
+      "duration": 30
+    },
+    {
+      "id": "TC059",
+      "name": "Profile page displays user information",
+      "category": "Functional Test",
+      "description": "Verify profile page shows user name and email",
+      "status": "PASS",
+      "duration": 3082
+    },
+    {
+      "id": "TC060",
+      "name": "Profile page shows change password section",
+      "category": "Functional Test",
+      "description": "Verify change password form is visible on profile page",
+      "status": "PASS",
+      "duration": 5
+    },
+    {
+      "id": "TC061",
+      "name": "Email field validates email format on login",
+      "category": "Validation Test",
+      "description": "Verify email input has type=email for browser validation",
+      "status": "PASS",
+      "duration": 2973
+    },
+    {
+      "id": "TC062",
+      "name": "Password field is type=password on login",
+      "category": "Validation Test",
+      "description": "Verify password input masks characters with type=password",
+      "status": "PASS",
+      "duration": 30
+    },
+    {
+      "id": "TC063",
+      "name": "Email field validates format on register",
+      "category": "Validation Test",
+      "description": "Verify register email input has type=email validation",
+      "status": "PASS",
+      "duration": 2919
+    },
+    {
+      "id": "TC064",
+      "name": "Name field required on register",
+      "category": "Validation Test",
+      "description": "Verify register name field has required attribute",
+      "status": "PASS",
+      "duration": 10
+    },
+    {
+      "id": "TC065",
+      "name": "OTP field max length is 6",
+      "category": "Validation Test",
+      "description": "Verify OTP input maxLength=6 on register verification step",
+      "status": "PASS",
+      "duration": 10
+    },
+    {
+      "id": "TC066",
+      "name": "Password minimum length enforced",
+      "category": "Validation Test",
+      "description": "Verify password minLength=6 is enforced on registration",
+      "status": "PASS",
+      "duration": 8
+    },
+    {
+      "id": "TC067",
+      "name": "Empty form submission prevented on login",
+      "category": "Validation Test",
+      "description": "Verify required attributes prevent empty login form submission",
+      "status": "PASS",
+      "duration": 2969
+    },
+    {
+      "id": "TC068",
+      "name": "Empty form submission prevented on register",
+      "category": "Validation Test",
+      "description": "Verify required attributes prevent empty register submission",
+      "status": "PASS",
+      "duration": 2975
+    },
+    {
+      "id": "TC069",
+      "name": "Domain name required for workspace creation",
+      "category": "Validation Test",
+      "description": "Verify workspace creation requires non-empty name field",
+      "status": "PASS",
+      "duration": 10
+    },
+    {
+      "id": "TC070",
+      "name": "Task title required for task creation",
+      "category": "Validation Test",
+      "description": "Verify task creation form requires a title value",
+      "status": "PASS",
+      "duration": 8
+    },
+    {
+      "id": "TC071",
+      "name": "Invite email validates email format",
+      "category": "Validation Test",
+      "description": "Verify invite member form validates email format",
+      "status": "PASS",
+      "duration": 8
+    },
+    {
+      "id": "TC072",
+      "name": "Change password requires current password",
+      "category": "Validation Test",
+      "description": "Verify current password field is required for change",
+      "status": "PASS",
+      "duration": 8673
+    },
+    {
+      "id": "TC073",
+      "name": "Change password requires new password",
+      "category": "Validation Test",
+      "description": "Verify new password field is required",
+      "status": "PASS",
+      "duration": 5031
+    },
+    {
+      "id": "TC074",
+      "name": "Change password requires confirm password",
+      "category": "Validation Test",
+      "description": "Verify confirm password field is required",
+      "status": "PASS",
+      "duration": 5027
+    },
+    {
+      "id": "TC075",
+      "name": "New passwords must match validation",
+      "category": "Validation Test",
+      "description": "Verify mismatched passwords show error message",
+      "status": "PASS",
+      "duration": 12
+    },
+    {
+      "id": "TC076",
+      "name": "New password minimum 6 characters",
+      "category": "Validation Test",
+      "description": "Verify new password field enforces minLength=6",
+      "status": "PASS",
+      "duration": 10062
+    },
+    {
+      "id": "TC077",
+      "name": "Forgot password OTP field maxlength 6",
+      "category": "Validation Test",
+      "description": "Verify OTP input on reset password has maxLength=6",
+      "status": "PASS",
+      "duration": 5
+    },
+    {
+      "id": "TC078",
+      "name": "Delete account OTP field maxlength 6",
+      "category": "Validation Test",
+      "description": "Verify delete account OTP input has maxLength=6",
+      "status": "PASS",
+      "duration": 5
+    },
+    {
+      "id": "TC079",
+      "name": "Form prevents double submission on login",
+      "category": "Validation Test",
+      "description": "Verify submit button disables during login request",
+      "status": "PASS",
+      "duration": 3190
+    },
+    {
+      "id": "TC080",
+      "name": "Form prevents double submission on register",
+      "category": "Validation Test",
+      "description": "Verify submit button disables during register request",
+      "status": "PASS",
+      "duration": 2828
+    },
+    {
+      "id": "TC081",
+      "name": "XSS protection - script tags in inputs",
+      "category": "Validation Test",
+      "description": "Verify script tags are properly handled in input fields",
+      "status": "PASS",
+      "duration": 3788
+    },
+    {
+      "id": "TC082",
+      "name": "SQL injection protection in inputs",
+      "category": "Validation Test",
+      "description": "Verify SQL injection strings are handled safely",
+      "status": "PASS",
+      "duration": 465
+    },
+    {
+      "id": "TC083",
+      "name": "HTML entities escaped in display",
+      "category": "Validation Test",
+      "description": "Verify HTML entities are properly escaped in UI rendering",
+      "status": "PASS",
+      "duration": 3256
+    },
+    {
+      "id": "TC084",
+      "name": "Long text input handled gracefully",
+      "category": "Validation Test",
+      "description": "Verify extremely long text input does not break the UI",
+      "status": "PASS",
+      "duration": 1734
+    },
+    {
+      "id": "TC085",
+      "name": "Special characters in name field handled",
+      "category": "Validation Test",
+      "description": "Verify international/special characters work in name field",
+      "status": "PASS",
+      "duration": 3622
+    },
+    {
+      "id": "TC086",
+      "name": "Full login to dashboard flow",
+      "category": "E2E Integration Test",
+      "description": "Verify complete login -> dashboard navigation flow works end-to-end",
+      "status": "PASS",
+      "duration": 3813
+    },
+    {
+      "id": "TC087",
+      "name": "Full login to create workspace flow",
+      "category": "E2E Integration Test",
+      "description": "Verify login -> navigate to create workspace page works",
+      "status": "PASS",
+      "duration": 3848
+    },
+    {
+      "id": "TC088",
+      "name": "Full login to progress page flow",
+      "category": "E2E Integration Test",
+      "description": "Verify login -> navigate to progress page shows domain progress",
+      "status": "PASS",
+      "duration": 3845
+    },
+    {
+      "id": "TC089",
+      "name": "Full login to invitations page flow",
+      "category": "E2E Integration Test",
+      "description": "Verify login -> navigate to invitations page shows messages",
+      "status": "PASS",
+      "duration": 3878
+    },
+    {
+      "id": "TC090",
+      "name": "Full login to profile page flow",
+      "category": "E2E Integration Test",
+      "description": "Verify login -> navigate to profile page shows user info",
+      "status": "PASS",
+      "duration": 3826
+    },
+    {
+      "id": "TC091",
+      "name": "Full login to terms page flow",
+      "category": "E2E Integration Test",
+      "description": "Verify login -> navigate to terms page shows content",
+      "status": "PASS",
+      "duration": 3831
+    },
+    {
+      "id": "TC092",
+      "name": "Settings panel toggle in sidebar",
+      "category": "E2E Integration Test",
+      "description": "Verify settings panel opens/closes in sidebar",
+      "status": "PASS",
+      "duration": 3328
+    },
+    {
+      "id": "TC093",
+      "name": "Theme switch to light mode persists",
+      "category": "E2E Integration Test",
+      "description": "Verify switching to light mode saves to localStorage",
+      "status": "PASS",
+      "duration": 524
+    },
+    {
+      "id": "TC094",
+      "name": "Theme switch to dark mode persists",
+      "category": "E2E Integration Test",
+      "description": "Verify switching to dark mode saves to localStorage",
+      "status": "PASS",
+      "duration": 521
+    },
+    {
+      "id": "TC095",
+      "name": "Language setting available in settings",
+      "category": "E2E Integration Test",
+      "description": "Verify language options (English, Telugu, Hindi) in settings",
+      "status": "PASS",
+      "duration": 3
+    },
+    {
+      "id": "TC096",
+      "name": "Font size setting available in settings",
+      "category": "E2E Integration Test",
+      "description": "Verify font size options (Small, Medium, Large) in settings",
+      "status": "PASS",
+      "duration": 5
+    },
+    {
+      "id": "TC097",
+      "name": "Settings panel opens and closes",
+      "category": "E2E Integration Test",
+      "description": "Verify settings gear icon toggles the settings panel",
+      "status": "PASS",
+      "duration": 4
+    },
+    {
+      "id": "TC098",
+      "name": "Scroll to top button appears on scroll",
+      "category": "E2E Integration Test",
+      "description": "Verify scroll-to-top button appears after scrolling down",
+      "status": "PASS",
+      "duration": 516
+    },
+    {
+      "id": "TC099",
+      "name": "Mobile menu button visible on narrow viewport",
+      "category": "E2E Integration Test",
+      "description": "Verify hamburger menu appears on mobile-width viewport",
+      "status": "PASS",
+      "duration": 914
+    },
+    {
+      "id": "TC100",
+      "name": "Dashboard empty state rendering",
+      "category": "E2E Integration Test",
+      "description": "Verify empty state UI shows when user has no domains",
+      "status": "PASS",
+      "duration": 20
+    },
+    {
+      "id": "TC101",
+      "name": "Terms page displays all sections",
+      "category": "E2E Integration Test",
+      "description": "Verify terms page shows About, Workflow, Roles, ToS sections",
+      "status": "PASS",
+      "duration": 3825
+    },
+    {
+      "id": "TC102",
+      "name": "Profile page change password section",
+      "category": "E2E Integration Test",
+      "description": "Verify profile page includes change password form",
+      "status": "PASS",
+      "duration": 3842
+    },
+    {
+      "id": "TC103",
+      "name": "Profile page danger zone section",
+      "category": "E2E Integration Test",
+      "description": "Verify profile page includes Danger Zone with delete account",
+      "status": "PASS",
+      "duration": 4
+    },
+    {
+      "id": "TC104",
+      "name": "Progress page displays content",
+      "category": "E2E Integration Test",
+      "description": "Verify progress page shows domain progress or empty state",
+      "status": "PASS",
+      "duration": 3918
+    },
+    {
+      "id": "TC105",
+      "name": "Navigation breadcrumbs work correctly",
+      "category": "E2E Integration Test",
+      "description": "Verify back/breadcrumb navigation functions properly",
+      "status": "PASS",
+      "duration": 3398
+    },
+    {
+      "id": "TC106",
+      "name": "Application serves on port 3000",
+      "category": "Deployable Status Test",
+      "description": "Verify the Next.js application responds on localhost:3000",
+      "status": "PASS",
+      "duration": 179
+    },
+    {
+      "id": "TC107",
+      "name": "All critical routes return responses",
+      "category": "Deployable Status Test",
+      "description": "Verify /login, /register, /dashboard and other routes serve content",
+      "status": "PASS",
+      "duration": 258
+    },
+    {
+      "id": "TC108",
+      "name": "API routes return proper responses",
+      "category": "Deployable Status Test",
+      "description": "Verify API endpoints respond with proper status codes",
+      "status": "PASS",
+      "duration": 1342
+    },
+    {
+      "id": "TC109",
+      "name": "Static assets load correctly",
+      "category": "Deployable Status Test",
+      "description": "Verify favicon and static assets return 200 status",
+      "status": "PASS",
+      "duration": 8
+    },
+    {
+      "id": "TC110",
+      "name": "HTML document proper structure",
+      "category": "Deployable Status Test",
+      "description": "Verify HTML has proper html, head, body and meta elements",
+      "status": "PASS",
+      "duration": 2526
+    }
+  ]
+}
