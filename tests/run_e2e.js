@@ -1,15 +1,8 @@
 const { Builder, By, until } = require('selenium-webdriver');
 const edge = require('selenium-webdriver/edge');
+const chrome = require('selenium-webdriver/chrome');
 const fs = require('fs');
 const path = require('path');
-
-// Configure Microsoft Edge Options
-const options = new edge.Options();
-options.setBinaryPath('C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe');
-options.addArguments('--headless=new');
-options.addArguments('--disable-gpu');
-options.addArguments('--no-sandbox');
-options.addArguments('--window-size=1920,1080');
 
 const targetUrl = 'https://pdd-main-oyhb.onrender.com';
 const results = [];
@@ -22,14 +15,34 @@ function logTest(id, name, type, status, details, error = null) {
 }
 
 async function runTests() {
-  console.log(`Starting Selenium E2E Automation Suite on Microsoft Edge against ${targetUrl}...`);
+  let driverBuilder = new Builder();
+  let browserName = 'MicrosoftEdge';
+
+  if (process.platform === 'win32') {
+    const options = new edge.Options();
+    options.setBinaryPath('C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe');
+    options.addArguments('--headless=new');
+    options.addArguments('--disable-gpu');
+    options.addArguments('--no-sandbox');
+    options.addArguments('--window-size=1920,1080');
+    driverBuilder = driverBuilder.forBrowser('MicrosoftEdge').setEdgeOptions(options);
+    browserName = 'MicrosoftEdge';
+  } else {
+    const options = new chrome.Options();
+    options.addArguments('--headless=new');
+    options.addArguments('--disable-gpu');
+    options.addArguments('--no-sandbox');
+    options.addArguments('--disable-dev-shm-usage');
+    options.addArguments('--window-size=1920,1080');
+    driverBuilder = driverBuilder.forBrowser('chrome').setChromeOptions(options);
+    browserName = 'Chrome';
+  }
+
+  console.log(`Starting Selenium E2E Automation Suite on ${browserName} against ${targetUrl}...`);
   let driver;
   
   try {
-    driver = await new Builder()
-      .forBrowser('MicrosoftEdge')
-      .setEdgeOptions(options)
-      .build();
+    driver = await driverBuilder.build();
 
     const loadPage = async (url) => {
       await driver.get(url);

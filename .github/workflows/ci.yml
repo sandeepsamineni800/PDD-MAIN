@@ -74,8 +74,8 @@ jobs:
         EMAIL_USER: ${{ secrets.EMAIL_USER }}
         EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
 
-    - name: Run Selenium + Appium E2E Tests (125 tests)
-      run: node tests/selenium/test_runner.js
+    - name: Run Selenium E2E Tests
+      run: node tests/run_e2e.js
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
@@ -86,29 +86,9 @@ jobs:
       with:
         name: e2e-test-report
         path: |
-          apptestingreport.xlsx
-          tests/selenium/test_results.json
+          tests/e2e_report.json
+          tests/e2e_report.html
 
     - name: Test Summary
       if: always()
-      run: |
-        echo "## 📊 Selenium + Appium E2E Test Results" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
-        echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
-        echo "| Total Tests | 125 |" >> $GITHUB_STEP_SUMMARY
-        echo "| Passed | 125 ✅ |" >> $GITHUB_STEP_SUMMARY
-        echo "| Failed | 0 |" >> $GITHUB_STEP_SUMMARY
-        echo "| Pass Rate | 100% |" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### Category Breakdown" >> $GITHUB_STEP_SUMMARY
-        echo "| Category | Result |" >> $GITHUB_STEP_SUMMARY
-        echo "|----------|--------|" >> $GITHUB_STEP_SUMMARY
-        echo "| UI/UX Tests | 25/25 ✅ |" >> $GITHUB_STEP_SUMMARY
-        echo "| Functional Tests | 35/35 ✅ |" >> $GITHUB_STEP_SUMMARY
-        echo "| Validation Tests | 25/25 ✅ |" >> $GITHUB_STEP_SUMMARY
-        echo "| E2E Integration Tests | 20/20 ✅ |" >> $GITHUB_STEP_SUMMARY
-        echo "| Deployable Status Tests | 5/5 ✅ |" >> $GITHUB_STEP_SUMMARY
-        echo "| Appium Mobile Tests | 15/15 ✅ |" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 🚀 Deployment Status: READY" >> $GITHUB_STEP_SUMMARY
+      run: node tests/generate_summary.js
