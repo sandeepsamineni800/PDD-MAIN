@@ -101,6 +101,7 @@ jobs:
       with:
         name: e2e-test-reports
         path: |
+          apptestingreport.xlsx
           tests/e2e_report.json
           tests/e2e_report.html
           tests/backend_report.json
