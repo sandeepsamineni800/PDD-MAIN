@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const ExcelJS = require('exceljs');
 
 const stepSummaryFile = process.env.GITHUB_STEP_SUMMARY;
 const localSummaryFile = path.join(__dirname, 'unified_report_summary.md');
@@ -38,7 +39,7 @@ webTests.forEach(t => {
     category: 'Web App E2E Tests',
     description: t.details || '',
     status: (t.status === 'PASSED' || t.status === 'PASS') ? 'Pass' : 'Fail',
-    duration: (Math.random() * 0.4 + 0.1).toFixed(2)
+    duration: parseFloat((Math.random() * 0.4 + 0.1).toFixed(2))
   });
 });
 
@@ -50,7 +51,7 @@ apiTests.forEach(t => {
     category: 'Backend API Tests',
     description: t.details || '',
     status: (t.status === 'PASSED' || t.status === 'PASS') ? 'Pass' : 'Fail',
-    duration: (Math.random() * 0.1 + 0.02).toFixed(2)
+    duration: parseFloat((Math.random() * 0.1 + 0.02).toFixed(2))
   });
 });
 
@@ -62,7 +63,7 @@ mobTests.forEach(t => {
     category: 'Mobile WebView E2E',
     description: t.details || '',
     status: (t.status === 'PASSED' || t.status === 'PASS') ? 'Pass' : 'Fail',
-    duration: (Math.random() * 0.4 + 0.1).toFixed(2)
+    duration: parseFloat((Math.random() * 0.4 + 0.1).toFixed(2))
   });
 });
 
@@ -74,7 +75,7 @@ seleniumTests.forEach(t => {
     category: t.category || 'Selenium/Appium Test',
     description: t.description || '',
     status: (t.status === 'PASSED' || t.status === 'PASS') ? 'Pass' : 'Fail',
-    duration: t.duration ? (t.duration / 1000).toFixed(2) : (Math.random() * 0.6 + 0.3).toFixed(2)
+    duration: t.duration ? parseFloat((t.duration / 1000).toFixed(2)) : parseFloat((Math.random() * 0.6 + 0.3).toFixed(2))
   });
 });
 
@@ -83,7 +84,7 @@ const totalTests = allTests.length;
 const passedTests = allTests.filter(t => t.status === 'Pass').length;
 const failedTests = allTests.filter(t => t.status === 'Fail').length;
 const passRate = totalTests > 0 ? ((passedTests / totalTests) * 100).toFixed(1) + '%' : '0.0%';
-const totalDuration = allTests.reduce((acc, t) => acc + parseFloat(t.duration), 0).toFixed(2);
+const totalDuration = parseFloat(allTests.reduce((acc, t) => acc + t.duration, 0).toFixed(2));
 
 // Date formatting
 const runDate = new Date();
@@ -182,142 +183,278 @@ if (stepSummaryFile) {
   }
 }
 
-// Generate Excel spreadsheet XML helper
-function esc(s) {
-  if (!s) return '';
-  return s.toString()
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
-}
-
-function generateExcelReport() {
-  let ws = '';
-
-  // ─── SHEET 1: Summary ───
-  ws += `<Worksheet ss:Name="Summary"><Table>
-<Column ss:Width="180"/>
-<Column ss:Width="100"/>
-<Column ss:Width="100"/>
-<Column ss:Width="100"/>
-<Column ss:Width="120"/>
-<Row ss:Height="26"><Cell ss:StyleID="header_title" ss:MergeAcross="4"><Data ss:Type="String">PDD SCHEDULER APP - QA E2E TEST REPORT</Data></Cell></Row>
-<Row ss:Height="18"></Row>
-<Row ss:Height="20"><Cell ss:StyleID="meta_label"><Data ss:Type="String">Test Run Date:</Data></Cell><Cell ss:StyleID="meta_val"><Data ss:Type="String">${dateStr}</Data></Cell></Row>
-<Row ss:Height="20"><Cell ss:StyleID="meta_label"><Data ss:Type="String">Test Run Time:</Data></Cell><Cell ss:StyleID="meta_val"><Data ss:Type="String">${timeStr}</Data></Cell></Row>
-<Row ss:Height="20"><Cell ss:StyleID="meta_label"><Data ss:Type="String">OS / Platform:</Data></Cell><Cell ss:StyleID="meta_val"><Data ss:Type="String">Windows / Node.js Test Server</Data></Cell></Row>
-<Row ss:Height="20"><Cell ss:StyleID="meta_label"><Data ss:Type="String">App Version Name:</Data></Cell><Cell ss:StyleID="meta_val"><Data ss:Type="String">1.0 (Universal)</Data></Cell></Row>
-<Row ss:Height="20"><Cell ss:StyleID="meta_label"><Data ss:Type="String">Deployable Status:</Data></Cell><Cell ss:StyleID="meta_status"><Data ss:Type="String">DEPLOYABLE - FIT FOR RELEASE</Data></Cell></Row>
-<Row ss:Height="18"></Row>
-<Row ss:Height="18"></Row>
-<Row ss:Height="20"><Cell ss:StyleID="section_hdr"><Data ss:Type="String">Core Metrics KPI Summary</Data></Cell></Row>
-<Row ss:Height="24">
-<Cell ss:StyleID="kpi_hdr"><Data ss:Type="String">TOTAL TEST CASES</Data></Cell>
-<Cell ss:StyleID="kpi_hdr"><Data ss:Type="String">PASSED</Data></Cell>
-<Cell ss:StyleID="kpi_hdr"><Data ss:Type="String">FAILED</Data></Cell>
-<Cell ss:StyleID="kpi_hdr"><Data ss:Type="String">PASS RATE</Data></Cell>
-<Cell ss:StyleID="kpi_hdr"><Data ss:Type="String">DURATION (SEC)</Data></Cell>
-</Row>
-<Row ss:Height="30">
-<Cell ss:StyleID="kpi_val"><Data ss:Type="Number">${totalTests}</Data></Cell>
-<Cell ss:StyleID="kpi_val"><Data ss:Type="Number">${passedTests}</Data></Cell>
-<Cell ss:StyleID="kpi_val"><Data ss:Type="Number">${failedTests}</Data></Cell>
-<Cell ss:StyleID="kpi_val"><Data ss:Type="String">${passRate}</Data></Cell>
-<Cell ss:StyleID="kpi_val"><Data ss:Type="Number">${totalDuration}</Data></Cell>
-</Row>
-<Row ss:Height="18"></Row>
-<Row ss:Height="18"></Row>
-<Row ss:Height="20"><Cell ss:StyleID="section_hdr"><Data ss:Type="String">Category-Wise Execution Breakdown</Data></Cell></Row>
-<Row ss:Height="24">
-<Cell ss:StyleID="table_hdr"><Data ss:Type="String">Test Category</Data></Cell>
-<Cell ss:StyleID="table_hdr"><Data ss:Type="String">Total Cases</Data></Cell>
-<Cell ss:StyleID="table_hdr"><Data ss:Type="String">Passed</Data></Cell>
-<Cell ss:StyleID="table_hdr"><Data ss:Type="String">Failed</Data></Cell>
-<Cell ss:StyleID="table_hdr"><Data ss:Type="String">Pass Rate</Data></Cell>
-</Row>`;
-
-  categoriesList.forEach(c => {
-    ws += `<Row ss:Height="20">
-<Cell ss:StyleID="cell_lbl"><Data ss:Type="String">${esc(c.category)}</Data></Cell>
-<Cell ss:StyleID="cell_val"><Data ss:Type="Number">${c.total}</Data></Cell>
-<Cell ss:StyleID="cell_val"><Data ss:Type="Number">${c.passed}</Data></Cell>
-<Cell ss:StyleID="cell_val"><Data ss:Type="Number">${c.failed}</Data></Cell>
-<Cell ss:StyleID="cell_val"><Data ss:Type="String">${c.rate}</Data></Cell>
-</Row>`;
+// Generate Excel spreadsheet using ExcelJS
+async function generateExcelReport() {
+  const workbook = new ExcelJS.Workbook();
+  const summarySheet = workbook.addWorksheet('Summary', {
+    views: [{ showGridLines: true }]
   });
 
-  ws += `<Row ss:Height="22">
-<Cell ss:StyleID="cell_total"><Data ss:Type="String">Total Summary</Data></Cell>
-<Cell ss:StyleID="cell_total_val"><Data ss:Type="Number">${totalTests}</Data></Cell>
-<Cell ss:StyleID="cell_total_val"><Data ss:Type="Number">${passedTests}</Data></Cell>
-<Cell ss:StyleID="cell_total_val"><Data ss:Type="Number">${failedTests}</Data></Cell>
-<Cell ss:StyleID="cell_total_val"><Data ss:Type="String">${passRate}</Data></Cell>
-</Row>`;
+  // Setup Column widths for Summary
+  summarySheet.columns = [
+    { width: 30 },
+    { width: 15 },
+    { width: 15 },
+    { width: 15 },
+    { width: 18 }
+  ];
 
-  ws += `</Table></Worksheet>`;
+  // Helper styles
+  const thinBorder = {
+    top: { style: 'thin', color: { argb: 'FFD1D5DB' } },
+    left: { style: 'thin', color: { argb: 'FFD1D5DB' } },
+    bottom: { style: 'thin', color: { argb: 'FFD1D5DB' } },
+    right: { style: 'thin', color: { argb: 'FFD1D5DB' } }
+  };
+
+  // Header Title
+  summarySheet.mergeCells('A1:E1');
+  const titleCell = summarySheet.getCell('A1');
+  titleCell.value = 'PDD SCHEDULER APP - QA E2E TEST REPORT';
+  summarySheet.getRow(1).height = 30;
+  titleCell.font = { name: 'Segoe UI', size: 14, bold: true, color: { argb: 'FFFFFFFF' } };
+  titleCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1B365D' } };
+  titleCell.alignment = { vertical: 'middle', horizontal: 'center' };
+
+  // Run details
+  summarySheet.getRow(2).height = 18;
+
+  const runDetails = [
+    { label: 'Test Run Date:', val: dateStr },
+    { label: 'Test Run Time:', val: timeStr },
+    { label: 'OS / Platform:', val: 'Windows / Node.js Test Server' },
+    { label: 'App Version Name:', val: '1.0 (Universal)' },
+    { label: 'Deployable Status:', val: 'DEPLOYABLE - FIT FOR RELEASE', isStatus: true }
+  ];
+
+  runDetails.forEach((d, idx) => {
+    const rowNum = 3 + idx;
+    summarySheet.getRow(rowNum).height = 20;
+    const labelCell = summarySheet.getCell(`A${rowNum}`);
+    labelCell.value = d.label;
+    labelCell.font = { name: 'Segoe UI', size: 10, bold: true, color: { argb: 'FF1F2937' } };
+
+    const valCell = summarySheet.getCell(`B${rowNum}`);
+    valCell.value = d.val;
+    if (d.isStatus) {
+      valCell.font = { name: 'Segoe UI', size: 10, bold: true, color: { argb: 'FF375623' } };
+      valCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE2EFDA' } };
+    } else {
+      valCell.font = { name: 'Segoe UI', size: 10, color: { argb: 'FF1F2937' } };
+    }
+  });
+
+  summarySheet.getRow(8).height = 18;
+  summarySheet.getRow(9).height = 18;
+
+  // KPI Header
+  summarySheet.getRow(10).height = 20;
+  const kpiTitle = summarySheet.getCell('A10');
+  kpiTitle.value = 'Core Metrics KPI Summary';
+  kpiTitle.font = { name: 'Segoe UI', size: 11, bold: true, color: { argb: 'FF1B365D' } };
+
+  summarySheet.getRow(11).height = 24;
+  const kpis = ['TOTAL TEST CASES', 'PASSED', 'FAILED', 'PASS RATE', 'DURATION (SEC)'];
+  kpis.forEach((hdr, idx) => {
+    const cell = summarySheet.getCell(11, idx + 1);
+    cell.value = hdr;
+    cell.font = { name: 'Segoe UI', size: 9, bold: true, color: { argb: 'FF1F2937' } };
+    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF2F2F2' } };
+    cell.alignment = { vertical: 'middle', horizontal: 'center' };
+    cell.border = thinBorder;
+  });
+
+  summarySheet.getRow(12).height = 30;
+  const kpiValues = [totalTests, passedTests, failedTests, passRate, totalDuration];
+  kpiValues.forEach((val, idx) => {
+    const cell = summarySheet.getCell(12, idx + 1);
+    cell.value = val;
+    cell.font = { name: 'Segoe UI', size: 16, bold: true, color: { argb: 'FF1B365D' } };
+    cell.alignment = { vertical: 'middle', horizontal: 'center' };
+    cell.border = thinBorder;
+  });
+
+  summarySheet.getRow(13).height = 18;
+  summarySheet.getRow(14).height = 18;
+
+  // Breakdown Header
+  summarySheet.getRow(15).height = 20;
+  const breakdownTitle = summarySheet.getCell('A15');
+  breakdownTitle.value = 'Category-Wise Execution Breakdown';
+  breakdownTitle.font = { name: 'Segoe UI', size: 11, bold: true, color: { argb: 'FF1B365D' } };
+
+  summarySheet.getRow(16).height = 24;
+  const breakdownHdrs = ['Test Category', 'Total Cases', 'Passed', 'Failed', 'Pass Rate'];
+  breakdownHdrs.forEach((hdr, idx) => {
+    const cell = summarySheet.getCell(16, idx + 1);
+    cell.value = hdr;
+    cell.font = { name: 'Segoe UI', size: 10, bold: true, color: { argb: 'FFFFFFFF' } };
+    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1B365D' } };
+    cell.alignment = { vertical: 'middle', horizontal: 'center' };
+    cell.border = {
+      top: { style: 'thin', color: { argb: 'FF1F2937' } },
+      left: { style: 'thin', color: { argb: 'FF1F2937' } },
+      bottom: { style: 'thin', color: { argb: 'FF1F2937' } },
+      right: { style: 'thin', color: { argb: 'FF1F2937' } }
+    };
+  });
+
+  // Breakdown Rows
+  categoriesList.forEach((c, idx) => {
+    const rowNum = 17 + idx;
+    summarySheet.getRow(rowNum).height = 20;
+
+    const cellA = summarySheet.getCell(`A${rowNum}`);
+    cellA.value = c.category;
+    cellA.font = { name: 'Segoe UI', size: 10, color: { argb: 'FF1F2937' } };
+    cellA.alignment = { vertical: 'middle', horizontal: 'left' };
+    cellA.border = thinBorder;
+
+    const cellB = summarySheet.getCell(`B${rowNum}`);
+    cellB.value = c.total;
+    cellB.font = { name: 'Segoe UI', size: 10, color: { argb: 'FF1F2937' } };
+    cellB.alignment = { vertical: 'middle', horizontal: 'center' };
+    cellB.border = thinBorder;
+
+    const cellC = summarySheet.getCell(`C${rowNum}`);
+    cellC.value = c.passed;
+    cellC.font = { name: 'Segoe UI', size: 10, color: { argb: 'FF1F2937' } };
+    cellC.alignment = { vertical: 'middle', horizontal: 'center' };
+    cellC.border = thinBorder;
+
+    const cellD = summarySheet.getCell(`D${rowNum}`);
+    cellD.value = c.failed;
+    cellD.font = { name: 'Segoe UI', size: 10, color: { argb: 'FF1F2937' } };
+    cellD.alignment = { vertical: 'middle', horizontal: 'center' };
+    cellD.border = thinBorder;
+
+    const cellE = summarySheet.getCell(`E${rowNum}`);
+    cellE.value = c.rate;
+    cellE.font = { name: 'Segoe UI', size: 10, color: { argb: 'FF1F2937' } };
+    cellE.alignment = { vertical: 'middle', horizontal: 'center' };
+    cellE.border = thinBorder;
+  });
+
+  // Total Summary row
+  const totalRowNum = 17 + categoriesList.length;
+  summarySheet.getRow(totalRowNum).height = 22;
+
+  const totalBorder = {
+    top: { style: 'thin', color: { argb: 'FF1F2937' } },
+    left: { style: 'thin', color: { argb: 'FFD1D5DB' } },
+    bottom: { style: 'double', color: { argb: 'FF1F2937' } },
+    right: { style: 'thin', color: { argb: 'FFD1D5DB' } }
+  };
+
+  const totalCellA = summarySheet.getCell(`A${totalRowNum}`);
+  totalCellA.value = 'Total Summary';
+  totalCellA.font = { name: 'Segoe UI', size: 10, bold: true, color: { argb: 'FF1F2937' } };
+  totalCellA.border = totalBorder;
+
+  const totalCellB = summarySheet.getCell(`B${totalRowNum}`);
+  totalCellB.value = totalTests;
+  totalCellB.font = { name: 'Segoe UI', size: 10, bold: true, color: { argb: 'FF1F2937' } };
+  totalCellB.alignment = { vertical: 'middle', horizontal: 'center' };
+  totalCellB.border = totalBorder;
+
+  const totalCellC = summarySheet.getCell(`C${totalRowNum}`);
+  totalCellC.value = passedTests;
+  totalCellC.font = { name: 'Segoe UI', size: 10, bold: true, color: { argb: 'FF1F2937' } };
+  totalCellC.alignment = { vertical: 'middle', horizontal: 'center' };
+  totalCellC.border = totalBorder;
+
+  const totalCellD = summarySheet.getCell(`D${totalRowNum}`);
+  totalCellD.value = failedTests;
+  totalCellD.font = { name: 'Segoe UI', size: 10, bold: true, color: { argb: 'FF1F2937' } };
+  totalCellD.alignment = { vertical: 'middle', horizontal: 'center' };
+  totalCellD.border = totalBorder;
+
+  const totalCellE = summarySheet.getCell(`E${totalRowNum}`);
+  totalCellE.value = passRate;
+  totalCellE.font = { name: 'Segoe UI', size: 10, bold: true, color: { argb: 'FF1F2937' } };
+  totalCellE.alignment = { vertical: 'middle', horizontal: 'center' };
+  totalCellE.border = totalBorder;
 
   // ─── SHEET 2: Detailed Results ───
-  ws += `<Worksheet ss:Name="Detailed Results"><Table>
-<Column ss:Width="90"/>
-<Column ss:Width="140"/>
-<Column ss:Width="140"/>
-<Column ss:Width="300"/>
-<Column ss:Width="80"/>
-<Column ss:Width="110"/>
-<Row ss:Height="24">
-<Cell ss:StyleID="table_hdr"><Data ss:Type="String">Test ID</Data></Cell>
-<Cell ss:StyleID="table_hdr"><Data ss:Type="String">Module</Data></Cell>
-<Cell ss:StyleID="table_hdr"><Data ss:Type="String">Test Category</Data></Cell>
-<Cell ss:StyleID="table_hdr"><Data ss:Type="String">Test Case Description</Data></Cell>
-<Cell ss:StyleID="table_hdr"><Data ss:Type="String">Status</Data></Cell>
-<Cell ss:StyleID="table_hdr"><Data ss:Type="String">Execution Time (s)</Data></Cell>
-</Row>`;
-
-  allTests.forEach(t => {
-    ws += `<Row ss:Height="20">
-<Cell ss:StyleID="id_style"><Data ss:Type="String">${t.id}</Data></Cell>
-<Cell ss:StyleID="cell_lbl"><Data ss:Type="String">${esc(t.module)}</Data></Cell>
-<Cell ss:StyleID="cell_lbl"><Data ss:Type="String">${esc(t.category)}</Data></Cell>
-<Cell ss:StyleID="cell_lbl"><Data ss:Type="String">${esc(t.description)}</Data></Cell>
-<Cell ss:StyleID="${t.status === 'Pass' ? 'cell_pass' : 'cell_fail'}"><Data ss:Type="String">${t.status}</Data></Cell>
-<Cell ss:StyleID="cell_val"><Data ss:Type="Number">${t.duration}</Data></Cell>
-</Row>`;
+  const detailSheet = workbook.addWorksheet('Detailed Results', {
+    views: [{ showGridLines: true }]
   });
 
-  ws += `</Table></Worksheet>`;
+  detailSheet.columns = [
+    { width: 15 },
+    { width: 22 },
+    { width: 22 },
+    { width: 45 },
+    { width: 12 },
+    { width: 18 }
+  ];
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<?mso-application progid="Excel.Sheet"?>
-<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
- xmlns:o="urn:schemas-microsoft-com:office:office"
- xmlns:x="urn:schemas-microsoft-com:office:excel"
- xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
-<Styles>
- <Style ss:ID="Default"><Font ss:FontName="Segoe UI" ss:Size="10"/><Alignment ss:Vertical="Center" ss:WrapText="1"/></Style>
- <Style ss:ID="header_title"><Font ss:FontName="Segoe UI" ss:Size="14" ss:Bold="1" ss:Color="#FFFFFF"/><Interior ss:Color="#1B365D" ss:Pattern="Solid"/><Alignment ss:Vertical="Center" ss:Horizontal="Center"/></Style>
- <Style ss:ID="meta_label"><Font ss:FontName="Segoe UI" ss:Size="10" ss:Bold="1" ss:Color="#1F2937"/><Alignment ss:Vertical="Center"/></Style>
- <Style ss:ID="meta_val"><Font ss:FontName="Segoe UI" ss:Size="10" ss:Color="#1F2937"/><Alignment ss:Vertical="Center"/></Style>
- <Style ss:ID="meta_status"><Font ss:FontName="Segoe UI" ss:Size="10" ss:Bold="1" ss:Color="#375623"/><Interior ss:Color="#E2EFDA" ss:Pattern="Solid"/><Alignment ss:Vertical="Center"/></Style>
- <Style ss:ID="section_hdr"><Font ss:FontName="Segoe UI" ss:Size="11" ss:Bold="1" ss:Color="#1B365D"/><Alignment ss:Vertical="Center"/></Style>
- <Style ss:ID="kpi_hdr"><Font ss:FontName="Segoe UI" ss:Size="9" ss:Bold="1" ss:Color="#1F2937"/><Interior ss:Color="#F2F2F2" ss:Pattern="Solid"/><Alignment ss:Vertical="Center" ss:Horizontal="Center"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/></Borders></Style>
- <Style ss:ID="kpi_val"><Font ss:FontName="Segoe UI" ss:Size="16" ss:Bold="1" ss:Color="#1B365D"/><Alignment ss:Vertical="Center" ss:Horizontal="Center"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/></Borders></Style>
- <Style ss:ID="table_hdr"><Font ss:FontName="Segoe UI" ss:Size="10" ss:Bold="1" ss:Color="#FFFFFF"/><Interior ss:Color="#1B365D" ss:Pattern="Solid"/><Alignment ss:Vertical="Center" ss:Horizontal="Center"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#1F2937"/><Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#1F2937"/><Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#1F2937"/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#1F2937"/></Borders></Style>
- <Style ss:ID="cell_lbl"><Font ss:FontName="Segoe UI" ss:Size="10" ss:Color="#1F2937"/><Alignment ss:Vertical="Center"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/></Borders></Style>
- <Style ss:ID="cell_val"><Font ss:FontName="Segoe UI" ss:Size="10" ss:Color="#1F2937"/><Alignment ss:Vertical="Center" ss:Horizontal="Center"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/></Borders></Style>
- <Style ss:ID="cell_total"><Font ss:FontName="Segoe UI" ss:Size="10" ss:Bold="1" ss:Color="#1F2937"/><Alignment ss:Vertical="Center"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Double" ss:Weight="3" ss:Color="#1F2937"/><Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#1F2937"/></Borders></Style>
- <Style ss:ID="cell_total_val"><Font ss:FontName="Segoe UI" ss:Size="10" ss:Bold="1" ss:Color="#1F2937"/><Alignment ss:Vertical="Center" ss:Horizontal="Center"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Double" ss:Weight="3" ss:Color="#1F2937"/><Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#1F2937"/></Borders></Style>
- <Style ss:ID="cell_pass"><Font ss:FontName="Segoe UI" ss:Size="10" ss:Color="#065F46"/><Alignment ss:Vertical="Center" ss:Horizontal="Center"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/></Borders></Style>
- <Style ss:ID="cell_fail"><Font ss:FontName="Segoe UI" ss:Size="10" ss:Color="#991B1B"/><Interior ss:Color="#FEE2E2" ss:Pattern="Solid"/><Alignment ss:Vertical="Center" ss:Horizontal="Center"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/></Borders></Style>
- <Style ss:ID="id_style"><Font ss:FontName="Consolas" ss:Size="9" ss:Color="#4338CA"/><Interior ss:Color="#EEF2FF" ss:Pattern="Solid"/><Alignment ss:Vertical="Center" ss:Horizontal="Left"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/></Borders></Style>
-</Styles>
-${ws}
-</Workbook>`;
+  detailSheet.getRow(1).height = 24;
+  const detailHdrs = ['Test ID', 'Module', 'Test Category', 'Test Case Description', 'Status', 'Execution Time (s)'];
+  detailHdrs.forEach((hdr, idx) => {
+    const cell = detailSheet.getCell(1, idx + 1);
+    cell.value = hdr;
+    cell.font = { name: 'Segoe UI', size: 10, bold: true, color: { argb: 'FFFFFFFF' } };
+    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1B365D' } };
+    cell.alignment = { vertical: 'middle', horizontal: 'center' };
+    cell.border = thinBorder;
+  });
+
+  allTests.forEach((t, idx) => {
+    const rowNum = 2 + idx;
+    detailSheet.getRow(rowNum).height = 20;
+
+    const cellA = detailSheet.getCell(`A${rowNum}`);
+    cellA.value = t.id;
+    cellA.font = { name: 'Consolas', size: 9, color: { argb: 'FF4338CA' } };
+    cellA.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFEEF2FF' } };
+    cellA.border = thinBorder;
+    cellA.alignment = { vertical: 'middle', horizontal: 'left' };
+
+    const cellB = detailSheet.getCell(`B${rowNum}`);
+    cellB.value = t.module;
+    cellB.font = { name: 'Segoe UI', size: 10, color: { argb: 'FF1F2937' } };
+    cellB.border = thinBorder;
+
+    const cellC = detailSheet.getCell(`C${rowNum}`);
+    cellC.value = t.category;
+    cellC.font = { name: 'Segoe UI', size: 10, color: { argb: 'FF1F2937' } };
+    cellC.border = thinBorder;
+
+    const cellD = detailSheet.getCell(`D${rowNum}`);
+    cellD.value = t.description;
+    cellD.font = { name: 'Segoe UI', size: 10, color: { argb: 'FF1F2937' } };
+    cellD.border = thinBorder;
+
+    const cellE = detailSheet.getCell(`E${rowNum}`);
+    cellE.value = t.status;
+    cellE.border = thinBorder;
+    cellE.alignment = { vertical: 'middle', horizontal: 'center' };
+    if (t.status === 'Pass') {
+      cellE.font = { name: 'Segoe UI', size: 10, color: { argb: 'FF065F46' } };
+      cellE.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD1FAE5' } };
+    } else {
+      cellE.font = { name: 'Segoe UI', size: 10, color: { argb: 'FF991B1B' } };
+      cellE.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFEE2E2' } };
+    }
+
+    const cellF = detailSheet.getCell(`F${rowNum}`);
+    cellF.value = parseFloat(t.duration);
+    cellF.font = { name: 'Segoe UI', size: 10, color: { argb: 'FF1F2937' } };
+    cellF.alignment = { vertical: 'middle', horizontal: 'right' };
+    cellF.border = thinBorder;
+    cellF.numFmt = '0.00';
+  });
 
   const outPath = path.join(__dirname, '..', 'apptestingreport.xlsx');
-  fs.writeFileSync(outPath, xml, 'utf8');
+  await workbook.xlsx.writeFile(outPath);
   console.log(`📊 Unified Excel report saved to ${outPath}`);
 }
 
-generateExcelReport();
+(async () => {
+  try {
+    await generateExcelReport();
+  } catch (err) {
+    console.error('Error generating Excel report:', err);
+  }
+})();
