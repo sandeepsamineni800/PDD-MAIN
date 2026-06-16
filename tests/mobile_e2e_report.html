@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile WebView E2E Test Report - PDD Scheduler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0b0f19;
+      --bg-card: #161b26;
+      --border-color: #222c3c;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --primary: #ec4899;
+      --primary-hover: #db2777;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+    
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .summary-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+
+    .card-total::before { background-color: var(--primary); }
+    .card-passed::before { background-color: var(--success); }
+    .card-failed::before { background-color: var(--danger); }
+    .card-rate::before { background-color: var(--warning); }
+
+    .card-title {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .card-value {
+      font-size: 36px;
+      font-weight: 700;
+    }
+
+    .results-table-container {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      background-color: rgba(22, 27, 38, 0.6);
+      padding: 16px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    td {
+      padding: 18px 24px;
+      font-size: 14px;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+    }
+
+    .type-functional { background-color: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
+    .type-ui\/ux { background-color: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    .type-validation { background-color: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+    .type-security { background-color: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .status-passed {
+      background-color: rgba(16, 185, 129, 0.15);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .status-failed {
+      background-color: rgba(239, 68, 68, 0.15);
+      color: var(--danger);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .error-log {
+      margin: 0;
+      padding: 8px 12px;
+      background-color: #020617;
+      color: var(--danger);
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 12px;
+      white-space: pre-wrap;
+      max-width: 400px;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <h1>PDD Scheduler - Mobile WebView E2E Emulation Report</h1>
+      <div style="color: var(--text-muted); font-size: 12px; margin-top: 4px;">Device: <span style="color: var(--primary);">Samsung Galaxy S8+ Viewport Emulation</span></div>
+    </div>
+    <div style="font-size: 14px; color: var(--text-muted);">Executed on: 6/16/2026, 1:42:15 PM</div>
+  </header>
+
+  <div class="container">
+    <div class="summary-grid">
+      <div class="summary-card card-total">
+        <div class="card-title">Total Mobile E2E Scenarios</div>
+        <div class="card-value">10</div>
+      </div>
+      <div class="summary-card card-passed">
+        <div class="card-title">Passed Scenarios</div>
+        <div class="card-value" style="color: var(--success);">10</div>
+      </div>
+      <div class="summary-card card-failed">
+        <div class="card-title">Failed Scenarios</div>
+        <div class="card-value" style="color: var(--text-main);">0</div>
+      </div>
+      <div class="summary-card card-rate">
+        <div class="card-title">Success Rate</div>
+        <div class="card-value" style="color: var(--warning);">100.0%</div>
+      </div>
+    </div>
+
+    <div class="results-table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Test ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Details</th>
+            <th>Error Context</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+    <tr class="passed">
+      <td><strong>TC-MOB-001</strong></td>
+      <td>Mobile Splash/Home Render</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Loaded mobile landing page successfully. Title: "Core Scheduler | Multi-Domain Task Manager"</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-002</strong></td>
+      <td>Mobile Viewport Scale Bounds</td>
+      <td><span class="badge type-ui/ux">UI/UX</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Viewport scaling matches mobile constraints (Detected width: 360px).</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-003</strong></td>
+      <td>Mobile Login Fields Stacking</td>
+      <td><span class="badge type-ui/ux">UI/UX</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Login email and password inputs stack vertically as expected on narrow screens.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-004</strong></td>
+      <td>Mobile Register Fields Stacking</td>
+      <td><span class="badge type-ui/ux">UI/UX</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Register Name and Email inputs stack vertically on mobile viewport.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-005</strong></td>
+      <td>Mobile Route Protection Redirect</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Correctly redirected unauthorized mobile sessions to login page.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-006</strong></td>
+      <td>Mobile Login Validation</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Form validation active; prevents submission of empty forms.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-007</strong></td>
+      <td>Mobile Register Validation - Invalid Email</td>
+      <td><span class="badge type-validation">Validation</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Malformed email formats blocked successfully.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-008</strong></td>
+      <td>Mobile Protection Redirect - Invitations</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Redirected unauthorized user to login for invitations route on mobile.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-009</strong></td>
+      <td>Mobile Protection Redirect - Profile</td>
+      <td><span class="badge type-security">Security</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>Redirected unauthorized user to login for profile route on mobile.</td>
+      <td>-</td>
+    </tr>
+  
+    <tr class="passed">
+      <td><strong>TC-MOB-010</strong></td>
+      <td>Mobile WebView Cookie Capability</td>
+      <td><span class="badge type-functional">Functional</span></td>
+      <td><span class="status-indicator status-passed">PASSED</span></td>
+      <td>WebView container supports cookies, essential for session persistence.</td>
+      <td>-</td>
+    </tr>
+  
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      Generated automatically by Antigravity AI Code Companion. Mobile WebView emulation verified headlessly.
+    </div>
+  </div>
+
+</body>
+</html>
+  

@@ -75,21 +75,39 @@ jobs:
         EMAIL_USER: ${{ secrets.EMAIL_USER }}
         EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
 
-    - name: Run Selenium E2E Tests
+    - name: Run Web E2E Tests
       run: node tests/run_e2e.js
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
-    - name: Upload Test Report
+    - name: Run Backend API Tests
+      if: always()
+      run: node tests/run_backend_tests.js
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+    - name: Run Mobile WebView E2E Tests
+      if: always()
+      run: node tests/run_mobile_e2e.js
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+    - name: Upload E2E Test Reports
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: e2e-test-report
+        name: e2e-test-reports
         path: |
           tests/e2e_report.json
           tests/e2e_report.html
+          tests/backend_report.json
+          tests/backend_report.html
+          tests/mobile_e2e_report.json
+          tests/mobile_e2e_report.html
 
-    - name: Test Summary
+    - name: Compile Unified Test Summary
       if: always()
       run: node tests/generate_summary.js

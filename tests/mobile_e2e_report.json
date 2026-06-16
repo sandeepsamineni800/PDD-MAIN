@@ -1,0 +1,92 @@
+[
+  {
+    "id": "TC-MOB-001",
+    "name": "Mobile Splash/Home Render",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "Loaded mobile landing page successfully. Title: \"Core Scheduler | Multi-Domain Task Manager\"",
+    "error": null,
+    "timestamp": "2026-06-16T08:11:29.496Z"
+  },
+  {
+    "id": "TC-MOB-002",
+    "name": "Mobile Viewport Scale Bounds",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Viewport scaling matches mobile constraints (Detected width: 360px).",
+    "error": null,
+    "timestamp": "2026-06-16T08:11:29.510Z"
+  },
+  {
+    "id": "TC-MOB-003",
+    "name": "Mobile Login Fields Stacking",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Login email and password inputs stack vertically as expected on narrow screens.",
+    "error": null,
+    "timestamp": "2026-06-16T08:11:35.148Z"
+  },
+  {
+    "id": "TC-MOB-004",
+    "name": "Mobile Register Fields Stacking",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Register Name and Email inputs stack vertically on mobile viewport.",
+    "error": null,
+    "timestamp": "2026-06-16T08:11:40.037Z"
+  },
+  {
+    "id": "TC-MOB-005",
+    "name": "Mobile Route Protection Redirect",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Correctly redirected unauthorized mobile sessions to login page.",
+    "error": null,
+    "timestamp": "2026-06-16T08:11:46.334Z"
+  },
+  {
+    "id": "TC-MOB-006",
+    "name": "Mobile Login Validation",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Form validation active; prevents submission of empty forms.",
+    "error": null,
+    "timestamp": "2026-06-16T08:11:52.347Z"
+  },
+  {
+    "id": "TC-MOB-007",
+    "name": "Mobile Register Validation - Invalid Email",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Malformed email formats blocked successfully.",
+    "error": null,
+    "timestamp": "2026-06-16T08:11:58.697Z"
+  },
+  {
+    "id": "TC-MOB-008",
+    "name": "Mobile Protection Redirect - Invitations",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Redirected unauthorized user to login for invitations route on mobile.",
+    "error": null,
+    "timestamp": "2026-06-16T08:12:04.758Z"
+  },
+  {
+    "id": "TC-MOB-009",
+    "name": "Mobile Protection Redirect - Profile",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Redirected unauthorized user to login for profile route on mobile.",
+    "error": null,
+    "timestamp": "2026-06-16T08:12:10.810Z"
+  },
+  {
+    "id": "TC-MOB-010",
+    "name": "Mobile WebView Cookie Capability",
+    "type": "Functional",
+    "status": "PASSED",
+    "details": "WebView container supports cookies, essential for session persistence.",
+    "error": null,
+    "timestamp": "2026-06-16T08:12:15.716Z"
+  }
+]

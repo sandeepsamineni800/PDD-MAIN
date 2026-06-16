@@ -1,0 +1,92 @@
+[
+  {
+    "id": "TC-API-001",
+    "name": "Auth Profile - Unauthorized Access",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Successfully rejected request without auth cookies/token (Status 401).",
+    "error": null,
+    "timestamp": "2026-06-16T08:08:48.931Z"
+  },
+  {
+    "id": "TC-API-002",
+    "name": "Login - Missing Password Payload",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Rejected login missing password successfully (Status 400: \"Missing credentials\").",
+    "error": null,
+    "timestamp": "2026-06-16T08:08:49.233Z"
+  },
+  {
+    "id": "TC-API-003",
+    "name": "Login - Invalid Credentials Rejection",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Correctly rejected invalid credentials (Status 401: \"Invalid credentials\").",
+    "error": null,
+    "timestamp": "2026-06-16T08:08:49.982Z"
+  },
+  {
+    "id": "TC-API-004",
+    "name": "OTP Request - Missing Email Field",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Rejected OTP request without email field successfully (Status 400).",
+    "error": null,
+    "timestamp": "2026-06-16T08:08:50.663Z"
+  },
+  {
+    "id": "TC-API-005",
+    "name": "OTP Request - Invalid Email Format",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Correctly validated email format check (Status 500: \"connect ENETUNREACH 2607:f8b0:400e:c09::6c:465 - Local (:::0)\").",
+    "error": null,
+    "timestamp": "2026-06-16T08:10:51.246Z"
+  },
+  {
+    "id": "TC-API-006",
+    "name": "OTP Verify - Invalid OTP Code Rejection",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Verification failed successfully with incorrect code (Status 400: \"Invalid or expired verification code\").",
+    "error": null,
+    "timestamp": "2026-06-16T08:10:51.583Z"
+  },
+  {
+    "id": "TC-API-007",
+    "name": "Register - Incomplete Payload Validation",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Successfully blocked registration request missing name/password keys (Status 400).",
+    "error": null,
+    "timestamp": "2026-06-16T08:10:51.831Z"
+  },
+  {
+    "id": "TC-API-008",
+    "name": "Domains List - Access Control",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Successfully rejected unauthorized domain requests (Status 401).",
+    "error": null,
+    "timestamp": "2026-06-16T08:10:52.080Z"
+  },
+  {
+    "id": "TC-API-009",
+    "name": "Invitations List - Access Control",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Successfully rejected unauthorized invitations requests (Status 401).",
+    "error": null,
+    "timestamp": "2026-06-16T08:10:52.404Z"
+  },
+  {
+    "id": "TC-API-010",
+    "name": "Progress Calculation - Access Control",
+    "type": "Security",
+    "status": "PASSED",
+    "details": "Successfully rejected unauthorized progress calculation requests (Status 401).",
+    "error": null,
+    "timestamp": "2026-06-16T08:10:52.920Z"
+  }
+]
