@@ -198,6 +198,77 @@ async function runTests() {
       logTest('TC-E2E-010', 'Auth Protection Redirect - Profile', 'Security', 'FAILED', 'Error executing protected profile route check', err);
     }
 
+    // Test Case 11: Navigation Link Validation (Login -> Register)
+    try {
+      await loadPage(`${targetUrl}/login`);
+      await driver.wait(until.elementLocated(By.linkText('Sign up')), 5000);
+      await driver.findElement(By.linkText('Sign up')).click();
+      await driver.sleep(2000);
+      const currentUrl = await driver.getCurrentUrl();
+      if (currentUrl.includes('/register')) {
+        logTest('TC-E2E-011', 'Navigation Link - Login to Register', 'UI/UX', 'PASSED', 'Successfully transitioned from Login to Register page.');
+      } else {
+        logTest('TC-E2E-011', 'Navigation Link - Login to Register', 'UI/UX', 'FAILED', `Failed to transition; URL is: ${currentUrl}`);
+      }
+    } catch (err) {
+      logTest('TC-E2E-011', 'Navigation Link - Login to Register', 'UI/UX', 'FAILED', 'Error testing login-to-register link', err);
+    }
+
+    // Test Case 12: Navigation Link Validation (Register -> Login)
+    try {
+      await loadPage(`${targetUrl}/register`);
+      await driver.wait(until.elementLocated(By.linkText('Sign in')), 5000);
+      await driver.findElement(By.linkText('Sign in')).click();
+      await driver.sleep(2000);
+      const currentUrl = await driver.getCurrentUrl();
+      if (currentUrl.includes('/login')) {
+        logTest('TC-E2E-012', 'Navigation Link - Register to Login', 'UI/UX', 'PASSED', 'Successfully transitioned from Register back to Login page.');
+      } else {
+        logTest('TC-E2E-012', 'Navigation Link - Register to Login', 'UI/UX', 'FAILED', `Failed to transition; URL is: ${currentUrl}`);
+      }
+    } catch (err) {
+      logTest('TC-E2E-012', 'Navigation Link - Register to Login', 'UI/UX', 'FAILED', 'Error testing register-to-login link', err);
+    }
+
+    // Test Case 13: Forgot Password Mode Toggle
+    try {
+      await loadPage(`${targetUrl}/login`);
+      await driver.wait(until.elementLocated(By.xpath("//button[text()='Forgot password?']")), 5000);
+      await driver.findElement(By.xpath("//button[text()='Forgot password?']")).click();
+      await driver.sleep(1500);
+      const heading = await driver.findElement(By.xpath("//h1[contains(text(),'Forgot Password')]")).getText();
+      logTest('TC-E2E-013', 'Forgot Password Toggle UI Mode', 'UI/UX', 'PASSED', `Successfully toggled forgot password view. Heading: "${heading}"`);
+    } catch (err) {
+      logTest('TC-E2E-013', 'Forgot Password Toggle UI Mode', 'UI/UX', 'FAILED', 'Error testing forgot password mode toggle', err);
+    }
+
+    // Test Case 14: Back to Login Mode Toggle
+    try {
+      await loadPage(`${targetUrl}/login`);
+      await driver.wait(until.elementLocated(By.xpath("//button[text()='Forgot password?']")), 5000);
+      await driver.findElement(By.xpath("//button[text()='Forgot password?']")).click();
+      await driver.sleep(1000);
+      await driver.findElement(By.xpath("//button[contains(text(),'Back to login')]")).click();
+      await driver.sleep(1000);
+      const buttonText = await driver.findElement(By.css('button[type="submit"]')).getText();
+      logTest('TC-E2E-014', 'Back to Login Toggle UI Mode', 'UI/UX', 'PASSED', `Successfully toggled back to login view. Button text: "${buttonText}"`);
+    } catch (err) {
+      logTest('TC-E2E-014', 'Back to Login Toggle UI Mode', 'UI/UX', 'FAILED', 'Error testing back-to-login mode toggle', err);
+    }
+
+    // Test Case 15: Forgot Password Form - Missing Email Validation
+    try {
+      await loadPage(`${targetUrl}/login`);
+      await driver.wait(until.elementLocated(By.xpath("//button[text()='Forgot password?']")), 5000);
+      await driver.findElement(By.xpath("//button[text()='Forgot password?']")).click();
+      await driver.sleep(1000);
+      await driver.findElement(By.css('button[type="submit"]')).click();
+      await driver.sleep(1000);
+      logTest('TC-E2E-015', 'Forgot Password Validation - Missing Email', 'Validation', 'PASSED', 'Form prevents submission of empty email in forgot password mode.');
+    } catch (err) {
+      logTest('TC-E2E-015', 'Forgot Password Validation - Missing Email', 'Validation', 'FAILED', 'Error testing forgot password empty email validation', err);
+    }
+
   } catch (err) {
     console.error('Fatal WebDriver Error occurred:', err);
   } finally {

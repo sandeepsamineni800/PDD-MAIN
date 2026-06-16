@@ -6,7 +6,7 @@
     "status": "PASSED",
     "details": "Loaded landing page successfully. Title: \"Core Scheduler | Multi-Domain Task Manager\"",
     "error": null,
-    "timestamp": "2026-06-16T06:31:03.932Z"
+    "timestamp": "2026-06-16T09:12:14.029Z"
   },
   {
     "id": "TC-E2E-002",
@@ -15,7 +15,7 @@
     "status": "PASSED",
     "details": "Email, Password inputs and Log In button are fully rendered.",
     "error": null,
-    "timestamp": "2026-06-16T06:31:09.247Z"
+    "timestamp": "2026-06-16T09:12:19.717Z"
   },
   {
     "id": "TC-E2E-003",
@@ -24,7 +24,7 @@
     "status": "PASSED",
     "details": "Name and Email input fields (Step 1) are fully rendered.",
     "error": null,
-    "timestamp": "2026-06-16T06:31:14.084Z"
+    "timestamp": "2026-06-16T09:12:24.611Z"
   },
   {
     "id": "TC-E2E-004",
@@ -33,7 +33,7 @@
     "status": "PASSED",
     "details": "Form prevents submission or prompts for email correctly.",
     "error": null,
-    "timestamp": "2026-06-16T06:31:20.148Z"
+    "timestamp": "2026-06-16T09:12:30.592Z"
   },
   {
     "id": "TC-E2E-005",
@@ -42,7 +42,7 @@
     "status": "PASSED",
     "details": "Form validation active; blank password prevented.",
     "error": null,
-    "timestamp": "2026-06-16T06:31:26.194Z"
+    "timestamp": "2026-06-16T09:12:36.517Z"
   },
   {
     "id": "TC-E2E-006",
@@ -51,7 +51,7 @@
     "status": "PASSED",
     "details": "Feedback displayed: \"Invalid credentials...\"",
     "error": null,
-    "timestamp": "2026-06-16T06:31:34.510Z"
+    "timestamp": "2026-06-16T09:12:44.560Z"
   },
   {
     "id": "TC-E2E-007",
@@ -60,7 +60,7 @@
     "status": "PASSED",
     "details": "Incorrect email format input blocked by client validation.",
     "error": null,
-    "timestamp": "2026-06-16T06:31:40.594Z"
+    "timestamp": "2026-06-16T09:12:50.546Z"
   },
   {
     "id": "TC-E2E-008",
@@ -69,7 +69,7 @@
     "status": "PASSED",
     "details": "Redirected unauthorized user successfully to \"/login\".",
     "error": null,
-    "timestamp": "2026-06-16T06:31:47.981Z"
+    "timestamp": "2026-06-16T09:12:57.812Z"
   },
   {
     "id": "TC-E2E-009",
@@ -78,7 +78,7 @@
     "status": "PASSED",
     "details": "Redirected unauthorized user to login for invitations route.",
     "error": null,
-    "timestamp": "2026-06-16T06:31:55.173Z"
+    "timestamp": "2026-06-16T09:13:05.332Z"
   },
   {
     "id": "TC-E2E-010",
@@ -87,6 +87,51 @@
     "status": "PASSED",
     "details": "Redirected unauthorized user to login for profile route.",
     "error": null,
-    "timestamp": "2026-06-16T06:32:02.230Z"
+    "timestamp": "2026-06-16T09:13:14.143Z"
+  },
+  {
+    "id": "TC-E2E-011",
+    "name": "Navigation Link - Login to Register",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Successfully transitioned from Login to Register page.",
+    "error": null,
+    "timestamp": "2026-06-16T09:13:21.072Z"
+  },
+  {
+    "id": "TC-E2E-012",
+    "name": "Navigation Link - Register to Login",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Successfully transitioned from Register back to Login page.",
+    "error": null,
+    "timestamp": "2026-06-16T09:13:28.004Z"
+  },
+  {
+    "id": "TC-E2E-013",
+    "name": "Forgot Password Toggle UI Mode",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Successfully toggled forgot password view. Heading: \"Forgot Password\"",
+    "error": null,
+    "timestamp": "2026-06-16T09:13:34.484Z"
+  },
+  {
+    "id": "TC-E2E-014",
+    "name": "Back to Login Toggle UI Mode",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Successfully toggled back to login view. Button text: \"SIGN IN\"",
+    "error": null,
+    "timestamp": "2026-06-16T09:13:41.500Z"
+  },
+  {
+    "id": "TC-E2E-015",
+    "name": "Forgot Password Validation - Missing Email",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Form prevents submission of empty email in forgot password mode.",
+    "error": null,
+    "timestamp": "2026-06-16T09:13:48.498Z"
   }
 ]

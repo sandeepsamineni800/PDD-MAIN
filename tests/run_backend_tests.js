@@ -11,6 +11,25 @@ function logTest(id, name, type, status, details, error = null) {
   if (error) console.error(error);
 }
 
+// Override global fetch to enforce an 8-second request timeout
+const originalFetch = globalThis.fetch || fetch;
+globalThis.fetch = async function (resource, options = {}) {
+  const timeout = options.timeout || 8000;
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+  try {
+    const response = await originalFetch(resource, {
+      ...options,
+      signal: controller.signal
+    });
+    clearTimeout(id);
+    return response;
+  } catch (error) {
+    clearTimeout(id);
+    throw error;
+  }
+};
+
 async function runTests() {
   console.log(`Starting Backend API Functionality Tests against ${targetUrl}...`);
 

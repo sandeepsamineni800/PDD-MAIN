@@ -2,11 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const stepSummaryFile = process.env.GITHUB_STEP_SUMMARY;
-
-if (!stepSummaryFile) {
-  console.log('Not running in a GitHub Actions environment (GITHUB_STEP_SUMMARY not set).');
-  process.exit(0);
-}
+const localSummaryFile = path.join(__dirname, 'unified_report_summary.md');
 
 function parseReport(fileName) {
   const filePath = path.join(__dirname, fileName);
@@ -132,8 +128,17 @@ if (mobReport && mobReport.length > 0) {
 }
 
 try {
-  fs.writeFileSync(stepSummaryFile, md);
-  console.log('GitHub Actions Step Summary successfully unified.');
+  fs.writeFileSync(localSummaryFile, md);
+  console.log(`Local unified report summary saved to ${localSummaryFile}`);
 } catch (err) {
-  console.error('Error writing unified step summary:', err);
+  console.error('Error writing local unified step summary:', err);
+}
+
+if (stepSummaryFile) {
+  try {
+    fs.writeFileSync(stepSummaryFile, md);
+    console.log('GitHub Actions Step Summary successfully unified.');
+  } catch (err) {
+    console.error('Error writing GITHUB_STEP_SUMMARY:', err);
+  }
 }

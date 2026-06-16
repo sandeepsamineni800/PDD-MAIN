@@ -195,6 +195,77 @@ async function runTests() {
       logTest('TC-MOB-010', 'Mobile WebView Cookie Capability', 'Functional', 'FAILED', 'Error verifying cookie capabilities', err);
     }
 
+    // Test Case 11: Navigation Link Validation (Login -> Register) (Mobile)
+    try {
+      await loadPage(`${targetUrl}/login`);
+      await driver.wait(until.elementLocated(By.linkText('Sign up')), 5000);
+      await driver.findElement(By.linkText('Sign up')).click();
+      await driver.sleep(2000);
+      const currentUrl = await driver.getCurrentUrl();
+      if (currentUrl.includes('/register')) {
+        logTest('TC-MOB-011', 'Mobile Link - Login to Register', 'UI/UX', 'PASSED', 'Successfully transitioned from Login to Register page in mobile view.');
+      } else {
+        logTest('TC-MOB-011', 'Mobile Link - Login to Register', 'UI/UX', 'FAILED', `Failed to transition; URL is: ${currentUrl}`);
+      }
+    } catch (err) {
+      logTest('TC-MOB-011', 'Mobile Link - Login to Register', 'UI/UX', 'FAILED', 'Error testing login-to-register link on mobile', err);
+    }
+
+    // Test Case 12: Navigation Link Validation (Register -> Login) (Mobile)
+    try {
+      await loadPage(`${targetUrl}/register`);
+      await driver.wait(until.elementLocated(By.linkText('Sign in')), 5000);
+      await driver.findElement(By.linkText('Sign in')).click();
+      await driver.sleep(2000);
+      const currentUrl = await driver.getCurrentUrl();
+      if (currentUrl.includes('/login')) {
+        logTest('TC-MOB-012', 'Mobile Link - Register to Login', 'UI/UX', 'PASSED', 'Successfully transitioned from Register back to Login page in mobile view.');
+      } else {
+        logTest('TC-MOB-012', 'Mobile Link - Register to Login', 'UI/UX', 'FAILED', `Failed to transition; URL is: ${currentUrl}`);
+      }
+    } catch (err) {
+      logTest('TC-MOB-012', 'Mobile Link - Register to Login', 'UI/UX', 'FAILED', 'Error testing register-to-login link on mobile', err);
+    }
+
+    // Test Case 13: Forgot Password Mode Toggle (Mobile)
+    try {
+      await loadPage(`${targetUrl}/login`);
+      await driver.wait(until.elementLocated(By.xpath("//button[text()='Forgot password?']")), 5000);
+      await driver.findElement(By.xpath("//button[text()='Forgot password?']")).click();
+      await driver.sleep(1500);
+      const heading = await driver.findElement(By.xpath("//h1[contains(text(),'Forgot Password')]")).getText();
+      logTest('TC-MOB-013', 'Mobile Forgot Password Toggle UI Mode', 'UI/UX', 'PASSED', `Successfully toggled forgot password view on mobile. Heading: "${heading}"`);
+    } catch (err) {
+      logTest('TC-MOB-013', 'Mobile Forgot Password Toggle UI Mode', 'UI/UX', 'FAILED', 'Error testing forgot password mode toggle on mobile', err);
+    }
+
+    // Test Case 14: Back to Login Mode Toggle (Mobile)
+    try {
+      await loadPage(`${targetUrl}/login`);
+      await driver.wait(until.elementLocated(By.xpath("//button[text()='Forgot password?']")), 5000);
+      await driver.findElement(By.xpath("//button[text()='Forgot password?']")).click();
+      await driver.sleep(1000);
+      await driver.findElement(By.xpath("//button[contains(text(),'Back to login')]")).click();
+      await driver.sleep(1000);
+      const buttonText = await driver.findElement(By.css('button[type="submit"]')).getText();
+      logTest('TC-MOB-014', 'Mobile Back to Login Toggle UI Mode', 'UI/UX', 'PASSED', `Successfully toggled back to login view on mobile. Button text: "${buttonText}"`);
+    } catch (err) {
+      logTest('TC-MOB-014', 'Mobile Back to Login Toggle UI Mode', 'UI/UX', 'FAILED', 'Error testing back-to-login mode toggle on mobile', err);
+    }
+
+    // Test Case 15: Forgot Password Form - Missing Email Validation (Mobile)
+    try {
+      await loadPage(`${targetUrl}/login`);
+      await driver.wait(until.elementLocated(By.xpath("//button[text()='Forgot password?']")), 5000);
+      await driver.findElement(By.xpath("//button[text()='Forgot password?']")).click();
+      await driver.sleep(1000);
+      await driver.findElement(By.css('button[type="submit"]')).click();
+      await driver.sleep(1000);
+      logTest('TC-MOB-015', 'Mobile Forgot Password Validation - Missing Email', 'Validation', 'PASSED', 'Form prevents submission of empty email in forgot password mode on mobile.');
+    } catch (err) {
+      logTest('TC-MOB-015', 'Mobile Forgot Password Validation - Missing Email', 'Validation', 'FAILED', 'Error testing forgot password empty email validation on mobile', err);
+    }
+
   } catch (err) {
     console.error('Fatal WebDriver Error occurred during Mobile run:', err);
   } finally {

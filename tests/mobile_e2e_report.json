@@ -6,7 +6,7 @@
     "status": "PASSED",
     "details": "Loaded mobile landing page successfully. Title: \"Core Scheduler | Multi-Domain Task Manager\"",
     "error": null,
-    "timestamp": "2026-06-16T08:11:29.496Z"
+    "timestamp": "2026-06-16T09:14:38.324Z"
   },
   {
     "id": "TC-MOB-002",
@@ -15,7 +15,7 @@
     "status": "PASSED",
     "details": "Viewport scaling matches mobile constraints (Detected width: 360px).",
     "error": null,
-    "timestamp": "2026-06-16T08:11:29.510Z"
+    "timestamp": "2026-06-16T09:14:38.334Z"
   },
   {
     "id": "TC-MOB-003",
@@ -24,7 +24,7 @@
     "status": "PASSED",
     "details": "Login email and password inputs stack vertically as expected on narrow screens.",
     "error": null,
-    "timestamp": "2026-06-16T08:11:35.148Z"
+    "timestamp": "2026-06-16T09:14:43.629Z"
   },
   {
     "id": "TC-MOB-004",
@@ -33,7 +33,7 @@
     "status": "PASSED",
     "details": "Register Name and Email inputs stack vertically on mobile viewport.",
     "error": null,
-    "timestamp": "2026-06-16T08:11:40.037Z"
+    "timestamp": "2026-06-16T09:14:48.488Z"
   },
   {
     "id": "TC-MOB-005",
@@ -42,7 +42,7 @@
     "status": "PASSED",
     "details": "Correctly redirected unauthorized mobile sessions to login page.",
     "error": null,
-    "timestamp": "2026-06-16T08:11:46.334Z"
+    "timestamp": "2026-06-16T09:14:54.733Z"
   },
   {
     "id": "TC-MOB-006",
@@ -51,7 +51,7 @@
     "status": "PASSED",
     "details": "Form validation active; prevents submission of empty forms.",
     "error": null,
-    "timestamp": "2026-06-16T08:11:52.347Z"
+    "timestamp": "2026-06-16T09:15:00.694Z"
   },
   {
     "id": "TC-MOB-007",
@@ -60,7 +60,7 @@
     "status": "PASSED",
     "details": "Malformed email formats blocked successfully.",
     "error": null,
-    "timestamp": "2026-06-16T08:11:58.697Z"
+    "timestamp": "2026-06-16T09:15:06.799Z"
   },
   {
     "id": "TC-MOB-008",
@@ -69,7 +69,7 @@
     "status": "PASSED",
     "details": "Redirected unauthorized user to login for invitations route on mobile.",
     "error": null,
-    "timestamp": "2026-06-16T08:12:04.758Z"
+    "timestamp": "2026-06-16T09:15:12.855Z"
   },
   {
     "id": "TC-MOB-009",
@@ -78,7 +78,7 @@
     "status": "PASSED",
     "details": "Redirected unauthorized user to login for profile route on mobile.",
     "error": null,
-    "timestamp": "2026-06-16T08:12:10.810Z"
+    "timestamp": "2026-06-16T09:15:18.864Z"
   },
   {
     "id": "TC-MOB-010",
@@ -87,6 +87,51 @@
     "status": "PASSED",
     "details": "WebView container supports cookies, essential for session persistence.",
     "error": null,
-    "timestamp": "2026-06-16T08:12:15.716Z"
+    "timestamp": "2026-06-16T09:15:23.668Z"
+  },
+  {
+    "id": "TC-MOB-011",
+    "name": "Mobile Link - Login to Register",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Successfully transitioned from Login to Register page in mobile view.",
+    "error": null,
+    "timestamp": "2026-06-16T09:15:30.615Z"
+  },
+  {
+    "id": "TC-MOB-012",
+    "name": "Mobile Link - Register to Login",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Successfully transitioned from Register back to Login page in mobile view.",
+    "error": null,
+    "timestamp": "2026-06-16T09:15:37.605Z"
+  },
+  {
+    "id": "TC-MOB-013",
+    "name": "Mobile Forgot Password Toggle UI Mode",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Successfully toggled forgot password view on mobile. Heading: \"Forgot Password\"",
+    "error": null,
+    "timestamp": "2026-06-16T09:15:44.099Z"
+  },
+  {
+    "id": "TC-MOB-014",
+    "name": "Mobile Back to Login Toggle UI Mode",
+    "type": "UI/UX",
+    "status": "PASSED",
+    "details": "Successfully toggled back to login view on mobile. Button text: \"SIGN IN\"",
+    "error": null,
+    "timestamp": "2026-06-16T09:15:51.136Z"
+  },
+  {
+    "id": "TC-MOB-015",
+    "name": "Mobile Forgot Password Validation - Missing Email",
+    "type": "Validation",
+    "status": "PASSED",
+    "details": "Form prevents submission of empty email in forgot password mode on mobile.",
+    "error": null,
+    "timestamp": "2026-06-16T09:15:58.216Z"
   }
 ]

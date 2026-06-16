@@ -198,7 +198,7 @@
       <h1>PDD Scheduler - Backend API Verification Report</h1>
       <div style="color: var(--text-muted); font-size: 12px; margin-top: 4px;">Target Host: <a href="https://pdd-main-oyhb.onrender.com" style="color: var(--primary); text-decoration: none;" target="_blank">https://pdd-main-oyhb.onrender.com</a></div>
     </div>
-    <div style="font-size: 14px; color: var(--text-muted);">Executed on: 6/16/2026, 1:40:52 PM</div>
+    <div style="font-size: 14px; color: var(--text-muted);">Executed on: 6/16/2026, 2:46:08 PM</div>
   </header>
 
   <div class="container">
@@ -209,15 +209,15 @@
       </div>
       <div class="summary-card card-passed">
         <div class="card-title">Passed Assertions</div>
-        <div class="card-value" style="color: var(--success);">10</div>
+        <div class="card-value" style="color: var(--success);">9</div>
       </div>
       <div class="summary-card card-failed">
         <div class="card-title">Failed Assertions</div>
-        <div class="card-value" style="color: var(--text-main);">0</div>
+        <div class="card-value" style="color: var(--danger);">1</div>
       </div>
       <div class="summary-card card-rate">
         <div class="card-title">Compliance Rate</div>
-        <div class="card-value" style="color: var(--warning);">100.0%</div>
+        <div class="card-value" style="color: var(--warning);">90.0%</div>
       </div>
     </div>
 
@@ -271,13 +271,13 @@
       <td>-</td>
     </tr>
   
-    <tr class="passed">
+    <tr class="failed">
       <td><strong>TC-API-005</strong></td>
       <td>OTP Request - Invalid Email Format</td>
       <td><span class="badge type-validation">Validation</span></td>
-      <td><span class="status-indicator status-passed">PASSED</span></td>
-      <td>Correctly validated email format check (Status 500: "connect ENETUNREACH 2607:f8b0:400e:c09::6c:465 - Local (:::0)").</td>
-      <td>-</td>
+      <td><span class="status-indicator status-failed">FAILED</span></td>
+      <td>Connection error occurred</td>
+      <td><pre class="error-log">This operation was aborted</pre></td>
     </tr>
   
     <tr class="passed">
