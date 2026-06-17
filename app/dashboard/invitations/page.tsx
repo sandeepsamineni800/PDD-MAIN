@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { MessageSquare, Check, X, Loader2 } from 'lucide-react';
+import { MessageSquare, Check, X, Loader2, ClipboardCheck } from 'lucide-react';
 import styles from './page.module.css';
 
 export default function InvitationsPage() {
@@ -34,14 +34,14 @@ export default function InvitationsPage() {
   const handleAction = async (domainId: string, action: 'accept' | 'reject', isRoleUpgrade: boolean = false) => {
     setActionLoading(domainId);
     try {
-      const endpoint = isRoleUpgrade 
-        ? `/api/invitations/${domainId}/role` 
+      const endpoint = isRoleUpgrade
+        ? `/api/invitations/${domainId}/role`
         : `/api/invitations/${domainId}`;
 
       const res = await fetch(endpoint, {
         method: action === 'accept' ? 'POST' : 'DELETE'
       });
-      
+
       if (res.ok) {
         // Immediately remove the invitation card from the UI
         setInvitations(prev => prev.filter(inv => {
@@ -75,12 +75,46 @@ export default function InvitationsPage() {
         method: 'DELETE'
       });
       if (res.ok) {
-        setNotifications(notifications.filter(n => n.id !== notificationId));
-        // Dispatch event to update the sidebar badge notification count without reloading
+        setNotifications(prev => prev.filter(n => n.id !== notificationId));
         window.dispatchEvent(new Event('messages-updated'));
       }
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  // Admin/Sub-Admin: Approve a task completion request
+  const handleTaskApprove = async (notificationId: string, taskId: string, domainId: string) => {
+    setActionLoading(notificationId);
+    try {
+      const res = await fetch(`/api/domains/${domainId}/tasks/${taskId}/approve`, { method: 'POST' });
+      if (res.ok) {
+        // Remove the notification card and update sidebar
+        setNotifications(prev => prev.filter(n => n.id !== notificationId));
+        window.dispatchEvent(new Event('messages-updated'));
+        window.dispatchEvent(new CustomEvent('domain-membership-updated', { detail: { domainId } }));
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  // Admin/Sub-Admin: Decline a task completion request
+  const handleTaskDecline = async (notificationId: string, taskId: string, domainId: string) => {
+    setActionLoading(notificationId);
+    try {
+      const res = await fetch(`/api/domains/${domainId}/tasks/${taskId}/approve`, { method: 'DELETE' });
+      if (res.ok) {
+        setNotifications(prev => prev.filter(n => n.id !== notificationId));
+        window.dispatchEvent(new Event('messages-updated'));
+        window.dispatchEvent(new CustomEvent('domain-membership-updated', { detail: { domainId } }));
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setActionLoading(null);
     }
   };
 
@@ -101,39 +135,96 @@ export default function InvitationsPage() {
         <div className={`${styles.emptyState} glass-panel`}>
           <MessageSquare size={48} style={{ marginBottom: '1rem', opacity: 0.5 }} />
           <h3>No Pending Messages</h3>
-          <p>You're all caught up!</p>
+          <p>You&apos;re all caught up!</p>
         </div>
       ) : (
         <div className="invitations-list" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {/* Notifications / System alerts first */}
-          {notifications.map((notif) => (
-            <div key={notif.id} className={`${styles.invitationCard} glass-panel`} style={{ borderColor: 'var(--accent-primary)' }}>
-              <div className={styles.domainInfo}>
-                <h3 style={{ color: 'var(--accent-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <MessageSquare size={18} />
-                  {notif.title}
-                </h3>
-                <p style={{ marginTop: '0.5rem' }}>{notif.content}</p>
-                <p style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                  Received: {new Date(notif.createdAt).toLocaleString()}
-                </p>
+          {notifications.map((notif) => {
+            // Check if this is a task approval request
+            const isTaskApproval = notif.type === 'TASK_APPROVAL_REQUEST';
+            let taskApprovalData: any = null;
+
+            if (isTaskApproval) {
+              try {
+                taskApprovalData = JSON.parse(notif.content);
+              } catch {
+                taskApprovalData = null;
+              }
+            }
+
+            return (
+              <div
+                key={notif.id}
+                className={`${styles.invitationCard} glass-panel`}
+                style={{
+                  borderColor: isTaskApproval ? '#f59e0b' : 'var(--accent-primary)'
+                }}
+              >
+                <div className={styles.domainInfo}>
+                  <h3
+                    style={{
+                      color: isTaskApproval ? '#f59e0b' : 'var(--accent-primary)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem'
+                    }}
+                  >
+                    {isTaskApproval ? <ClipboardCheck size={18} /> : <MessageSquare size={18} />}
+                    {notif.title}
+                  </h3>
+                  <p style={{ marginTop: '0.5rem' }}>
+                    {isTaskApproval && taskApprovalData
+                      ? taskApprovalData.message
+                      : notif.content}
+                  </p>
+                  {isTaskApproval && taskApprovalData && (
+                    <p style={{ marginTop: '0.3rem', fontSize: '0.78rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
+                      Task: <strong>{taskApprovalData.taskTitle}</strong> — by <strong>{taskApprovalData.assigneeName}</strong>
+                    </p>
+                  )}
+                  <p style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                    Received: {new Date(notif.createdAt).toLocaleString()}
+                  </p>
+                </div>
+                <div className={styles.actions}>
+                  {isTaskApproval && taskApprovalData ? (
+                    <>
+                      <button
+                        className={styles.rejectBtn}
+                        onClick={() => handleTaskDecline(notif.id, taskApprovalData.taskId, taskApprovalData.domainId)}
+                        disabled={actionLoading === notif.id}
+                        title="Decline — task will be marked Reassigned"
+                      >
+                        <X size={18} /> Decline
+                      </button>
+                      <button
+                        className={styles.acceptBtn}
+                        onClick={() => handleTaskApprove(notif.id, taskApprovalData.taskId, taskApprovalData.domainId)}
+                        disabled={actionLoading === notif.id}
+                        title="Approve — task will be marked Completed"
+                      >
+                        <Check size={18} /> Approve
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      className={styles.rejectBtn}
+                      onClick={() => handleDismissNotification(notif.id)}
+                    >
+                      <X size={18} /> Dismiss
+                    </button>
+                  )}
+                </div>
               </div>
-              <div className={styles.actions}>
-                <button 
-                  className={styles.rejectBtn}
-                  onClick={() => handleDismissNotification(notif.id)}
-                >
-                  <X size={18} /> Dismiss
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
 
           {/* Invitations list */}
           {invitations.map((inv) => {
             const isRoleUpgrade = inv.status === 'ACCEPTED' && inv.pendingRole !== null;
             const adminName = inv.domain?.members?.[0]?.user?.name || 'an Admin';
-            
+
             return (
               <div key={`${inv.id}-${isRoleUpgrade ? 'role' : 'domain'}`} className={`${styles.invitationCard} glass-panel`}>
                 <div className={styles.domainInfo}>
@@ -143,21 +234,21 @@ export default function InvitationsPage() {
                     Invited by: <strong>{adminName}</strong>
                   </p>
                   <p style={{ marginTop: '0.2rem', fontSize: '0.8rem', color: 'var(--accent-primary)' }}>
-                    {isRoleUpgrade 
-                      ? <>Role Upgrade: <strong>{inv.pendingRole}</strong></> 
+                    {isRoleUpgrade
+                      ? <>Role Upgrade: <strong>{inv.pendingRole}</strong></>
                       : <>Invited as: <strong>{inv.role}</strong></>
                     }
                   </p>
                 </div>
                 <div className={styles.actions}>
-                  <button 
+                  <button
                     className={styles.rejectBtn}
                     onClick={() => handleAction(inv.domainId, 'reject', isRoleUpgrade)}
                     disabled={actionLoading === inv.domainId}
                   >
                     <X size={18} /> Reject
                   </button>
-                  <button 
+                  <button
                     className={styles.acceptBtn}
                     onClick={() => handleAction(inv.domainId, 'accept', isRoleUpgrade)}
                     disabled={actionLoading === inv.domainId}

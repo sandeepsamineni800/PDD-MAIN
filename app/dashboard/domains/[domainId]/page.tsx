@@ -433,6 +433,32 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
     }
   };
 
+  // Approve a task completion request (Admin/Sub-Admin only)
+  const handleApproveTask = async (taskId: string) => {
+    try {
+      const res = await fetch(`/api/domains/${domainId}/tasks/${taskId}/approve`, { method: 'POST' });
+      if (res.ok) {
+        fetchData();
+        window.dispatchEvent(new Event('messages-updated'));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Decline a task completion request (Admin/Sub-Admin only)
+  const handleDeclineTask = async (taskId: string) => {
+    try {
+      const res = await fetch(`/api/domains/${domainId}/tasks/${taskId}/approve`, { method: 'DELETE' });
+      if (res.ok) {
+        fetchData();
+        window.dispatchEvent(new Event('messages-updated'));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (loading) return <div>Loading domain...</div>;
 
   return (
@@ -595,28 +621,48 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
                           {(canManageTasks || task.assigneeId === currentUser?.id) ? (
                             task.status === 'PENDING_APPROVAL' ? (
                               canManageTasks ? (
+                                // Admin/Sub-Admin: show Approve & Decline buttons
                                 <>
                                   <button 
                                     className="btn-icon" 
                                     style={{ color: 'var(--success)' }}
-                                    onClick={() => handleToggleTaskStatus(task, 'COMPLETED')}
-                                    title="Accept & Complete"
+                                    onClick={() => handleApproveTask(task.id)}
+                                    title="Approve — Mark as Completed"
                                   >
                                     <CheckCircle size={16} />
                                   </button>
                                   <button 
                                     className="btn-icon" 
                                     style={{ color: 'var(--danger)' }}
-                                    onClick={() => handleToggleTaskStatus(task, 'IN_PROGRESS')}
-                                    title="Reject (Back to In Progress)"
+                                    onClick={() => handleDeclineTask(task.id)}
+                                    title="Decline — Reassign task"
                                   >
                                     <XCircle size={16} />
                                   </button>
                                 </>
                               ) : (
-                                <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#f59e0b', background: 'rgba(245, 158, 11, 0.1)', padding: '2px 8px', borderRadius: '4px' }}>
-                                  Pending Approval
+                                // Member: show waiting badge
+                                <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#f59e0b', background: 'rgba(245, 158, 11, 0.12)', padding: '2px 8px', borderRadius: '4px', whiteSpace: 'nowrap' }}>
+                                  ⏳ Awaiting Approval
                                 </span>
+                              )
+                            ) : task.status === 'REASSIGNED' ? (
+                              // REASSIGNED: let the member re-submit or admin can override
+                              task.assigneeId === currentUser?.id ? (
+                                <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--danger)', background: 'rgba(239,68,68,0.1)', padding: '2px 8px', borderRadius: '4px', whiteSpace: 'nowrap' }}>
+                                  🔄 Reassigned — Check Messages
+                                </span>
+                              ) : canManageTasks ? (
+                                <button 
+                                  className="btn-icon" 
+                                  style={{ color: 'var(--success)' }}
+                                  onClick={() => handleToggleTaskStatus(task, 'COMPLETED')}
+                                  title="Mark as Completed (override)"
+                                >
+                                  <CheckCircle size={16} />
+                                </button>
+                              ) : (
+                                <div style={{ width: 16, height: 16 }}></div>
                               )
                             ) : (
                               <button 
@@ -647,7 +693,12 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
                             <User size={14} />
                             {task.assignee ? `Assigned to: ${task.assignee.name}` : 'Unassigned'}
                           </div>
-                          <span className={`${styles.statusBadge} ${styles[`status-${task.status}`]}`}>{task.status}</span>
+                          <span className={`${styles.statusBadge} ${styles[`status-${task.status}`]}`}>
+                            {task.status === 'PENDING_APPROVAL' ? 'PENDING APPROVAL'
+                              : task.status === 'REASSIGNED' ? 'REASSIGNED'
+                              : task.status === 'IN_PROGRESS' ? 'IN PROGRESS'
+                              : task.status}
+                          </span>
                         </div>
                         
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', fontSize: '0.75rem', width: '100%', paddingTop: '0.75rem', borderTop: '1px solid var(--border-color)' }}>
