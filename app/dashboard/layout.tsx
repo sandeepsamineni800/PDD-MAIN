@@ -40,13 +40,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   useEffect(() => {
     async function checkAuth() {
       try {
-        const res = await fetch('/api/auth/me');
+        const res = await fetch('/api/auth/me', { cache: 'no-store' });
         if (res.ok) {
           const data = await res.json();
           setUser(data.user);
           
           // Fetch invitations count
-          fetch('/api/invitations')
+          fetch('/api/invitations', { cache: 'no-store' })
             .then(r => r.json())
             .then(data => {
               if (data.invitations) {
@@ -74,7 +74,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   useEffect(() => {
     const refreshInvitations = () => {
-      fetch('/api/invitations')
+      fetch('/api/invitations', { cache: 'no-store' })
         .then(r => r.json())
         .then(data => {
           if (data.invitations) {

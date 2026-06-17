@@ -21,7 +21,7 @@ export default function ProgressPage() {
   const { t } = useLanguage();
 
   useEffect(() => {
-    fetch('/api/progress')
+    fetch('/api/progress', { cache: 'no-store' })
       .then(res => res.json())
       .then(data => {
         if (data.domains) {
