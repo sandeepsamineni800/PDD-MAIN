@@ -49,4 +49,14 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+        CookieManager.getInstance().flush()
+    }
+
+    override fun onDestroy() {
+        CookieManager.getInstance().flush()
+        super.onDestroy()
+    }
 }
