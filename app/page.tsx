@@ -55,13 +55,19 @@ export default function Onboarding() {
   const router = useRouter();
 
   useEffect(() => {
-    // If user is already logged in, redirect to dashboard
-    const hasToken = document.cookie.includes('token=');
-    if (hasToken) {
-      router.replace('/dashboard');
-    } else {
-      setMounted(true);
+    async function checkAuth() {
+      try {
+        const res = await fetch('/api/auth/me', { cache: 'no-store' });
+        if (res.ok) {
+          router.replace('/dashboard');
+        } else {
+          setMounted(true);
+        }
+      } catch (err) {
+        setMounted(true);
+      }
     }
+    checkAuth();
   }, [router]);
 
   const finishOnboarding = () => {

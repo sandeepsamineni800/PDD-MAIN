@@ -16,7 +16,26 @@ export default function Register() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [resendTimer, setResendTimer] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const res = await fetch('/api/auth/me', { cache: 'no-store' });
+        if (res.ok) {
+          router.replace('/dashboard');
+        } else {
+          setMounted(true);
+        }
+      } catch (err) {
+        setMounted(true);
+      }
+    }
+    checkAuth();
+  }, [router]);
+
+  if (!mounted) return null;
 
   useEffect(() => {
     let interval: NodeJS.Timeout;

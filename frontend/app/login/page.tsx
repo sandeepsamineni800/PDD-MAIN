@@ -18,7 +18,24 @@ export default function Login() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const res = await fetch('/api/auth/me', { cache: 'no-store' });
+        if (res.ok) {
+          router.replace('/dashboard');
+        } else {
+          setMounted(true);
+        }
+      } catch (err) {
+        setMounted(true);
+      }
+    }
+    checkAuth();
+  }, [router]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -30,6 +47,8 @@ export default function Login() {
       }
     }
   }, []);
+
+  if (!mounted) return null;
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
