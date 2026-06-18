@@ -54,16 +54,22 @@ export async function PUT(request: Request, { params }: { params: Promise<{ doma
 
     // If task moved to PENDING_APPROVAL, notify all admins and sub-admins in the domain
     if (finalStatus === 'PENDING_APPROVAL') {
-      const approvers = await prisma.domainMember.findMany({
-        where: {
-          domainId,
-          status: 'ACCEPTED',
-          role: { in: ['ADMIN', 'SUB_ADMIN'] }
-        },
-        include: { user: { select: { id: true, name: true } } }
-      });
+      const [approvers, dbUser] = await Promise.all([
+        prisma.domainMember.findMany({
+          where: {
+            domainId,
+            status: 'ACCEPTED',
+            role: { in: ['ADMIN', 'SUB_ADMIN'] }
+          },
+          include: { user: { select: { id: true, name: true } } }
+        }),
+        prisma.user.findUnique({
+          where: { id: user.id },
+          select: { name: true }
+        })
+      ]);
 
-      const assigneeName = user.name;
+      const assigneeName = dbUser?.name || 'A team member';
       const taskTitle = updatedTask.title;
 
       // Create notifications for all approvers

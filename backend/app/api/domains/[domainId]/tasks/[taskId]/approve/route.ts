@@ -15,9 +15,15 @@ export async function POST(
     const { domainId, taskId } = await params;
 
     // Only ADMIN or SUB_ADMIN can approve
-    const membership = await prisma.domainMember.findUnique({
-      where: { userId_domainId: { userId: user.id, domainId } }
-    });
+    const [membership, dbUser] = await Promise.all([
+      prisma.domainMember.findUnique({
+        where: { userId_domainId: { userId: user.id, domainId } }
+      }),
+      prisma.user.findUnique({
+        where: { id: user.id },
+        select: { name: true }
+      })
+    ]);
 
     if (!membership || (membership.role !== 'ADMIN' && membership.role !== 'SUB_ADMIN')) {
       return NextResponse.json({ error: 'Only Admins or Sub-Admins can approve tasks' }, { status: 403 });
@@ -46,6 +52,9 @@ export async function POST(
       }
     });
 
+    const approverName = dbUser?.name || 'Admin';
+    const approverRole = membership.role === 'SUB_ADMIN' ? 'Sub-Admin' : 'Admin';
+
     // Notify the assignee that their task was approved
     if (updatedTask.assigneeId) {
       await prisma.notification.create({
@@ -53,7 +62,7 @@ export async function POST(
           userId: updatedTask.assigneeId,
           type: 'TASK_APPROVED',
           title: '✅ Task Approved',
-          content: `Your task "${task.title}" has been approved and marked as Completed by ${user.name}.`
+          content: `Your task "${task.title}" has been approved and marked as Completed by ${approverName} (${approverRole}).`
         }
       });
     }
@@ -78,9 +87,15 @@ export async function DELETE(
     const { domainId, taskId } = await params;
 
     // Only ADMIN or SUB_ADMIN can decline
-    const membership = await prisma.domainMember.findUnique({
-      where: { userId_domainId: { userId: user.id, domainId } }
-    });
+    const [membership, dbUser] = await Promise.all([
+      prisma.domainMember.findUnique({
+        where: { userId_domainId: { userId: user.id, domainId } }
+      }),
+      prisma.user.findUnique({
+        where: { id: user.id },
+        select: { name: true }
+      })
+    ]);
 
     if (!membership || (membership.role !== 'ADMIN' && membership.role !== 'SUB_ADMIN')) {
       return NextResponse.json({ error: 'Only Admins or Sub-Admins can decline tasks' }, { status: 403 });
@@ -109,6 +124,9 @@ export async function DELETE(
       }
     });
 
+    const declinerName = dbUser?.name || 'Admin';
+    const declinerRole = membership.role === 'SUB_ADMIN' ? 'Sub-Admin' : 'Admin';
+
     // Notify the assignee that their task was declined and reassigned
     if (updatedTask.assigneeId) {
       await prisma.notification.create({
@@ -116,7 +134,7 @@ export async function DELETE(
           userId: updatedTask.assigneeId,
           type: 'TASK_DECLINED',
           title: '🔄 Task Reassigned',
-          content: `Your completion request for "${task.title}" was declined by ${user.name}. The task has been marked as Reassigned — please review and try again.`
+          content: `Your completion request for "${task.title}" was declined by ${declinerName} (${declinerRole}). The task has been marked as Reassigned — please review and try again.`
         }
       });
     }
