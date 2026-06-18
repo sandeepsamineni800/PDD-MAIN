@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Layers, Users, CheckSquare, PlusCircle, Trash2, Edit2, Save, X } from 'lucide-react';
+import { Layers, Users, CheckSquare, PlusCircle, Trash2, Edit2, Save, X, LogOut } from 'lucide-react';
 import { useLanguage } from '@/lib/i18nContext';
 import styles from './page.module.css';
 
@@ -98,6 +98,24 @@ export default function Dashboard() {
       setDeleteError(err.message || 'An unexpected error occurred.');
     } finally {
       setDeleteLoading(false);
+    }
+  };
+
+  const handleLeaveWorkspace = async (e: React.MouseEvent, domain: Domain) => {
+    e.stopPropagation();
+    if (!confirm(`Are you sure you want to leave "${domain.name}"?`)) return;
+    const myMembership = domain.members.find(m => m.user?.id === currentUser?.id || m.userId === currentUser?.id);
+    if (!myMembership) return;
+    try {
+      const res = await fetch(`/api/domains/${domain.id}/members/${myMembership.id}`, { method: 'DELETE' });
+      if (res.ok) {
+        fetchDomains();
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Failed to leave workspace');
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -262,6 +280,11 @@ export default function Dashboard() {
                         <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginLeft: '0.5rem', borderLeft: '1px solid var(--border-color)', paddingLeft: '0.5rem' }}>
                           {t('dashboard.created')} {new Date(domain.createdAt).toLocaleDateString()}
                         </span>
+                      </div>
+                      <div className={styles.cardActions}>
+                        <button className="btn-icon text-danger" onClick={(e) => handleLeaveWorkspace(e, domain)} title="Leave Workspace">
+                          <LogOut size={16} />
+                        </button>
                       </div>
                     </div>
                     

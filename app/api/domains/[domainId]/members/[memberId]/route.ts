@@ -96,15 +96,20 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ d
       return NextResponse.json({ error: 'Cannot remove the domain admin' }, { status: 400 });
     }
 
-    // Role checks:
-    // - ADMIN can remove anyone (SUB_ADMIN or MEMBER)
-    // - SUB_ADMIN can only remove regular MEMBER
-    if (requesterMembership.role !== 'ADMIN' && requesterMembership.role !== 'SUB_ADMIN') {
-      return NextResponse.json({ error: 'Not authorized to remove members' }, { status: 403 });
-    }
+    // Allow self-removal (leaving a workspace)
+    const isSelfRemoval = targetMember.userId === user.id;
 
-    if (requesterMembership.role === 'SUB_ADMIN' && targetMember.role === 'SUB_ADMIN') {
-      return NextResponse.json({ error: 'Sub-admins cannot remove other sub-admins' }, { status: 403 });
+    if (!isSelfRemoval) {
+      // Role checks for removing others:
+      // - ADMIN can remove anyone (SUB_ADMIN or MEMBER)
+      // - SUB_ADMIN can only remove regular MEMBER
+      if (requesterMembership.role !== 'ADMIN' && requesterMembership.role !== 'SUB_ADMIN') {
+        return NextResponse.json({ error: 'Not authorized to remove members' }, { status: 403 });
+      }
+
+      if (requesterMembership.role === 'SUB_ADMIN' && targetMember.role === 'SUB_ADMIN') {
+        return NextResponse.json({ error: 'Sub-admins cannot remove other sub-admins' }, { status: 403 });
+      }
     }
 
     // Get the domain details (for the name)
