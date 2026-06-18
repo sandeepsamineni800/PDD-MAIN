@@ -28,6 +28,12 @@ export default function Dashboard() {
   const [editName, setEditName] = useState('');
   const [editDesc, setEditDesc] = useState('');
 
+  // Domain Delete Modal State
+  const [deleteDomainId, setDeleteDomainId] = useState<string | null>(null);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
+
   const fetchDomains = async () => {
     try {
       const [res, meRes] = await Promise.all([
@@ -62,33 +68,36 @@ export default function Dashboard() {
     return () => window.removeEventListener('domain-membership-updated', handleMembershipUpdate);
   }, []);
 
-  const handleDeleteDomain = async (e: React.MouseEvent, domainId: string) => {
+  const handleDeleteDomainClick = (e: React.MouseEvent, domainId: string) => {
     e.stopPropagation();
-    if (!confirm('WARNING: Are you sure you want to delete this entire workspace and all its tasks? This cannot be undone.')) return;
-    
-    const password = prompt('Please enter your account password to confirm deleting this entire domain:');
-    if (password === null) return; // User cancelled
-    if (!password) {
-      alert('Password is required to delete the domain.');
-      return;
-    }
+    setDeleteDomainId(domainId);
+    setConfirmPassword('');
+    setDeleteError('');
+  };
 
+  const handleConfirmDelete = async () => {
+    if (!deleteDomainId || !confirmPassword) return;
+    setDeleteLoading(true);
+    setDeleteError('');
     try {
-      const res = await fetch(`/api/domains/${domainId}`, { 
+      const res = await fetch(`/api/domains/${deleteDomainId}`, { 
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password })
+        body: JSON.stringify({ password: confirmPassword })
       });
       if (res.ok) {
+        setDeleteDomainId(null);
         fetchDomains(); // Refresh the list
         router.refresh(); // Refresh client router cache
       } else {
         const data = await res.json();
-        alert(data.error || 'Failed to delete domain');
+        setDeleteError(data.error || 'Failed to delete domain');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert('An unexpected error occurred.');
+      setDeleteError(err.message || 'An unexpected error occurred.');
+    } finally {
+      setDeleteLoading(false);
     }
   };
 
@@ -198,7 +207,7 @@ export default function Dashboard() {
                             <button className="btn-icon" onClick={(e) => startEditing(e, domain)} title="Edit Workspace Details">
                               <Edit2 size={16} />
                             </button>
-                            <button className="btn-icon text-danger" onClick={(e) => handleDeleteDomain(e, domain.id)} title="Delete Workspace">
+                            <button className="btn-icon text-danger" onClick={(e) => handleDeleteDomainClick(e, domain.id)} title="Delete Workspace">
                               <Trash2 size={16} />
                             </button>
                           </div>
@@ -276,6 +285,51 @@ export default function Dashboard() {
             </div>
           )}
 
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteDomainId && (
+        <div className={styles.modalOverlay} onClick={() => { setDeleteDomainId(null); setConfirmPassword(''); setDeleteError(''); }}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <h3 className={styles.modalTitle}>
+              <Trash2 size={22} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} />
+              Delete Workspace
+            </h3>
+            <p className={styles.modalDesc}>
+              This action is permanent and cannot be undone. All tasks, members, and data in this workspace will be deleted forever. Please enter your account password to confirm.
+            </p>
+            {deleteError && (
+              <div className={styles.errorMessage}>{deleteError}</div>
+            )}
+            <input
+              type="password"
+              className="input-field"
+              placeholder="Enter your account password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') handleConfirmDelete(); }}
+              autoFocus
+              style={{ width: '100%' }}
+            />
+            <div className={styles.modalActions}>
+              <button
+                className={styles.cancelBtn}
+                onClick={() => { setDeleteDomainId(null); setConfirmPassword(''); setDeleteError(''); }}
+                disabled={deleteLoading}
+              >
+                Cancel
+              </button>
+              <button
+                className={styles.dangerBtn}
+                onClick={handleConfirmDelete}
+                disabled={deleteLoading || !confirmPassword}
+              >
+                <Trash2 size={16} />
+                {deleteLoading ? 'Deleting...' : 'Delete Workspace'}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
