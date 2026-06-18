@@ -34,6 +34,12 @@ export default function Dashboard() {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteError, setDeleteError] = useState('');
 
+  // Leave Workspace Modal State
+  const [leaveDomain, setLeaveDomain] = useState<Domain | null>(null);
+  const [leavePassword, setLeavePassword] = useState('');
+  const [leaveLoading, setLeaveLoading] = useState(false);
+  const [leaveError, setLeaveError] = useState('');
+
   const fetchDomains = async () => {
     try {
       const [res, meRes] = await Promise.all([
@@ -101,21 +107,38 @@ export default function Dashboard() {
     }
   };
 
-  const handleLeaveWorkspace = async (e: React.MouseEvent, domain: Domain) => {
+  const handleLeaveClick = (e: React.MouseEvent, domain: Domain) => {
     e.stopPropagation();
-    if (!confirm(`Are you sure you want to leave "${domain.name}"?`)) return;
-    const myMembership = domain.members.find(m => m.user?.id === currentUser?.id || m.userId === currentUser?.id);
+    setLeaveDomain(domain);
+    setLeavePassword('');
+    setLeaveError('');
+  };
+
+  const handleConfirmLeave = async () => {
+    if (!leaveDomain || !leavePassword) return;
+    const myMembership = leaveDomain.members.find(m => m.user?.id === currentUser?.id || m.userId === currentUser?.id);
     if (!myMembership) return;
+    setLeaveLoading(true);
+    setLeaveError('');
     try {
-      const res = await fetch(`/api/domains/${domain.id}/members/${myMembership.id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/domains/${leaveDomain.id}/members/${myMembership.id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: leavePassword })
+      });
       if (res.ok) {
+        setLeaveDomain(null);
         fetchDomains();
+        router.refresh();
       } else {
         const data = await res.json();
-        alert(data.error || 'Failed to leave workspace');
+        setLeaveError(data.error || 'Failed to leave workspace');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      setLeaveError(err.message || 'An unexpected error occurred.');
+    } finally {
+      setLeaveLoading(false);
     }
   };
 
@@ -282,7 +305,7 @@ export default function Dashboard() {
                         </span>
                       </div>
                       <div className={styles.cardActions}>
-                        <button className="btn-icon text-danger" onClick={(e) => handleLeaveWorkspace(e, domain)} title="Leave Workspace">
+                        <button className="btn-icon text-danger" onClick={(e) => handleLeaveClick(e, domain)} title="Leave Workspace">
                           <LogOut size={16} />
                         </button>
                       </div>
@@ -350,6 +373,51 @@ export default function Dashboard() {
               >
                 <Trash2 size={16} />
                 {deleteLoading ? 'Deleting...' : 'Delete Workspace'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Leave Workspace Confirmation Modal */}
+      {leaveDomain && (
+        <div className={styles.modalOverlay} onClick={() => { setLeaveDomain(null); setLeavePassword(''); setLeaveError(''); }}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <h3 className={styles.modalTitle} style={{ color: 'var(--text-primary)' }}>
+              <LogOut size={22} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} />
+              Leave Workspace
+            </h3>
+            <p className={styles.modalDesc}>
+              You are about to leave <strong>"{leaveDomain.name}"</strong>. Your assigned tasks will be removed. Enter your account password to confirm.
+            </p>
+            {leaveError && (
+              <div className={styles.errorMessage}>{leaveError}</div>
+            )}
+            <input
+              type="password"
+              className="input-field"
+              placeholder="Enter your account password"
+              value={leavePassword}
+              onChange={(e) => setLeavePassword(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') handleConfirmLeave(); }}
+              autoFocus
+              style={{ width: '100%' }}
+            />
+            <div className={styles.modalActions}>
+              <button
+                className={styles.cancelBtn}
+                onClick={() => { setLeaveDomain(null); setLeavePassword(''); setLeaveError(''); }}
+                disabled={leaveLoading}
+              >
+                Cancel
+              </button>
+              <button
+                className={styles.dangerBtn}
+                onClick={handleConfirmLeave}
+                disabled={leaveLoading || !leavePassword}
+              >
+                <LogOut size={16} />
+                {leaveLoading ? 'Leaving...' : 'Leave Workspace'}
               </button>
             </div>
           </div>

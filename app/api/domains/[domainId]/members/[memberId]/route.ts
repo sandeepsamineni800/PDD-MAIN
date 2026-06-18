@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getUserFromCookies } from '@/lib/auth';
 import prisma from '@/lib/prisma';
+import bcrypt from 'bcryptjs';
 
 export async function PUT(request: Request, { params }: { params: Promise<{ domainId: string, memberId: string }> }) {
   try {
@@ -96,10 +97,32 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ d
       return NextResponse.json({ error: 'Cannot remove the domain admin' }, { status: 400 });
     }
 
-    // Allow self-removal (leaving a workspace)
+    // Allow self-removal (leaving a workspace) — requires password verification
     const isSelfRemoval = targetMember.userId === user.id;
 
-    if (!isSelfRemoval) {
+    if (isSelfRemoval) {
+      // Parse password from request body
+      let password = '';
+      try {
+        const body = await request.json();
+        password = body.password || '';
+      } catch {
+        // No body provided
+      }
+      if (!password) {
+        return NextResponse.json({ error: 'Password is required to leave a workspace' }, { status: 400 });
+      }
+
+      // Verify password
+      const dbUser = await prisma.user.findUnique({ where: { id: user.id } });
+      if (!dbUser) {
+        return NextResponse.json({ error: 'User not found' }, { status: 404 });
+      }
+      const isValidPassword = await bcrypt.compare(password, dbUser.password);
+      if (!isValidPassword) {
+        return NextResponse.json({ error: 'Incorrect password' }, { status: 403 });
+      }
+    } else {
       // Role checks for removing others:
       // - ADMIN can remove anyone (SUB_ADMIN or MEMBER)
       // - SUB_ADMIN can only remove regular MEMBER
@@ -137,15 +160,37 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ d
       });
     });
 
-    // Create a notification for the removed user
-    await prisma.notification.create({
-      data: {
-        userId: targetMember.userId,
-        type: 'MEMBER_REMOVED',
-        title: 'Removed from Team',
-        content: `You have been removed from the domain "${domain.name}" by the team management.`
-      }
-    });
+    if (isSelfRemoval) {
+      // Notify admin and sub-admins that this member left
+      const adminsAndSubAdmins = await prisma.domainMember.findMany({
+        where: {
+          domainId,
+          role: { in: ['ADMIN', 'SUB_ADMIN'] }
+        },
+        select: { userId: true }
+      });
+
+      const leavingUserName = targetMember.user?.name || targetMember.user?.email || 'A member';
+
+      await prisma.notification.createMany({
+        data: adminsAndSubAdmins.map(m => ({
+          userId: m.userId,
+          type: 'MEMBER_LEFT',
+          title: 'Member Left Workspace',
+          content: `${leavingUserName} has left the workspace "${domain.name}".`
+        }))
+      });
+    } else {
+      // Create a notification for the removed user (admin-initiated removal)
+      await prisma.notification.create({
+        data: {
+          userId: targetMember.userId,
+          type: 'MEMBER_REMOVED',
+          title: 'Removed from Team',
+          content: `You have been removed from the domain "${domain.name}" by the team management.`
+        }
+      });
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
