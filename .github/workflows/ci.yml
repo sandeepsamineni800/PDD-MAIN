@@ -95,6 +95,10 @@ jobs:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
+    - name: Run Baseline Load Tests
+      if: always()
+      run: node tests/run_load_tests.js
+
     - name: Upload E2E Test Reports
       uses: actions/upload-artifact@v4
       if: always()

@@ -37,6 +37,7 @@
     "prisma": "^5.10.2",
     "puppeteer-core": "^24.43.1",
     "selenium-webdriver": "^4.44.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "autocannon": "^7.15.0"
   }
 }
