@@ -37,35 +37,6 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ d
     const user = await getUserFromCookies();
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-    let password = '';
-    let reason = '';
-    try {
-      const body = await request.json();
-      password = body.password || '';
-      reason = body.reason || '';
-    } catch (e) {
-      return NextResponse.json({ error: 'Password is required to delete this domain' }, { status: 400 });
-    }
-
-    if (!password) {
-      return NextResponse.json({ error: 'Password is required to delete this domain' }, { status: 400 });
-    }
-
-    const dbUser = await prisma.user.findUnique({
-      where: { id: user.id },
-      select: { name: true, password: true }
-    });
-
-    if (!dbUser) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
-    }
-
-    const isValidPassword = await bcrypt.compare(password, dbUser.password);
-    if (!isValidPassword) {
-      return NextResponse.json({ error: 'Invalid password. Domain deletion aborted.' }, { status: 401 });
-    }
-
-    const userName = dbUser.name || 'Admin';
     const { domainId } = await params;
 
     // Verify user is an admin of the domain
@@ -90,6 +61,45 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ d
     if (!domain) {
       return NextResponse.json({ error: 'Domain not found' }, { status: 404 });
     }
+
+    const hasOtherMembers = domain.members.length > 0;
+    let reason = '';
+
+    if (hasOtherMembers) {
+      // Require password verification when other members exist
+      let password = '';
+      try {
+        const body = await request.json();
+        password = body.password || '';
+        reason = body.reason || '';
+      } catch (e) {
+        return NextResponse.json({ error: 'Password is required to delete this domain' }, { status: 400 });
+      }
+
+      if (!password) {
+        return NextResponse.json({ error: 'Password is required to delete this domain' }, { status: 400 });
+      }
+
+      const dbUser = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { name: true, password: true }
+      });
+
+      if (!dbUser) {
+        return NextResponse.json({ error: 'User not found' }, { status: 404 });
+      }
+
+      const isValidPassword = await bcrypt.compare(password, dbUser.password);
+      if (!isValidPassword) {
+        return NextResponse.json({ error: 'Invalid password. Domain deletion aborted.' }, { status: 401 });
+      }
+    }
+
+    const dbUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { name: true }
+    });
+    const userName = dbUser?.name || 'Admin';
 
     // Prisma schema uses onDelete: Cascade for DomainMember and Task,
     // so deleting the domain will automatically clean up related records.

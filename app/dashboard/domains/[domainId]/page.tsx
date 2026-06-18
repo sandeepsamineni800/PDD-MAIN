@@ -289,14 +289,15 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
   };
 
   const handleConfirmDelete = async () => {
-    if (!confirmPassword) return;
+    const isSoloAdmin = members.length <= 1;
+    if (!isSoloAdmin && !confirmPassword) return;
     setDeleteLoading(true);
     setDeleteError('');
     try {
       const res = await fetch(`/api/domains/${domainId}`, { 
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: confirmPassword, reason: deleteReason })
+        body: JSON.stringify(isSoloAdmin ? {} : { password: confirmPassword, reason: deleteReason })
       });
       if (res.ok) {
         setDeleteDomainModalOpen(false);
@@ -983,7 +984,9 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
         </div>
       </div>
       {/* Delete Confirmation Modal */}
-      {deleteDomainModalOpen && (
+      {deleteDomainModalOpen && (() => {
+        const isSoloAdmin = members.length <= 1;
+        return (
         <div className={styles.modalOverlay} onClick={() => { setDeleteDomainModalOpen(false); setConfirmPassword(''); setDeleteError(''); setDeleteReason(''); }}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <h3 className={styles.modalTitle}>
@@ -991,29 +994,36 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
               Delete Workspace
             </h3>
             <p className={styles.modalDesc}>
-              This action is permanent and cannot be undone. All tasks, members, and data in this workspace will be deleted forever. Please enter your account password to confirm.
+              {isSoloAdmin
+                ? 'This action is permanent and cannot be undone. All tasks and data in this workspace will be deleted forever.'
+                : 'This action is permanent and cannot be undone. All tasks, members, and data in this workspace will be deleted forever. Please enter your account password to confirm.'
+              }
             </p>
             {deleteError && (
               <div className={styles.errorMessage}>{deleteError}</div>
             )}
-            <input
-              type="password"
-              className="input-field"
-              placeholder="Enter your account password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') handleConfirmDelete(); }}
-              autoFocus
-              style={{ width: '100%' }}
-            />
-            <textarea
-              className="input-field"
-              placeholder="Reason for deletion (optional)"
-              value={deleteReason}
-              onChange={(e) => setDeleteReason(e.target.value)}
-              rows={2}
-              style={{ width: '100%', marginTop: '0.75rem', resize: 'vertical' }}
-            />
+            {!isSoloAdmin && (
+              <>
+                <input
+                  type="password"
+                  className="input-field"
+                  placeholder="Enter your account password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') handleConfirmDelete(); }}
+                  autoFocus
+                  style={{ width: '100%' }}
+                />
+                <textarea
+                  className="input-field"
+                  placeholder="Reason for deletion (optional)"
+                  value={deleteReason}
+                  onChange={(e) => setDeleteReason(e.target.value)}
+                  rows={2}
+                  style={{ width: '100%', marginTop: '0.75rem', resize: 'vertical' }}
+                />
+              </>
+            )}
             <div className={styles.modalActions}>
               <button
                 className={styles.cancelBtn}
@@ -1025,7 +1035,7 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
               <button
                 className={styles.dangerBtn}
                 onClick={handleConfirmDelete}
-                disabled={deleteLoading || !confirmPassword}
+                disabled={deleteLoading || (!isSoloAdmin && !confirmPassword)}
               >
                 <Trash2 size={16} />
                 {deleteLoading ? 'Deleting...' : 'Delete Workspace'}
@@ -1033,7 +1043,8 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
             </div>
           </div>
         </div>
-      )}
+        );
+      })()}
     </div>
   );
 }

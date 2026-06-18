@@ -85,19 +85,22 @@ export default function Dashboard() {
   };
 
   const handleConfirmDelete = async () => {
-    if (!deleteDomainId || !confirmPassword) return;
+    if (!deleteDomainId) return;
+    const deletingDomain = domains.find(d => d.id === deleteDomainId);
+    const isSoloAdmin = deletingDomain && deletingDomain.members.length <= 1;
+    if (!isSoloAdmin && !confirmPassword) return;
     setDeleteLoading(true);
     setDeleteError('');
     try {
       const res = await fetch(`/api/domains/${deleteDomainId}`, { 
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: confirmPassword, reason: deleteReason })
+        body: JSON.stringify(isSoloAdmin ? {} : { password: confirmPassword, reason: deleteReason })
       });
       if (res.ok) {
         setDeleteDomainId(null);
-        fetchDomains(); // Refresh the list
-        router.refresh(); // Refresh client router cache
+        fetchDomains();
+        router.refresh();
       } else {
         const data = await res.json();
         setDeleteError(data.error || 'Failed to delete domain');
@@ -339,7 +342,10 @@ export default function Dashboard() {
       )}
 
       {/* Delete Confirmation Modal */}
-      {deleteDomainId && (
+      {deleteDomainId && (() => {
+        const deletingDomain = domains.find(d => d.id === deleteDomainId);
+        const isSoloAdmin = deletingDomain && deletingDomain.members.length <= 1;
+        return (
         <div className={styles.modalOverlay} onClick={() => { setDeleteDomainId(null); setConfirmPassword(''); setDeleteError(''); setDeleteReason(''); }}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <h3 className={styles.modalTitle}>
@@ -347,29 +353,36 @@ export default function Dashboard() {
               Delete Workspace
             </h3>
             <p className={styles.modalDesc}>
-              This action is permanent and cannot be undone. All tasks, members, and data in this workspace will be deleted forever. Please enter your account password to confirm.
+              {isSoloAdmin
+                ? 'This action is permanent and cannot be undone. All tasks and data in this workspace will be deleted forever.'
+                : 'This action is permanent and cannot be undone. All tasks, members, and data in this workspace will be deleted forever. Please enter your account password to confirm.'
+              }
             </p>
             {deleteError && (
               <div className={styles.errorMessage}>{deleteError}</div>
             )}
-            <input
-              type="password"
-              className="input-field"
-              placeholder="Enter your account password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') handleConfirmDelete(); }}
-              autoFocus
-              style={{ width: '100%' }}
-            />
-            <textarea
-              className="input-field"
-              placeholder="Reason for deletion (optional)"
-              value={deleteReason}
-              onChange={(e) => setDeleteReason(e.target.value)}
-              rows={2}
-              style={{ width: '100%', marginTop: '0.75rem', resize: 'vertical' }}
-            />
+            {!isSoloAdmin && (
+              <>
+                <input
+                  type="password"
+                  className="input-field"
+                  placeholder="Enter your account password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') handleConfirmDelete(); }}
+                  autoFocus
+                  style={{ width: '100%' }}
+                />
+                <textarea
+                  className="input-field"
+                  placeholder="Reason for deletion (optional)"
+                  value={deleteReason}
+                  onChange={(e) => setDeleteReason(e.target.value)}
+                  rows={2}
+                  style={{ width: '100%', marginTop: '0.75rem', resize: 'vertical' }}
+                />
+              </>
+            )}
             <div className={styles.modalActions}>
               <button
                 className={styles.cancelBtn}
@@ -381,7 +394,7 @@ export default function Dashboard() {
               <button
                 className={styles.dangerBtn}
                 onClick={handleConfirmDelete}
-                disabled={deleteLoading || !confirmPassword}
+                disabled={deleteLoading || (!isSoloAdmin && !confirmPassword)}
               >
                 <Trash2 size={16} />
                 {deleteLoading ? 'Deleting...' : 'Delete Workspace'}
@@ -389,7 +402,8 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-      )}
+        );
+      })()}
 
       {/* Leave Workspace Confirmation Modal */}
       {leaveDomain && (
