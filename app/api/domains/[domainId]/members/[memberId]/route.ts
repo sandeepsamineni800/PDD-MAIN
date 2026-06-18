@@ -101,11 +101,13 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ d
     const isSelfRemoval = targetMember.userId === user.id;
 
     if (isSelfRemoval) {
-      // Parse password from request body
+      // Parse password and reason from request body
       let password = '';
+      let reason = '';
       try {
         const body = await request.json();
         password = body.password || '';
+        reason = body.reason || '';
       } catch {
         // No body provided
       }
@@ -171,13 +173,14 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ d
       });
 
       const leavingUserName = targetMember.user?.name || targetMember.user?.email || 'A member';
+      const reasonText = reason ? `\nReason: "${reason}"` : '';
 
       await prisma.notification.createMany({
         data: adminsAndSubAdmins.map(m => ({
           userId: m.userId,
           type: 'MEMBER_LEFT',
           title: 'Member Left Workspace',
-          content: `${leavingUserName} has left the workspace "${domain.name}".`
+          content: `${leavingUserName} has left the workspace "${domain.name}".${reasonText}`
         }))
       });
     } else {

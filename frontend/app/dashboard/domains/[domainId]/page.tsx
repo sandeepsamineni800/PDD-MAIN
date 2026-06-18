@@ -65,6 +65,7 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
   const [confirmPassword, setConfirmPassword] = useState('');
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteError, setDeleteError] = useState('');
+  const [deleteReason, setDeleteReason] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -258,6 +259,7 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
     setDeleteDomainModalOpen(true);
     setConfirmPassword('');
     setDeleteError('');
+    setDeleteReason('');
   };
 
   const handleConfirmDelete = async () => {
@@ -268,7 +270,7 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
       const res = await fetch(`/api/domains/${domainId}`, { 
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: confirmPassword })
+        body: JSON.stringify({ password: confirmPassword, reason: deleteReason })
       });
       if (res.ok) {
         setDeleteDomainModalOpen(false);
@@ -889,7 +891,7 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
       </div>
       {/* Delete Confirmation Modal */}
       {deleteDomainModalOpen && (
-        <div className={styles.modalOverlay} onClick={() => { setDeleteDomainModalOpen(false); setConfirmPassword(''); setDeleteError(''); }}>
+        <div className={styles.modalOverlay} onClick={() => { setDeleteDomainModalOpen(false); setConfirmPassword(''); setDeleteError(''); setDeleteReason(''); }}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <h3 className={styles.modalTitle}>
               <Trash2 size={22} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} />
@@ -911,10 +913,18 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
               autoFocus
               style={{ width: '100%' }}
             />
+            <textarea
+              className="input-field"
+              placeholder="Reason for deletion (optional)"
+              value={deleteReason}
+              onChange={(e) => setDeleteReason(e.target.value)}
+              rows={2}
+              style={{ width: '100%', marginTop: '0.75rem', resize: 'vertical' }}
+            />
             <div className={styles.modalActions}>
               <button
                 className={styles.cancelBtn}
-                onClick={() => { setDeleteDomainModalOpen(false); setConfirmPassword(''); setDeleteError(''); }}
+                onClick={() => { setDeleteDomainModalOpen(false); setConfirmPassword(''); setDeleteError(''); setDeleteReason(''); }}
                 disabled={deleteLoading}
               >
                 Cancel

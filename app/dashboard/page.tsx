@@ -33,12 +33,14 @@ export default function Dashboard() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteError, setDeleteError] = useState('');
+  const [deleteReason, setDeleteReason] = useState('');
 
   // Leave Workspace Modal State
   const [leaveDomain, setLeaveDomain] = useState<Domain | null>(null);
   const [leavePassword, setLeavePassword] = useState('');
   const [leaveLoading, setLeaveLoading] = useState(false);
   const [leaveError, setLeaveError] = useState('');
+  const [leaveReason, setLeaveReason] = useState('');
 
   const fetchDomains = async () => {
     try {
@@ -79,6 +81,7 @@ export default function Dashboard() {
     setDeleteDomainId(domainId);
     setConfirmPassword('');
     setDeleteError('');
+    setDeleteReason('');
   };
 
   const handleConfirmDelete = async () => {
@@ -89,7 +92,7 @@ export default function Dashboard() {
       const res = await fetch(`/api/domains/${deleteDomainId}`, { 
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: confirmPassword })
+        body: JSON.stringify({ password: confirmPassword, reason: deleteReason })
       });
       if (res.ok) {
         setDeleteDomainId(null);
@@ -112,6 +115,7 @@ export default function Dashboard() {
     setLeaveDomain(domain);
     setLeavePassword('');
     setLeaveError('');
+    setLeaveReason('');
   };
 
   const handleConfirmLeave = async () => {
@@ -124,7 +128,7 @@ export default function Dashboard() {
       const res = await fetch(`/api/domains/${leaveDomain.id}/members/${myMembership.id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: leavePassword })
+        body: JSON.stringify({ password: leavePassword, reason: leaveReason })
       });
       if (res.ok) {
         setLeaveDomain(null);
@@ -336,7 +340,7 @@ export default function Dashboard() {
 
       {/* Delete Confirmation Modal */}
       {deleteDomainId && (
-        <div className={styles.modalOverlay} onClick={() => { setDeleteDomainId(null); setConfirmPassword(''); setDeleteError(''); }}>
+        <div className={styles.modalOverlay} onClick={() => { setDeleteDomainId(null); setConfirmPassword(''); setDeleteError(''); setDeleteReason(''); }}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <h3 className={styles.modalTitle}>
               <Trash2 size={22} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} />
@@ -358,10 +362,18 @@ export default function Dashboard() {
               autoFocus
               style={{ width: '100%' }}
             />
+            <textarea
+              className="input-field"
+              placeholder="Reason for deletion (optional)"
+              value={deleteReason}
+              onChange={(e) => setDeleteReason(e.target.value)}
+              rows={2}
+              style={{ width: '100%', marginTop: '0.75rem', resize: 'vertical' }}
+            />
             <div className={styles.modalActions}>
               <button
                 className={styles.cancelBtn}
-                onClick={() => { setDeleteDomainId(null); setConfirmPassword(''); setDeleteError(''); }}
+                onClick={() => { setDeleteDomainId(null); setConfirmPassword(''); setDeleteError(''); setDeleteReason(''); }}
                 disabled={deleteLoading}
               >
                 Cancel
@@ -381,7 +393,7 @@ export default function Dashboard() {
 
       {/* Leave Workspace Confirmation Modal */}
       {leaveDomain && (
-        <div className={styles.modalOverlay} onClick={() => { setLeaveDomain(null); setLeavePassword(''); setLeaveError(''); }}>
+        <div className={styles.modalOverlay} onClick={() => { setLeaveDomain(null); setLeavePassword(''); setLeaveError(''); setLeaveReason(''); }}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <h3 className={styles.modalTitle} style={{ color: 'var(--text-primary)' }}>
               <LogOut size={22} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} />
@@ -403,10 +415,18 @@ export default function Dashboard() {
               autoFocus
               style={{ width: '100%' }}
             />
+            <textarea
+              className="input-field"
+              placeholder="Reason for leaving (optional)"
+              value={leaveReason}
+              onChange={(e) => setLeaveReason(e.target.value)}
+              rows={2}
+              style={{ width: '100%', marginTop: '0.75rem', resize: 'vertical' }}
+            />
             <div className={styles.modalActions}>
               <button
                 className={styles.cancelBtn}
-                onClick={() => { setLeaveDomain(null); setLeavePassword(''); setLeaveError(''); }}
+                onClick={() => { setLeaveDomain(null); setLeavePassword(''); setLeaveError(''); setLeaveReason(''); }}
                 disabled={leaveLoading}
               >
                 Cancel

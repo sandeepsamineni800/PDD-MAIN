@@ -38,9 +38,11 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ d
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     let password = '';
+    let reason = '';
     try {
       const body = await request.json();
       password = body.password || '';
+      reason = body.reason || '';
     } catch (e) {
       return NextResponse.json({ error: 'Password is required to delete this domain' }, { status: 400 });
     }
@@ -96,13 +98,14 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ d
     });
 
     // Create notifications for all former members in the database
+    const reasonText = reason ? `\nReason: "${reason}"` : '';
     for (const member of domain.members) {
       await prisma.notification.create({
         data: {
           userId: member.userId,
           type: 'DOMAIN_DELETED',
           title: 'Domain Deleted',
-          content: `The domain "${domain.name}" has been deleted by the admin "${userName}".`
+          content: `The domain "${domain.name}" has been deleted by the admin "${userName}".${reasonText}`
         }
       });
     }
