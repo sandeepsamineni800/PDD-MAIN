@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getUserFromCookies } from '@/lib/auth';
 import prisma from '@/lib/prisma';
+import bcrypt from 'bcryptjs';
 
 export async function PUT(request: Request, { params }: { params: Promise<{ domainId: string }> }) {
   try {
@@ -35,6 +36,32 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ d
   try {
     const user = await getUserFromCookies();
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+    let password = '';
+    try {
+      const body = await request.json();
+      password = body.password || '';
+    } catch (e) {
+      return NextResponse.json({ error: 'Password is required to delete this domain' }, { status: 400 });
+    }
+
+    if (!password) {
+      return NextResponse.json({ error: 'Password is required to delete this domain' }, { status: 400 });
+    }
+
+    const dbUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { name: true, password: true }
+    });
+
+    if (!dbUser) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    const isValidPassword = await bcrypt.compare(password, dbUser.password);
+    if (!isValidPassword) {
+      return NextResponse.json({ error: 'Invalid password. Domain deletion aborted.' }, { status: 401 });
+    }
 
     const { domainId } = await params;
 

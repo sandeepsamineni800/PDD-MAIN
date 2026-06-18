@@ -59,13 +59,28 @@ export default function Dashboard() {
     e.stopPropagation();
     if (!confirm('WARNING: Are you sure you want to delete this entire workspace and all its tasks? This cannot be undone.')) return;
     
+    const password = prompt('Please enter your account password to confirm deleting this entire domain:');
+    if (password === null) return; // User cancelled
+    if (!password) {
+      alert('Password is required to delete the domain.');
+      return;
+    }
+
     try {
-      const res = await fetch(`/api/domains/${domainId}`, { method: 'DELETE' });
+      const res = await fetch(`/api/domains/${domainId}`, { 
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      });
       if (res.ok) {
         fetchDomains(); // Refresh the list
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Failed to delete domain');
       }
     } catch (err) {
       console.error(err);
+      alert('An unexpected error occurred.');
     }
   };
 
