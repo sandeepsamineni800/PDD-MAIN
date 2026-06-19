@@ -1,4 +1,4 @@
-name: Next.js CI + Selenium & Appium E2E Testing
+name: Next.js CI + Selenium & Appium E2E Testing (310 Test Cases)
 
 on:
   push:
@@ -75,7 +75,15 @@ jobs:
         EMAIL_USER: ${{ secrets.EMAIL_USER }}
         EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
 
+    - name: Run Selenium + Appium Test Suite (310 Tests)
+      run: node tests/selenium/test_runner.js
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        TARGET_URL: http://localhost:3000
+
     - name: Run Web E2E Tests
+      if: always()
       run: node tests/run_e2e.js
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -98,6 +106,13 @@ jobs:
     - name: Run Baseline Load Tests
       if: always()
       run: node tests/run_load_tests.js
+
+    - name: Upload Selenium Test Results JSON
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: selenium-test-results
+        path: tests/selenium/test_results.json
 
     - name: Upload E2E Test Reports
       uses: actions/upload-artifact@v4

@@ -29,7 +29,8 @@ const config = {
     FUNCTIONAL: 'Functional Test',
     VALIDATION: 'Validation Test',
     E2E_INTEGRATION: 'E2E Integration Test',
-    DEPLOYMENT: 'Deployable Status Test'
+    DEPLOYMENT: 'Deployable Status Test',
+    APPIUM_MOBILE: 'Appium Mobile Test'
   }
 };
 
