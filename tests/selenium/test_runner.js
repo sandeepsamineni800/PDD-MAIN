@@ -134,7 +134,10 @@ async function runAllTests() {
   if (process.env.GITHUB_STEP_SUMMARY) {
     console.log('\n📝 Generating GitHub Action Job Summary...');
     try {
-      let md = `## 📊 PDD Core Scheduler Test Results Summary\n\n`;
+      const deployUrl = process.env.TARGET_URL || `https://${process.env.GITHUB_REPOSITORY_OWNER || 'saimanoj918'}.github.io/${process.env.GITHUB_REPOSITORY?.split('/')[1] || 'PDD'}/`;
+      let md = `## 🚀 Live Website Deployment\n`;
+      md += `🔗 **Live Website Link**: [${deployUrl}](${deployUrl})\n\n`;
+      md += `## 📊 PDD Core Scheduler Test Results Summary\n\n`;
       md += `| Metric | Value |\n`;
       md += `| :--- | :--- |\n`;
       md += `| **Total Tests** | ${total} |\n`;
