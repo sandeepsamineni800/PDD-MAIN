@@ -51,14 +51,16 @@ export async function POST(request: Request, { params }: { params: Promise<{ dom
       return NextResponse.json({ error: 'Only Admins and Sub-Admins can add members' }, { status: 403 });
     }
 
+    const cleanEmail = email.trim().toLowerCase();
+
+    if (cleanEmail === user.email.toLowerCase()) {
+      return NextResponse.json({ error: 'Admin cannot add in team' }, { status: 400 });
+    }
+
     // Find the user to add by email
     const userToAdd = await prisma.user.findUnique({
-      where: { email }
+      where: { email: cleanEmail }
     });
-
-    if (!userToAdd) {
-      return NextResponse.json({ error: 'User not found. They must register first.' }, { status: 404 });
-    }
 
     // Check if they are already in the domain
     const existingMember = await prisma.domainMember.findUnique({

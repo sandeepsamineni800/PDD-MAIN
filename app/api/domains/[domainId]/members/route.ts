@@ -53,6 +53,10 @@ export async function POST(request: Request, { params }: { params: Promise<{ dom
 
     const cleanEmail = email.trim().toLowerCase();
 
+    if (cleanEmail === user.email.toLowerCase()) {
+      return NextResponse.json({ error: 'Admin cannot add in team' }, { status: 400 });
+    }
+
     // Find the user to add by email
     const userToAdd = await prisma.user.findUnique({
       where: { email: cleanEmail }
