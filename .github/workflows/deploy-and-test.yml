@@ -39,12 +39,42 @@ jobs:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     needs: build
+    permissions:
+      contents: write
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Mock Deploy Step
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci --ignore-scripts
+
+    - name: Prepare static export config and strip API routes
       run: |
-        echo "Deploying to GitHub Pages... (Simulated for Next.js)"
+        # Use next.config.export.ts config
+        cp next.config.export.ts next.config.ts
+        # Move api directory out of app so static export succeeds
+        mv app/api app/api_temp
+
+    - name: Build static website
+      run: npm run build
+      env:
+        DATABASE_URL: mysql://localhost:3306/db
+        JWT_SECRET: mocksecret
+
+    - name: Deploy to GitHub Pages 🚀
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./out
+
+    - name: Output deployment link
+      run: |
         URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
         echo "Website URL: $URL"
         echo "## 🚀 GitHub Pages Deployment Status" >> $GITHUB_STEP_SUMMARY
@@ -60,7 +90,8 @@ jobs:
       run: |
         URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
         echo "Verifying deployment status for $URL..."
-        sleep 5
+        # Send a quick request to verify the static site is live
+        curl --silent --fail --head "$URL" || { echo "URL verification failed"; exit 1; }
         echo "Deployment is live and responsive at $URL."
         echo "## 🔍 Deployment Verification" >> $GITHUB_STEP_SUMMARY
         echo "Verification checks passed successfully." >> $GITHUB_STEP_SUMMARY
