@@ -5,10 +5,6 @@ import { useRouter } from 'next/navigation';
 import { CheckSquare, User, Clock, Users, UserPlus, Send, Trash2, Edit2, X, Save, Calendar, CheckCircle, XCircle, MoreVertical, Check } from 'lucide-react';
 import styles from './page.module.css';
 
-export async function generateStaticParams() {
-  return [{ domainId: '1' }, { domainId: 'demo' }];
-}
-
 export default function DomainDetail({ params }: { params: Promise<{ domainId: string }> }) {
   const resolvedParams = use(params);
   const { domainId } = resolvedParams;

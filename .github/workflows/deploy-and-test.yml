@@ -64,6 +64,8 @@ jobs:
         cp next.config.export.ts next.config.ts
         # Move api directory entirely outside of the app folder so static export succeeds
         mv app/api ./api_temp
+        # Move dynamic dashboard directory out during build to bypass generateStaticParams restrictions
+        mv app/dashboard/domains/\[domainId\] ./domain_temp
 
     - name: Build static website
       run: npm run build
