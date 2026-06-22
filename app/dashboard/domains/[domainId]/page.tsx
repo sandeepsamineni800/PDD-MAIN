@@ -533,9 +533,13 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
           const chatContainer = document.getElementById('chat-messages-container');
           if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
         }, 100);
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        alert(`Failed to send message: ${errData.error || res.statusText || 'Unknown error'}`);
       }
     } catch (err) {
       console.error('Failed to send message:', err);
+      alert('Failed to send message due to network error.');
     } finally {
       setSendingMessage(false);
     }
