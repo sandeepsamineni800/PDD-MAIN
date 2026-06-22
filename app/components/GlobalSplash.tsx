@@ -5,12 +5,26 @@ import { Layers } from 'lucide-react';
 import styles from './GlobalSplash.module.css';
 
 export default function GlobalSplash() {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [key, setKey] = useState(0);
 
   useEffect(() => {
-    // Keep it hidden for static gh-pages view, since there is no session redirect delay
-    setShow(false);
+    // Automatically hide the splash overlay after 2.5 seconds on initial load
+    let timer = setTimeout(() => setShow(false), 2500);
+    
+    // Listen for manual triggers (e.g. after successful login)
+    const handleTrigger = () => {
+      clearTimeout(timer);
+      setKey(prev => prev + 1); // Forces animation restart
+      setShow(true);
+      timer = setTimeout(() => setShow(false), 2500);
+    };
+    window.addEventListener('trigger-splash', handleTrigger);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('trigger-splash', handleTrigger);
+    };
   }, []);
 
   return (
