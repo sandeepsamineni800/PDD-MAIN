@@ -21,7 +21,16 @@ export async function GET(request: Request, { params }: { params: Promise<{ doma
     const messages = await prisma.chatMessage.findMany({
       where: { domainId },
       include: {
-        user: { select: { id: true, name: true, email: true } }
+        user: { 
+          select: { 
+            id: true, 
+            name: true, 
+            email: true,
+            domains: {
+              where: { domainId }
+            }
+          } 
+        }
       },
       orderBy: { createdAt: 'asc' }
     });
@@ -61,7 +70,16 @@ export async function POST(request: Request, { params }: { params: Promise<{ dom
         userId: user.id
       },
       include: {
-        user: { select: { id: true, name: true, email: true } }
+        user: { 
+          select: { 
+            id: true, 
+            name: true, 
+            email: true,
+            domains: {
+              where: { domainId }
+            }
+          } 
+        }
       }
     });
 

@@ -1158,7 +1158,16 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
                         </div>
                       )}
                       <div className={styles.chatMessageContent}>
-                        {!isOwn && <span className={styles.chatSenderName}>{msg.user?.name || 'User'}</span>}
+                        {!isOwn && (
+                          <span className={styles.chatSenderName}>
+                            {(() => {
+                              const role = msg.user?.domains?.[0]?.role;
+                              if (role === 'ADMIN') return 'Admin';
+                              if (role === 'SUB_ADMIN') return 'Sub-Admin';
+                              return msg.user?.name || 'User';
+                            })()}
+                          </span>
+                        )}
                         <div className={styles.chatBubble}>
                           {msg.content}
                         </div>
