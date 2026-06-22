@@ -506,12 +506,12 @@
 
 @media (max-width: 640px) {
   .chatDrawer {
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    margin: 0;
-    border-radius: 0;
-    border: none;
+    width: 90vw;
+    height: 80vh;
+    height: 80dvh;
+    margin: 10vh auto;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
   }
 }
 
