@@ -2,7 +2,7 @@
 
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
-import { CheckSquare, User, Clock, Users, UserPlus, Send, Trash2, Edit2, X, Save, Calendar, CheckCircle, XCircle, MoreVertical, Check } from 'lucide-react';
+import { CheckSquare, User, Clock, Users, UserPlus, Send, Trash2, Edit2, X, Save, Calendar, CheckCircle, XCircle, MoreVertical, Check, MessageSquare } from 'lucide-react';
 import styles from './page.module.css';
 
 export default function DomainDetail({ params }: { params: Promise<{ domainId: string }> }) {
@@ -66,6 +66,33 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteError, setDeleteError] = useState('');
   const [deleteReason, setDeleteReason] = useState('');
+
+  // Group Chat State
+  const [chatOpen, setChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState<any[]>([]);
+  const [newMessage, setNewMessage] = useState('');
+  const [sendingMessage, setSendingMessage] = useState(false);
+
+  // Poll for chat messages when chat panel is open
+  useEffect(() => {
+    if (!chatOpen) return;
+    
+    const fetchChatMessages = async () => {
+      try {
+        const res = await fetch(`/api/domains/${domainId}/chat`, { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          setChatMessages(data.messages);
+        }
+      } catch (err) {
+        console.error('Failed to fetch chat messages:', err);
+      }
+    };
+
+    fetchChatMessages();
+    const interval = setInterval(fetchChatMessages, 5000);
+    return () => clearInterval(interval);
+  }, [chatOpen, domainId]);
 
   useEffect(() => {
     fetchData();
@@ -487,6 +514,33 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
     }
   };
 
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newMessage.trim() || sendingMessage) return;
+    setSendingMessage(true);
+    try {
+      const res = await fetch(`/api/domains/${domainId}/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: newMessage })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setChatMessages(prev => [...prev, data.message]);
+        setNewMessage('');
+        // Scroll chat box to bottom
+        setTimeout(() => {
+          const chatContainer = document.getElementById('chat-messages-container');
+          if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
+        }, 100);
+      }
+    } catch (err) {
+      console.error('Failed to send message:', err);
+    } finally {
+      setSendingMessage(false);
+    }
+  };
+
   if (loading) return <div>Loading domain...</div>;
 
   return (
@@ -529,13 +583,34 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
                   </p>
                 )}
               </div>
-              {isAdmin && (
+              {isAdmin ? (
                 <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button className="btn-icon" onClick={() => {
+                    setChatOpen(!chatOpen);
+                    setTimeout(() => {
+                      const chatContainer = document.getElementById('chat-messages-container');
+                      if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
+                    }, 100);
+                  }} title="Workspace Chat">
+                    <MessageSquare size={18} style={{ color: chatOpen ? 'var(--accent-primary)' : 'inherit' }} />
+                  </button>
                   <button className="btn-icon" onClick={() => setEditingDomain(true)} title="Edit Workspace Details">
                     <Edit2 size={18} />
                   </button>
                   <button className="btn-icon text-danger" onClick={handleDeleteDomainClick} title="Delete Workspace">
                     <Trash2 size={18} />
+                  </button>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button className="btn-icon" onClick={() => {
+                    setChatOpen(!chatOpen);
+                    setTimeout(() => {
+                      const chatContainer = document.getElementById('chat-messages-container');
+                      if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
+                    }, 100);
+                  }} title="Workspace Chat">
+                    <MessageSquare size={18} style={{ color: chatOpen ? 'var(--accent-primary)' : 'inherit' }} />
                   </button>
                 </div>
               )}
@@ -1045,6 +1120,86 @@ export default function DomainDetail({ params }: { params: Promise<{ domainId: s
         </div>
         );
       })()}
+      
+      {/* Sliding Chat Drawer */}
+      {chatOpen && (
+        <div className={styles.chatDrawerOverlay} onClick={() => setChatOpen(false)}>
+          <div className={styles.chatDrawer} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.chatHeader}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <MessageSquare size={20} style={{ color: 'var(--accent-primary)' }} />
+                <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>{domainName} Chat</h3>
+              </div>
+              <button className="btn-icon" onClick={() => setChatOpen(false)} title="Close Chat">
+                <X size={18} />
+              </button>
+            </div>
+            
+            <div id="chat-messages-container" className={styles.chatMessages}>
+              {chatMessages.length === 0 ? (
+                <div style={{ textAlign: 'center', color: 'var(--text-muted)', padding: '2rem 1rem', fontSize: '0.875rem' }}>
+                  No messages yet. Send a message to start the conversation!
+                </div>
+              ) : (
+                chatMessages.map((msg) => {
+                  const isOwn = msg.userId === currentUser?.id;
+                  const senderInitial = msg.user?.name ? msg.user.name.charAt(0).toUpperCase() : '?';
+                  const msgTime = new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                  
+                  return (
+                    <div key={msg.id} className={`${styles.chatMessageWrapper} ${isOwn ? styles.chatMessageOwn : ''}`}>
+                      {!isOwn && (
+                        <div className={styles.chatAvatar} title={msg.user?.name || 'User'}>
+                          {senderInitial}
+                        </div>
+                      )}
+                      <div className={styles.chatMessageContent}>
+                        {!isOwn && <span className={styles.chatSenderName}>{msg.user?.name || 'User'}</span>}
+                        <div className={styles.chatBubble}>
+                          {msg.content}
+                        </div>
+                        <span className={styles.chatTimestamp}>{msgTime}</span>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+            
+            <form onSubmit={handleSendMessage} className={styles.chatInputArea}>
+              <input
+                type="text"
+                placeholder="Type a message..."
+                className="input-field"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                required
+                style={{ borderRadius: '24px', flex: 1, paddingRight: '3rem' }}
+                disabled={sendingMessage}
+              />
+              <button 
+                type="submit" 
+                className="btn-primary" 
+                style={{ 
+                  borderRadius: '50%', 
+                  width: '38px', 
+                  height: '38px', 
+                  padding: 0, 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  position: 'absolute',
+                  right: '1.25rem',
+                  boxShadow: 'none'
+                }}
+                disabled={sendingMessage || !newMessage.trim()}
+              >
+                <Send size={16} />
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

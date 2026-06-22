@@ -22,6 +22,7 @@ model User {
   tasks        Task[]         @relation("AssignedTasks")
   createdTasks Task[]         @relation("CreatedTasks")
   notifications Notification[]
+  chatMessages  ChatMessage[]
 }
 
 model Domain {
@@ -32,8 +33,9 @@ model Domain {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  members DomainMember[]
-  tasks   Task[]
+  members      DomainMember[]
+  tasks        Task[]
+  chatMessages ChatMessage[]
 }
 
 model DomainMember {
@@ -67,6 +69,20 @@ model Task {
   domain   Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
   assignee User?  @relation("AssignedTasks", fields: [assigneeId], references: [id], onDelete: SetNull)
   creator  User   @relation("CreatedTasks", fields: [creatorId], references: [id], onDelete: Cascade)
+}
+
+model ChatMessage {
+  id        String   @id @default(uuid())
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  userId    String
+  domainId  String
+
+  // Relationships
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  domain    Domain   @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  @@index([domainId])
 }
 
 model OTP {
