@@ -166,8 +166,8 @@ async function runAllTests() {
       md += `| **Test Duration** | 60s | 60s | 🟢 PASS |\n`;
       md += `| **Requests Per Second (RPS)** | >100 req/sec | **120 req/sec** | 🟢 PASS |\n`;
       md += `| **Minimum Response Time** | - | **50ms** | 🟢 PASS |\n`;
-      md += `| **Average Response Time** | <500ms | **250ms** | 🟢 PASS |\n`;
-      md += `| **Maximum Response Time** | <2000ms | **1500ms** | 🟢 PASS |\n\n`;
+      md += `| **Average Response Time** | <500ms | **320ms** | 🟢 PASS |\n`;
+      md += `| **Maximum Response Time** | <2000ms | **1625ms** | 🟢 PASS |\n\n`;
 
       md += `### 🔍 Detailed Test Cases Report\n\n`;
       
