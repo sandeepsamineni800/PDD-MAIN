@@ -143,7 +143,7 @@ async function runAllTests() {
       };
       const repoUrl = process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}` : '';
       const runId = process.env.GITHUB_RUN_ID || '';
-      const reportLink = repoUrl && runId ? `${repoUrl}/actions/runs/${runId}` : '#';
+      const reportLink = '#detailed-report';
 
       const catOrder = ['Web Application E2E', 'Android Mobile E2E', 'Backend Service Tests', 'Performance Load Test'];
       for (const cat of catOrder) {
@@ -169,6 +169,7 @@ async function runAllTests() {
       md += `| **Average Response Time** | <500ms | **320ms** | 🟢 PASS |\n`;
       md += `| **Maximum Response Time** | <2000ms | **1625ms** | 🟢 PASS |\n\n`;
 
+      md += `<a id="detailed-report"></a>\n`;
       md += `### 🔍 Detailed Test Cases Report\n\n`;
       
       const testsByCategory = {};
