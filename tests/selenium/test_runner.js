@@ -220,10 +220,7 @@ ${md.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
 </html>`;
       fs.writeFileSync('test_report.html', htmlReport);
 
-      if (process.env.GITHUB_STEP_SUMMARY) {
-        fs.writeFileSync(process.env.GITHUB_STEP_SUMMARY, md);
-      }
-      console.log('✅ GITHUB_STEP_SUMMARY, test_summary.md, and test_report.html updated successfully.');
+      console.log('✅ test_summary.md and test_report.html updated successfully. Unified Summary job will render them.');
     } catch (e) {
       console.error('⚠️ Failed to write summary:', e.message);
     }
