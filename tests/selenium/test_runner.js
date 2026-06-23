@@ -142,8 +142,7 @@ async function runAllTests() {
         'Performance Load Test': '📈'
       };
       const repoUrl = process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}` : '';
-      const runId = process.env.GITHUB_RUN_ID || '';
-      const reportLink = '#detailed-report';
+      const reportLink = repoUrl ? `https://htmlpreview.github.io/?${repoUrl}/blob/test-reports/test_report.html` : '#';
 
       const catOrder = ['Web Application E2E', 'Android Mobile E2E', 'Backend Service Tests', 'Performance Load Test'];
       for (const cat of catOrder) {
