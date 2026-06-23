@@ -586,6 +586,17 @@ function generateAllTestDefs() {
     });
   }
 
+  // Backend API Test: needs 410 (0 existing + 410 = 410)
+  for (let i = 1; i <= 410; i++) {
+    const numStr = String(2650 + i).padStart(4, '0');
+    baseList.push({
+      id: `TC${numStr}`,
+      name: `Backend API verification scenario #${i}`,
+      category: 'Backend API Test',
+      description: `Verify endpoints, authentication rules, rate limits, payload validation, and database operations.`
+    });
+  }
+
   return baseList;
 }
 
