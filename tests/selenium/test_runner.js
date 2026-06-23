@@ -151,10 +151,10 @@ async function runAllTests() {
         const data = categories[cat];
         const icon = icons[cat];
         if (cat === 'Performance Load Test') {
-          md += `| ${icon} **${cat}** | 5824 (Reqs) | — | — | — | 99.85% Success | ✅ OPTIMAL | [Run Details](${reportLink}) |\n`;
+          md += `| ${icon} **${cat}** | 5824 (Reqs) | — | — | — | 99.85% Success | ✅ OPTIMAL | 📥 Scroll to Artifacts ↓ |\n`;
         } else {
           const rate = ((data.passed / data.total) * 100).toFixed(1) + '%';
-          md += `| ${icon} **${cat}** | ${data.total} | ${data.passed} | 0 | 0 | ${rate} | ✅ PASS | [HTML Report](${reportLink}) |\n`;
+          md += `| ${icon} **${cat}** | ${data.total} | ${data.passed} | 0 | 0 | ${rate} | ✅ PASS | 📥 Scroll to Artifacts ↓ |\n`;
         }
       }
       md += `\n`;
