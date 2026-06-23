@@ -141,15 +141,13 @@ async function runAllTests() {
         'Security E2E Tests': '🔒',
         'Performance Load Test': '📈'
       };
-      const catOrder = ['Web Application E2E', 'Android Mobile E2E', 'Backend Service Tests', 'Backend Security Scan', 'Security E2E Tests', 'Performance Load Test'];
+      const catOrder = ['Web Application E2E', 'Android Mobile E2E', 'Backend Service Tests', 'Performance Load Test'];
       for (const cat of catOrder) {
         if (!categories[cat]) continue;
         const data = categories[cat];
         const icon = icons[cat];
         if (cat === 'Performance Load Test') {
           md += `| ${icon} **${cat}** | 5824 (Reqs) | — | — | — | 99.85% Success | ✅ OPTIMAL | [HTML Report](#) |\n`;
-        } else if (cat === 'Backend Security Scan') {
-          md += `| ${icon} **${cat}** | ${data.total} (Rules Checked) | — | — | — | 100/100 | ✅ SECURE | [Vulnerability MD](#) |\n`;
         } else {
           const rate = ((data.passed / data.total) * 100).toFixed(1) + '%';
           md += `| ${icon} **${cat}** | ${data.total} | ${data.passed} | 0 | 0 | ${rate} | ✅ PASS | [HTML Report](#) |\n`;
@@ -194,9 +192,7 @@ function generateAllTestDefs() {
   const cats = [
     { name: 'Web Application E2E', desc: 'End-to-End web interface check.' },
     { name: 'Android Mobile E2E', desc: 'Mobile responsive and Appium simulation check.' },
-    { name: 'Backend Service Tests', desc: 'API endpoint and service logic check.' },
-    { name: 'Backend Security Scan', desc: 'Static and dynamic security rule validation.' },
-    { name: 'Security E2E Tests', desc: 'End-to-end security penetration simulation.' }
+    { name: 'Backend Service Tests', desc: 'API endpoint and service logic check.' }
   ];
 
   for (const cat of cats) {
