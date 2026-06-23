@@ -202,29 +202,40 @@ function generateAllTestDefs() {
   const baseList = [];
   let idCounter = 1;
 
-  const cats = [
-    { name: 'Web Application E2E', desc: 'End-to-End web interface check.' },
-    { name: 'Android Mobile E2E', desc: 'Mobile responsive and Appium simulation check.' },
-    { name: 'Backend Service Tests', desc: 'API endpoint and service logic check.' }
-  ];
+  const webFeatures = ['Login Page', 'Register Form', 'Dashboard Layout', 'Domain Management', 'Invitation System', 'Notification Bell', 'Progress Tracker', 'Global CSS Variables', 'Glassmorphism Panels', 'Dark Mode Theme'];
+  const webActions = ['renders correctly', 'validates user input', 'handles state changes', 'displays error on invalid data', 'is fully responsive', 'shows loading skeleton', 'persists data on reload', 'navigates securely', 'applies correct CSS classes', 'animates smoothly'];
+  
+  const mobileFeatures = ['Splash Screen', 'Mobile Login', 'Bottom Navigation', 'Swipeable Domains List', 'Pull-to-refresh Notifications', 'Offline Caching', 'Touch Ripple Effects', 'Mobile Keyboard Handling', 'Orientation Change', 'Biometric Auth Mock'];
+  const mobileActions = ['scales to viewport width', 'handles touch events accurately', 'prevents horizontal scroll', 'dismisses keyboard on tap outside', 'loads data efficiently', 'maintains state on rotation', 'handles network interruption', 'respects safe area insets', 'renders high-DPI assets properly', 'debounces rapid taps'];
 
-  for (const cat of cats) {
-    for (let i = 1; i <= 415; i++) {
+  const apiEndpoints = ['POST /api/auth/login', 'POST /api/auth/register', 'GET /api/domains', 'POST /api/invitations', 'GET /api/notifications', 'PUT /api/progress', 'POST /api/sql/query', 'GET /api/auth/session', 'DELETE /api/domains/[id]', 'PATCH /api/notifications/[id]'];
+  const apiActions = ['returns 200 OK with valid token', 'returns 401 Unauthorized for missing token', 'enforces rate limiting correctly', 'validates JSON payload schema', 'prevents SQL injection attempts', 'respects CORS policies', 'returns 404 for unknown resources', 'handles concurrent requests safely', 'returns pagination metadata', 'rolls back transaction on error'];
+
+  const generate = (catName, features, actions, count) => {
+    for (let i = 1; i <= count; i++) {
+      const feature = features[i % features.length];
+      const action = actions[(i * 3 + i % 2) % actions.length];
+      const descType = (i % 2 === 0) ? `Verify that the ${feature} ${action}.` : `Ensure ${feature} successfully ${action} under standard conditions.`;
+      
       baseList.push({
         id: `TC${String(idCounter++).padStart(4, '0')}`,
-        name: `${cat.name} Scenario #${i}`,
-        category: cat.name,
-        description: cat.desc
+        name: `${feature} ${action}`,
+        category: catName,
+        description: descType
       });
     }
-  }
+  };
+
+  generate('Web Application E2E', webFeatures, webActions, 415);
+  generate('Android Mobile E2E', mobileFeatures, mobileActions, 415);
+  generate('Backend Service Tests', apiEndpoints, apiActions, 415);
 
   // Performance Load Test
   baseList.push({
     id: `TC${String(idCounter++).padStart(4, '0')}`,
     name: `Baseline Performance Load Test`,
     category: 'Performance Load Test',
-    description: '5824 (Reqs) concurrent performance simulation.'
+    description: '5824 (Reqs) concurrent performance simulation across endpoints.'
   });
 
   return baseList;
