@@ -185,10 +185,13 @@ async function runAllTests() {
         md += `\n</details>\n\n`;
       }
 
-      fs.writeFileSync(process.env.GITHUB_STEP_SUMMARY, md);
-      console.log('✅ GITHUB_STEP_SUMMARY updated successfully.');
+      fs.writeFileSync('test_summary.md', md);
+      if (process.env.GITHUB_STEP_SUMMARY) {
+        fs.writeFileSync(process.env.GITHUB_STEP_SUMMARY, md);
+      }
+      console.log('✅ GITHUB_STEP_SUMMARY and test_summary.md updated successfully.');
     } catch (e) {
-      console.error('⚠️ Failed to write to GITHUB_STEP_SUMMARY:', e.message);
+      console.error('⚠️ Failed to write summary:', e.message);
     }
   }
 
